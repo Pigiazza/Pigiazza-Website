@@ -18,69 +18,79 @@ const ICON_HEART =
 // --- Traduzioni ---
 
 const TRANSLATIONS = {
-  it: {
-    "nav.home": "Home",
-    "nav.projects": "Progetti",
-    "nav.contact": "Contatti",
-    "hero.eyebrow": "MINECRAFT DEVELOPER",
-    "hero.heading": 'CIAO, SONO<br /><span class="accent">PIGIAZZA</span>',
-    "hero.bioFallback": "Minecraft and coding enthusiast che unisce le due cose per creare mod, plugin, datapack e altro ancora 💚",
-    "hero.ctaProjects": "Guarda i progetti",
-    "hero.ctaContact": "Contattami",
-    "projects.eyebrow": "LIVE DA MODRINTH",
-    "projects.heading": "I MIEI PROGETTI",
-    "projects.subtext": "Sincronizzati automaticamente da Modrinth: pubblica un progetto e comparirà qui da solo.",
-    "projects.emptyTitle": "Ancora nessun progetto pubblico",
-    "projects.emptyText": "Appena pubblichi qualcosa su Modrinth comparirà qui automaticamente.",
-    "projects.emptyLink": "Vai al profilo Modrinth",
-    "projects.errorTitle": "Non riesco a contattare Modrinth in questo momento",
-    "projects.errorText": "Riprova più tardi, oppure dai un'occhiata diretta al profilo.",
-    "contact.eyebrow": "SEGUIMI",
-    "contact.heading": "RESTIAMO IN CONTATTO",
-    "contact.subtext": "Trovi tutto il mio lavoro e i modi per supportarmi sulle piattaforme qui sotto.",
-    "footer.tagline": "Fatto con 💚 per la community Minecraft.",
-    "modal.close": "Chiudi",
-    "modal.openLink": "Apri su Modrinth",
-    "modal.loading": "Caricamento descrizione...",
-  },
   en: {
     "nav.home": "Home",
+    "nav.craft": "Craft",
     "nav.projects": "Projects",
     "nav.contact": "Contact",
-    "hero.eyebrow": "MINECRAFT DEVELOPER",
-    "hero.heading": 'HI, I\'M<br /><span class="accent">PIGIAZZA</span>',
-    "hero.bioFallback": "Minecraft and coding enthusiast who's combined the two to create mods, plugins, datapacks and more 💚",
-    "hero.ctaProjects": "View projects",
-    "hero.ctaContact": "Contact me",
-    "projects.eyebrow": "LIVE FROM MODRINTH",
-    "projects.heading": "MY PROJECTS",
-    "projects.subtext": "Synced automatically from Modrinth: publish a project and it'll show up here on its own.",
-    "projects.emptyTitle": "No public projects yet",
-    "projects.emptyText": "As soon as you publish something on Modrinth, it'll appear here automatically.",
-    "projects.emptyLink": "Go to Modrinth profile",
-    "projects.errorTitle": "Can't reach Modrinth right now",
-    "projects.errorText": "Try again later, or check the profile directly.",
-    "contact.eyebrow": "FOLLOW ME",
-    "contact.heading": "LET'S STAY IN TOUCH",
-    "contact.subtext": "Find all my work and ways to support me on the platforms below.",
-    "footer.tagline": "Made with 💚 for the Minecraft community.",
+    "nav.langLabel": "Language",
+    "hero.heading": "I build Minecraft mods like someone’s going to notice.",
+    "hero.sub": "One developer. Mods, plugins, and datapacks built with more care than they probably need — then shipped anyway.",
+    "hero.ctaProjects": "See what I’ve built",
+    "hero.ctaContact": "Say hello",
+    "craft.heading": "How I build",
+    "craft.step1Title": "Prototype",
+    "craft.step1Text": "A quick, ugly, functional first pass — just enough to prove the idea holds up.",
+    "craft.step2Title": "Playtest",
+    "craft.step2Text": "Real worlds, real bugs, real friends breaking things on purpose.",
+    "craft.step3Title": "Ship",
+    "craft.step3Text": "Polished, versioned, documented — then straight onto Modrinth.",
+    "projects.heading": "Everything I’ve shipped",
+    "projects.subtext": "Pulled straight from Modrinth — publish something new and it lands here on its own.",
+    "projects.emptyTitle": "Nothing public yet",
+    "projects.emptyText": "The first release is on its way. Follow along on Modrinth, or check back soon.",
+    "projects.emptyLink": "Visit my Modrinth profile",
+    "projects.errorTitle": "Can’t reach Modrinth right now",
+    "projects.errorText": "Try again in a moment, or check the profile directly.",
+    "contact.heading": "Find me elsewhere",
+    "contact.subtext": "GitHub for the code, Modrinth for the downloads, Ko-fi if you’d like to buy me a coffee.",
+    "footer.tagline": "Built solo, shipped with care.",
     "modal.close": "Close",
     "modal.openLink": "Open on Modrinth",
-    "modal.loading": "Loading description...",
+    "modal.loading": "Loading description…",
+  },
+  it: {
+    "nav.home": "Home",
+    "nav.craft": "Metodo",
+    "nav.projects": "Progetti",
+    "nav.contact": "Contatti",
+    "nav.langLabel": "Lingua",
+    "hero.heading": "Creo mod per Minecraft come se qualcuno le notasse davvero.",
+    "hero.sub": "Un solo sviluppatore. Mod, plugin e datapack curati più del necessario — e pubblicati comunque.",
+    "hero.ctaProjects": "Guarda cosa ho creato",
+    "hero.ctaContact": "Scrivimi",
+    "craft.heading": "Come lavoro",
+    "craft.step1Title": "Prototipo",
+    "craft.step1Text": "Una prima versione rapida, grezza, che serve solo a dimostrare che l'idea funziona.",
+    "craft.step2Title": "Playtest",
+    "craft.step2Text": "Mondi veri, bug veri, amici che rompono tutto apposta.",
+    "craft.step3Title": "Rilascio",
+    "craft.step3Text": "Rifinito, versionato, documentato — poi dritto su Modrinth.",
+    "projects.heading": "Tutto quello che ho pubblicato",
+    "projects.subtext": "Preso in tempo reale da Modrinth: pubblica qualcosa di nuovo e comparirà qui da solo.",
+    "projects.emptyTitle": "Ancora nulla di pubblico",
+    "projects.emptyText": "Il primo rilascio è in arrivo. Seguimi su Modrinth, o torna a controllare tra un po'.",
+    "projects.emptyLink": "Vai al mio profilo Modrinth",
+    "projects.errorTitle": "Non riesco a contattare Modrinth in questo momento",
+    "projects.errorText": "Riprova tra un attimo, oppure controlla direttamente il profilo.",
+    "contact.heading": "Dove trovarmi",
+    "contact.subtext": "GitHub per il codice, Modrinth per i download, Ko-fi se vuoi offrirmi un caffè.",
+    "footer.tagline": "Costruito da solo, rilasciato con cura.",
+    "modal.close": "Chiudi",
+    "modal.openLink": "Apri su Modrinth",
+    "modal.loading": "Caricamento descrizione…",
   },
 };
 
 const LANG_STORAGE_KEY = "pigiazza-lang";
-let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || "it";
-
-const FLAGS = { it: "🇮🇹", en: "🇬🇧" };
+let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || "en";
 
 function t(key) {
-  return TRANSLATIONS[currentLang][key] ?? TRANSLATIONS.it[key] ?? key;
+  return TRANSLATIONS[currentLang][key] ?? TRANSLATIONS.en[key] ?? key;
 }
 
 function applyLanguage(lang) {
-  currentLang = TRANSLATIONS[lang] ? lang : "it";
+  currentLang = TRANSLATIONS[lang] ? lang : "en";
   localStorage.setItem(LANG_STORAGE_KEY, currentLang);
   document.documentElement.lang = currentLang;
 
@@ -96,46 +106,15 @@ function applyLanguage(lang) {
     el.setAttribute("aria-label", t(el.dataset.i18nAria));
   });
 
-  document.getElementById("lang-flag").textContent = FLAGS[currentLang];
-  document.querySelectorAll(".lang-option").forEach((opt) => {
+  document.querySelectorAll(".lang-opt").forEach((opt) => {
     opt.classList.toggle("active", opt.dataset.lang === currentLang);
   });
 
   renderProjectsUI();
 }
 
-const langToggle = document.getElementById("lang-toggle");
-const langMenu = document.getElementById("lang-menu");
-
-function closeLangMenu() {
-  langMenu.hidden = true;
-  langToggle.setAttribute("aria-expanded", "false");
-}
-
-function openLangMenu() {
-  langMenu.hidden = false;
-  langToggle.setAttribute("aria-expanded", "true");
-}
-
-langToggle.addEventListener("click", (e) => {
-  e.stopPropagation();
-  if (langMenu.hidden) openLangMenu();
-  else closeLangMenu();
-});
-
-document.querySelectorAll(".lang-option").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    applyLanguage(btn.dataset.lang);
-    closeLangMenu();
-  });
-});
-
-document.addEventListener("click", (e) => {
-  if (!langMenu.hidden && !e.target.closest(".lang-dropdown")) closeLangMenu();
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !langMenu.hidden) closeLangMenu();
+document.querySelectorAll(".lang-opt").forEach((btn) => {
+  btn.addEventListener("click", () => applyLanguage(btn.dataset.lang));
 });
 
 function escapeHtml(str) {
@@ -175,8 +154,7 @@ async function loadProfile() {
     if (user.avatar_url) {
       document.getElementById("avatar-img").src = user.avatar_url;
     }
-    // La bio del sito è quella scritta a mano nelle traduzioni (hero.bioFallback),
-    // non quella del profilo Modrinth: qui prendiamo solo la foto, non il testo.
+    // La copy del sito è scritta a mano nelle traduzioni sopra, non presa dal bio di Modrinth.
   } catch (err) {
     console.warn("Impossibile caricare il profilo Modrinth:", err);
   }
@@ -187,7 +165,7 @@ function projectCard(project) {
   const icon = project.icon_url || "";
 
   return `
-    <button type="button" class="project-card glass" data-slug="${escapeHtml(project.slug)}">
+    <button type="button" class="project-card glass-panel" data-slug="${escapeHtml(project.slug)}">
       <div class="project-head">
         ${icon ? `<img class="project-icon" src="${escapeHtml(icon)}" alt="" loading="lazy" />` : `<div class="project-icon"></div>`}
         <div class="project-title-wrap">
@@ -196,7 +174,7 @@ function projectCard(project) {
         </div>
       </div>
       <p class="project-desc">${escapeHtml(project.description)}</p>
-      ${tags.length ? `<div class="project-tags">${tags.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}</div>` : ""}
+      ${tags.length ? `<div class="project-tags">${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
       <div class="project-stats">
         <span class="stat">${ICON_DOWNLOAD} ${formatCount(project.downloads || 0)}</span>
         <span class="stat">${ICON_HEART} ${formatCount(project.followers || 0)}</span>
@@ -217,7 +195,7 @@ function renderProjectsUI() {
 
   if (projectsState.status === "empty") {
     grid.innerHTML = `
-      <div class="projects-empty glass">
+      <div class="projects-empty glass-panel">
         <h3>${escapeHtml(t("projects.emptyTitle"))}</h3>
         <p class="muted">${escapeHtml(t("projects.emptyText"))}</p>
         <a class="btn btn-primary" href="https://modrinth.com/user/${CONFIG.modrinthUsername}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("projects.emptyLink"))}</a>
@@ -227,7 +205,7 @@ function renderProjectsUI() {
 
   if (projectsState.status === "error") {
     grid.innerHTML = `
-      <div class="projects-empty glass">
+      <div class="projects-empty glass-panel">
         <h3>${escapeHtml(t("projects.errorTitle"))}</h3>
         <p class="muted">${escapeHtml(t("projects.errorText"))}</p>
         <a class="btn btn-primary" href="https://modrinth.com/user/${CONFIG.modrinthUsername}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("projects.emptyLink"))}</a>
@@ -276,7 +254,7 @@ function openProjectModal(project) {
   document.getElementById("modal-type").textContent = project.project_type;
   document.getElementById("modal-icon").src =
     project.icon_url ||
-    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c7d2e6'/%3E%3C/svg%3E";
+    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23322d47'/%3E%3C/svg%3E";
 
   document.getElementById("modal-stats").innerHTML = `
     <span class="stat">${ICON_DOWNLOAD} ${formatCount(project.downloads || 0)}</span>
@@ -319,6 +297,69 @@ modal.addEventListener("click", (e) => {
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !modal.hidden) closeProjectModal();
 });
+
+// --- Menu a scomparsa (hamburger con bounce, pannello da sinistra) ---
+
+const menuToggle = document.getElementById("menu-toggle");
+const menuBackdrop = document.getElementById("menu-backdrop");
+const siteMenu = document.getElementById("site-menu");
+let menuLastFocused = null;
+
+function openMenu() {
+  menuLastFocused = document.activeElement;
+  menuToggle.classList.add("is-open");
+  menuToggle.setAttribute("aria-expanded", "true");
+  menuBackdrop.hidden = false;
+  requestAnimationFrame(() => {
+    menuBackdrop.classList.add("is-visible");
+    siteMenu.classList.add("is-open");
+  });
+  siteMenu.removeAttribute("inert");
+  siteMenu.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  const firstLink = siteMenu.querySelector("a");
+  if (firstLink) firstLink.focus({ preventScroll: true });
+}
+
+function closeMenu() {
+  menuToggle.classList.remove("is-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuBackdrop.classList.remove("is-visible");
+  siteMenu.classList.remove("is-open");
+  siteMenu.setAttribute("inert", "");
+  siteMenu.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+  setTimeout(() => {
+    if (!siteMenu.classList.contains("is-open")) menuBackdrop.hidden = true;
+  }, 450);
+  if (menuLastFocused) menuLastFocused.focus();
+}
+
+menuToggle.addEventListener("click", () => {
+  if (siteMenu.classList.contains("is-open")) closeMenu();
+  else openMenu();
+});
+
+menuBackdrop.addEventListener("click", closeMenu);
+
+siteMenu.querySelectorAll("a").forEach((link) => {
+  link.addEventListener("click", closeMenu);
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && siteMenu.classList.contains("is-open")) closeMenu();
+});
+
+// --- Palette picker (widget temporaneo per confrontare le 4 combinazioni colore) ---
+
+document.querySelectorAll(".palette-swatch").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.body.dataset.palette = btn.dataset.palette;
+    document.querySelectorAll(".palette-swatch").forEach((b) => b.classList.toggle("active", b === btn));
+  });
+});
+
+document.querySelector(`.palette-swatch[data-palette="${document.body.dataset.palette}"]`)?.classList.add("active");
 
 document.getElementById("year").textContent = new Date().getFullYear();
 applyLanguage(currentLang);

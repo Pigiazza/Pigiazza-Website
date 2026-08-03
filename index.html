@@ -1,113 +1,142 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pigiazza — Minecraft Developer</title>
-<meta name="description" content="Pigiazza — sviluppatore Minecraft. Mod, plugin e datapack. Scopri i progetti su Modrinth, CurseForge e GitHub." />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=3" />
+<meta name="description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=4" />
 </head>
-<body>
+<body data-palette="aurora">
 
-<div class="bg-blobs" aria-hidden="true">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true">
+  <span class="glow glow-1"></span>
+  <span class="glow glow-2"></span>
+  <span class="glow glow-3"></span>
 </div>
 
-<header class="topbar">
-  <div class="topbar-inner glass">
-    <a href="#home" class="brand">
-      <span class="brand-dot"></span>
-      Pigiazza
-    </a>
-    <nav class="nav">
-      <a href="#home" data-i18n="nav.home">Home</a>
-      <a href="#progetti" data-i18n="nav.projects">Progetti</a>
-      <a href="#contatti" data-i18n="nav.contact">Contatti</a>
-    </nav>
-    <div class="topbar-right">
-      <div class="lang-dropdown">
-        <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
-          <span id="lang-flag">🇮🇹</span>
-          <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-        </button>
-        <ul class="lang-menu" id="lang-menu" hidden>
-          <li><button type="button" class="lang-option" data-lang="it">🇮🇹 <span>Italiano</span></button></li>
-          <li><button type="button" class="lang-option" data-lang="en">🇬🇧 <span>English</span></button></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<header class="site-header">
+  <a href="#top" class="brand-mark">
+    <svg class="brand-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
+      <path d="M4 9L12 3L20 9L12 21L4 9Z" />
+      <path d="M4 9H20" />
+      <path d="M8.5 9L12 3L15.5 9" />
+      <path d="M8.5 9L12 21" />
+      <path d="M15.5 9L12 21" />
+    </svg>
+    <span class="brand-word">Pigiazza</span>
+  </a>
+
+  <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+  </button>
 </header>
 
-<main>
+<div class="menu-backdrop" id="menu-backdrop" hidden></div>
 
-  <section id="home" class="hero">
-    <div class="hero-card glass">
-      <div class="hero-text">
-        <span class="pill" data-i18n="hero.eyebrow">MINECRAFT DEVELOPER</span>
-        <h1 data-i18n-html="hero.heading">CIAO, SONO<br /><span class="accent">PIGIAZZA</span></h1>
-        <p class="bio" id="bio-text" data-i18n="hero.bioFallback">
-          Minecraft and coding enthusiast che unisce le due cose per creare mod, plugin, datapack e altro ancora 💚
-        </p>
-        <div class="hero-actions">
-          <a href="#progetti" class="btn btn-primary" data-i18n="hero.ctaProjects">Guarda i progetti</a>
-          <a href="#contatti" class="btn btn-ghost" data-i18n="hero.ctaContact">Contattami</a>
-        </div>
+<nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
+  <ul class="menu-links">
+    <li style="--i:0"><a href="#top" data-i18n="nav.home">Home</a></li>
+    <li style="--i:1"><a href="#craft" data-i18n="nav.craft">Craft</a></li>
+    <li style="--i:2"><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+    <li style="--i:3"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+  </ul>
+
+  <div class="menu-footer" style="--i:4">
+    <span class="menu-footer-label" data-i18n="nav.langLabel">Language</span>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" class="lang-opt" data-lang="en">EN</button>
+      <button type="button" class="lang-opt" data-lang="it">IT</button>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1 data-i18n-html="hero.heading">I build Minecraft mods like someone&rsquo;s going to notice.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">One developer. Mods, plugins, and datapacks built with more care than they probably need — then shipped anyway.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary" data-i18n="hero.ctaProjects">See what I&rsquo;ve built</a>
+        <a href="#contact" class="btn btn-ghost" data-i18n="hero.ctaContact">Say hello</a>
       </div>
-      <div class="hero-visual">
-        <div class="avatar-frame glass">
-          <img
-            id="avatar-img"
-            alt="Avatar di Pigiazza"
-            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23c7d2e6'/%3E%3Ccircle cx='100' cy='80' r='36' fill='%23eef1f8'/%3E%3Cellipse cx='100' cy='190' rx='70' ry='60' fill='%23eef1f8'/%3E%3C/svg%3E"
-          />
-        </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="glass-panel float-shard float-shard--a"></div>
+      <div class="glass-panel avatar-panel">
+        <img
+          id="avatar-img"
+          alt=""
+          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23262336'/%3E%3Ccircle cx='100' cy='80' r='36' fill='%233a3550'/%3E%3Cellipse cx='100' cy='190' rx='70' ry='60' fill='%233a3550'/%3E%3C/svg%3E"
+        />
       </div>
+      <div class="glass-panel float-shard float-shard--b"></div>
     </div>
   </section>
 
-  <section id="progetti" class="projects">
-    <div class="section-head">
-      <span class="pill" data-i18n="projects.eyebrow">LIVE DA MODRINTH</span>
-      <h2 data-i18n="projects.heading">I MIEI PROGETTI</h2>
-      <p class="muted" data-i18n="projects.subtext">Sincronizzati automaticamente da Modrinth: pubblica un progetto e comparirà qui da solo.</p>
-    </div>
+  <section id="craft" class="craft">
+    <h2 data-i18n="craft.heading">How I build</h2>
+    <ol class="craft-steps">
+      <li class="craft-step glass-panel" style="--i:0">
+        <span class="step-index">01</span>
+        <h3 data-i18n="craft.step1Title">Prototype</h3>
+        <p data-i18n="craft.step1Text">A quick, ugly, functional first pass — just enough to prove the idea holds up.</p>
+      </li>
+      <li class="craft-step glass-panel" style="--i:1">
+        <span class="step-index">02</span>
+        <h3 data-i18n="craft.step2Title">Playtest</h3>
+        <p data-i18n="craft.step2Text">Real worlds, real bugs, real friends breaking things on purpose.</p>
+      </li>
+      <li class="craft-step glass-panel" style="--i:2">
+        <span class="step-index">03</span>
+        <h3 data-i18n="craft.step3Title">Ship</h3>
+        <p data-i18n="craft.step3Text">Polished, versioned, documented — then straight onto Modrinth.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="projects" class="projects">
+    <h2 data-i18n="projects.heading">Everything I&rsquo;ve shipped</h2>
+    <p class="section-sub muted" data-i18n="projects.subtext">Pulled straight from Modrinth — publish something new and it lands here on its own.</p>
     <div id="projects-grid" class="projects-grid">
-      <div class="project-card glass skeleton"></div>
-      <div class="project-card glass skeleton"></div>
-      <div class="project-card glass skeleton"></div>
+      <div class="project-card glass-panel skeleton"></div>
+      <div class="project-card glass-panel skeleton"></div>
+      <div class="project-card glass-panel skeleton"></div>
     </div>
   </section>
 
-  <section id="contatti" class="contact">
-    <div class="glass contact-card">
-      <span class="pill" data-i18n="contact.eyebrow">SEGUIMI</span>
-      <h2 data-i18n="contact.heading">RESTIAMO IN CONTATTO</h2>
-      <p class="muted" data-i18n="contact.subtext">Trovi tutto il mio lavoro e i modi per supportarmi sulle piattaforme qui sotto.</p>
+  <section id="contact" class="contact">
+    <div class="glass-panel contact-panel">
+      <h2 data-i18n="contact.heading">Find me elsewhere</h2>
+      <p class="muted" data-i18n="contact.subtext">GitHub for the code, Modrinth for the downloads, Ko-fi if you&rsquo;d like to buy me a coffee.</p>
       <div class="contact-grid" id="contact-grid"></div>
     </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <p>© <span id="year"></span> Pigiazza. <span data-i18n="footer.tagline">Fatto con 💚 per la community Minecraft.</span></p>
+<footer class="site-footer">
+  <p><span data-i18n="footer.tagline">Built solo, shipped with care.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
 <div class="modal-overlay" id="project-modal" hidden>
-  <div class="modal-card glass" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-close" id="modal-close" data-i18n-aria="modal.close" aria-label="Chiudi">&times;</button>
+  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" data-i18n-aria="modal.close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
     <div class="modal-head">
       <img
         class="modal-icon"
         id="modal-icon"
         alt=""
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c7d2e6'/%3E%3C/svg%3E"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23322d47'/%3E%3C/svg%3E"
       />
       <div>
         <h2 id="modal-title"></h2>
@@ -115,15 +144,29 @@
       </div>
     </div>
     <div class="project-stats" id="modal-stats"></div>
-    <a class="btn btn-primary" id="modal-link" href="#" target="_blank" rel="noopener noreferrer" data-i18n="modal.openLink">Apri su Modrinth</a>
+    <a class="btn btn-primary" id="modal-link" href="#" target="_blank" rel="noopener noreferrer" data-i18n="modal.openLink">
+      Open on Modrinth
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+    </a>
     <div class="modal-body" id="modal-body">
-      <p class="muted" data-i18n="modal.loading">Caricamento descrizione...</p>
+      <p class="muted" data-i18n="modal.loading">Loading description…</p>
     </div>
+  </div>
+</div>
+
+<!-- Widget temporaneo per confrontare le 4 palette — da rimuovere una volta scelta quella definitiva -->
+<div class="palette-picker" id="palette-picker">
+  <span class="palette-picker-label">Preview palette</span>
+  <div class="palette-swatches">
+    <button type="button" class="palette-swatch" data-palette="emerald" aria-label="Emerald Circuit"></button>
+    <button type="button" class="palette-swatch" data-palette="amber" aria-label="Molten Amber"></button>
+    <button type="button" class="palette-swatch" data-palette="aurora" aria-label="Aurora Violet"></button>
+    <button type="button" class="palette-swatch" data-palette="glacier" aria-label="Glacier Cyan"></button>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
-<script src="script.js?v=3"></script>
+<script src="script.js?v=4"></script>
 </body>
 </html>
