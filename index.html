@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pigiazza — Minecraft Developer</title>
+<meta name="description" content="Pigiazza — sviluppatore Minecraft. Mod, plugin e datapack. Scopri i progetti su Modrinth, CurseForge e GitHub." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=3" />
+</head>
+<body>
+
+<div class="bg-blobs" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<header class="topbar">
+  <div class="topbar-inner glass">
+    <a href="#home" class="brand">
+      <span class="brand-dot"></span>
+      Pigiazza
+    </a>
+    <nav class="nav">
+      <a href="#home" data-i18n="nav.home">Home</a>
+      <a href="#progetti" data-i18n="nav.projects">Progetti</a>
+      <a href="#contatti" data-i18n="nav.contact">Contatti</a>
+    </nav>
+    <div class="topbar-right">
+      <div class="lang-dropdown">
+        <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
+          <span id="lang-flag">🇮🇹</span>
+          <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <ul class="lang-menu" id="lang-menu" hidden>
+          <li><button type="button" class="lang-option" data-lang="it">🇮🇹 <span>Italiano</span></button></li>
+          <li><button type="button" class="lang-option" data-lang="en">🇬🇧 <span>English</span></button></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section id="home" class="hero">
+    <div class="hero-card glass">
+      <div class="hero-text">
+        <span class="pill" data-i18n="hero.eyebrow">MINECRAFT DEVELOPER</span>
+        <h1 data-i18n-html="hero.heading">CIAO, SONO<br /><span class="accent">PIGIAZZA</span></h1>
+        <p class="bio" id="bio-text" data-i18n="hero.bioFallback">
+          Minecraft and coding enthusiast che unisce le due cose per creare mod, plugin, datapack e altro ancora 💚
+        </p>
+        <div class="hero-actions">
+          <a href="#progetti" class="btn btn-primary" data-i18n="hero.ctaProjects">Guarda i progetti</a>
+          <a href="#contatti" class="btn btn-ghost" data-i18n="hero.ctaContact">Contattami</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="avatar-frame glass">
+          <img
+            id="avatar-img"
+            alt="Avatar di Pigiazza"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23c7d2e6'/%3E%3Ccircle cx='100' cy='80' r='36' fill='%23eef1f8'/%3E%3Cellipse cx='100' cy='190' rx='70' ry='60' fill='%23eef1f8'/%3E%3C/svg%3E"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="progetti" class="projects">
+    <div class="section-head">
+      <span class="pill" data-i18n="projects.eyebrow">LIVE DA MODRINTH</span>
+      <h2 data-i18n="projects.heading">I MIEI PROGETTI</h2>
+      <p class="muted" data-i18n="projects.subtext">Sincronizzati automaticamente da Modrinth: pubblica un progetto e comparirà qui da solo.</p>
+    </div>
+    <div id="projects-grid" class="projects-grid">
+      <div class="project-card glass skeleton"></div>
+      <div class="project-card glass skeleton"></div>
+      <div class="project-card glass skeleton"></div>
+    </div>
+  </section>
+
+  <section id="contatti" class="contact">
+    <div class="glass contact-card">
+      <span class="pill" data-i18n="contact.eyebrow">SEGUIMI</span>
+      <h2 data-i18n="contact.heading">RESTIAMO IN CONTATTO</h2>
+      <p class="muted" data-i18n="contact.subtext">Trovi tutto il mio lavoro e i modi per supportarmi sulle piattaforme qui sotto.</p>
+      <div class="contact-grid" id="contact-grid"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <p>© <span id="year"></span> Pigiazza. <span data-i18n="footer.tagline">Fatto con 💚 per la community Minecraft.</span></p>
+</footer>
+
+<div class="modal-overlay" id="project-modal" hidden>
+  <div class="modal-card glass" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" data-i18n-aria="modal.close" aria-label="Chiudi">&times;</button>
+    <div class="modal-head">
+      <img
+        class="modal-icon"
+        id="modal-icon"
+        alt=""
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c7d2e6'/%3E%3C/svg%3E"
+      />
+      <div>
+        <h2 id="modal-title"></h2>
+        <span class="project-type" id="modal-type"></span>
+      </div>
+    </div>
+    <div class="project-stats" id="modal-stats"></div>
+    <a class="btn btn-primary" id="modal-link" href="#" target="_blank" rel="noopener noreferrer" data-i18n="modal.openLink">Apri su Modrinth</a>
+    <div class="modal-body" id="modal-body">
+      <p class="muted" data-i18n="modal.loading">Caricamento descrizione...</p>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<script src="script.js?v=3"></script>
+</body>
+</html>
