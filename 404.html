@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex" />
+<title>Page not found — Pigiazza</title>
+<link rel="icon" href="assets/profile icon.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=5" />
+<style>
+  .notfound-header { justify-content: flex-end; }
+
+  .notfound {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .notfound-card {
+    max-width: 460px;
+    padding: clamp(36px, 6vw, 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .notfound-avatar {
+    width: 84px;
+    height: 84px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    flex-shrink: 0;
+    margin-bottom: 4px;
+  }
+
+  .notfound-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .notfound-code {
+    font-family: "Fredoka", sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 9vw, 4.5rem);
+    letter-spacing: -0.02em;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .notfound-text {
+    color: var(--ink-soft);
+    font-size: var(--fs-lg);
+    line-height: 1.6;
+    max-width: 40ch;
+  }
+
+  .notfound-report {
+    color: var(--ink-mute);
+    font-size: 0.85rem;
+  }
+
+  .notfound-report a { color: var(--accent); font-weight: 700; }
+
+  .notfound-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 0.8rem;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body data-palette="emerald" data-theme="dark">
+<script>
+  (function () {
+    var storedTheme = localStorage.getItem("pigiazza-theme");
+    var theme = storedTheme || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+    document.body.dataset.theme = theme;
+    document.documentElement.lang = localStorage.getItem("pigiazza-lang") || "en";
+  })();
+</script>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true">
+  <span class="glow glow-1"></span>
+  <span class="glow glow-2"></span>
+</div>
+
+<header class="site-header notfound-header">
+  <div class="header-controls">
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
+      <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+      </svg>
+      <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+      </svg>
+    </button>
+    <button type="button" class="lang-current" id="lang-toggle" aria-label="Switch language">
+      <span id="lang-toggle-code">EN</span>
+    </button>
+  </div>
+</header>
+
+<main class="notfound">
+  <div class="glass-panel notfound-card">
+    <div class="notfound-avatar">
+      <img src="assets/profile icon.png" alt="" />
+    </div>
+    <p class="notfound-code">404</p>
+    <h1 id="nf-heading">Page not found</h1>
+    <p class="notfound-text" id="nf-text">Whatever you were looking for isn&rsquo;t here. Maybe it moved, maybe it never existed.</p>
+    <a class="btn btn-primary" href="/" id="nf-cta">Back home</a>
+    <p class="notfound-report" id="nf-report">
+      Found a broken link? <a href="https://github.com/Pigiazza/Pigiazza/issues" target="_blank" rel="noopener noreferrer">Let me know on GitHub</a>.
+    </p>
+  </div>
+</main>
+
+<p class="notfound-footer">© <span id="nf-year"></span> Pigiazza</p>
+
+<script>
+  (function () {
+    var STRINGS = {
+      en: {
+        title: "Page not found — Pigiazza",
+        heading: "Page not found",
+        text: "Whatever you were looking for isn’t here. Maybe it moved, maybe it never existed.",
+        cta: "Back home",
+        reportPre: "Found a broken link? ",
+        reportLink: "Let me know on GitHub",
+        themeToLight: "Switch to light mode",
+        themeToDark: "Switch to dark mode",
+      },
+      it: {
+        title: "Pagina non trovata — Pigiazza",
+        heading: "Pagina non trovata",
+        text: "Quello che cercavi non c’è. Forse si è spostato, forse non è mai esistito.",
+        cta: "Torna alla home",
+        reportPre: "Hai trovato un link rotto? ",
+        reportLink: "Dimmelo su GitHub",
+        themeToLight: "Passa alla modalità chiara",
+        themeToDark: "Passa alla modalità scura",
+      },
+    };
+
+    var themeToggle = document.getElementById("theme-toggle");
+    var langToggle = document.getElementById("lang-toggle");
+    var langCode = document.getElementById("lang-toggle-code");
+    var lang = document.documentElement.lang === "it" ? "it" : "en";
+
+    function currentTheme() {
+      return document.body.dataset.theme === "light" ? "light" : "dark";
+    }
+
+    function render() {
+      var s = STRINGS[lang];
+      document.title = s.title;
+      document.getElementById("nf-heading").textContent = s.heading;
+      document.getElementById("nf-text").textContent = s.text;
+      document.getElementById("nf-cta").textContent = s.cta;
+      document.getElementById("nf-report").innerHTML =
+        s.reportPre + '<a href="https://github.com/Pigiazza/Pigiazza/issues" target="_blank" rel="noopener noreferrer">' + s.reportLink + "</a>.";
+      langCode.textContent = lang.toUpperCase();
+      themeToggle.setAttribute("aria-label", s[currentTheme() === "light" ? "themeToDark" : "themeToLight"]);
+    }
+
+    themeToggle.addEventListener("click", function () {
+      var next = currentTheme() === "light" ? "dark" : "light";
+      document.body.dataset.theme = next;
+      localStorage.setItem("pigiazza-theme", next);
+      render();
+    });
+
+    langToggle.addEventListener("click", function () {
+      lang = lang === "en" ? "it" : "en";
+      document.documentElement.lang = lang;
+      localStorage.setItem("pigiazza-lang", lang);
+      render();
+    });
+
+    document.getElementById("nf-year").textContent = new Date().getFullYear();
+    render();
+  })();
+</script>
+</body>
+</html>

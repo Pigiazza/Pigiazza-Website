@@ -5,12 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pigiazza — Minecraft Developer</title>
 <meta name="description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+
+<link rel="icon" href="assets/profile icon.png" type="image/png" />
+<link rel="apple-touch-icon" href="assets/profile icon.png" />
+
+<!-- Anteprima social: og:image/twitter:image usano un percorso relativo perche' il
+     dominio finale non e' ancora noto. Una volta pubblicato il sito, meglio
+     trasformarli in URL assoluti (es. https://tuodominio.it/assets/profile icon.png)
+     perche' Facebook/Twitter a volte non risolvono i percorsi relativi. -->
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Pigiazza — Minecraft Developer" />
+<meta property="og:description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+<meta property="og:image" content="assets/profile icon.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Pigiazza — Minecraft Developer" />
+<meta name="twitter:description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+<meta name="twitter:image" content="assets/profile icon.png" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Tommaso",
+  "alternateName": "Pigiazza",
+  "description": "Solo Minecraft developer building mods, plugins, and datapacks for Fabric, Forge, NeoForge, and Quilt.",
+  "sameAs": [
+    "https://github.com/Pigiazza",
+    "https://modrinth.com/user/Pigiazza",
+    "https://www.curseforge.com/members/pigiazza",
+    "https://ko-fi.com/pigiazza"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css?v=5" />
+
+<!-- Analytics: richiede un account Plausible (plausible.io) collegato al dominio
+     reale del sito. "pigiazza.example" e' un segnaposto: va sostituito con il
+     dominio effettivo una volta scelto, altrimenti lo script non traccia nulla. -->
+<script defer data-domain="pigiazza.example" src="https://plausible.io/js/script.js"></script>
 </head>
-<body data-palette="aurora">
+<body data-palette="emerald" data-theme="dark">
 
 <div class="noise-overlay" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true">
@@ -28,12 +66,24 @@
     <span class="menu-bar"></span>
   </button>
 
-  <div class="lang-dropdown" id="lang-dropdown">
-    <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
-      <span class="flag-icon" id="lang-current-flag"></span>
-      <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+  <div class="header-controls">
+    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
+      <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+      </svg>
+      <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+      </svg>
     </button>
-    <ul class="lang-menu" id="lang-menu" hidden></ul>
+
+    <div class="lang-dropdown" id="lang-dropdown">
+      <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-current-code" id="lang-current-code">EN</span>
+        <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <ul class="lang-menu" id="lang-menu" hidden></ul>
+    </div>
   </div>
 </header>
 
@@ -42,8 +92,9 @@
     <li style="--i:0"><a href="#top" data-i18n="nav.home">Home</a></li>
     <li style="--i:1"><a href="#about" data-i18n="nav.about">About</a></li>
     <li style="--i:2"><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-    <li style="--i:3"><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
-    <li style="--i:4"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    <li style="--i:3"><a href="#activity" data-i18n="nav.activity">Activity</a></li>
+    <li style="--i:4"><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+    <li style="--i:5"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
 </nav>
 
@@ -78,16 +129,96 @@
       <div class="glass-panel about-shard about-shard--b" data-parallax="0.18"></div>
       <div class="glass-panel about-shard about-shard--c" data-parallax="-0.08"></div>
     </div>
-    <p class="about-statement" data-i18n="about.statement">Every project starts the same way: there&rsquo;s something Minecraft doesn&rsquo;t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.</p>
+
+    <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: there&rsquo;s something Minecraft doesn&rsquo;t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.</p>
+
+    <div class="about-bio reveal">
+      <p data-i18n="about.bio1">I&rsquo;m Tommaso, known online as Pigiazza, one person and one editor, no team. I picked up Java to fix something that annoyed me on my own server, and never really stopped.</p>
+      <p data-i18n="about.bio2">No roadmap, no backers, no deadlines but my own. Just whatever Minecraft is missing this week, built until it&rsquo;s solid enough to hand to strangers on the internet.</p>
+      <p data-i18n="about.bio3">Fabric is home base, but every mod ships for Forge, NeoForge and Quilt too, across every Minecraft version that supports it, so nobody&rsquo;s left out over a loader choice.</p>
+    </div>
+
+    <ol class="process-list reveal">
+      <li class="process-step">
+        <span class="process-num">1</span>
+        <div>
+          <h3 data-i18n="about.step1Title">Idea</h3>
+          <p data-i18n="about.step1Text">Something&rsquo;s missing or annoying in my own world. That&rsquo;s the whole brief.</p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="process-num">2</span>
+        <div>
+          <h3 data-i18n="about.step2Title">Build</h3>
+          <p data-i18n="about.step2Text">Heads-down in the code, running it on my own server the whole time.</p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="process-num">3</span>
+        <div>
+          <h3 data-i18n="about.step3Title">Ship</h3>
+          <p data-i18n="about.step3Text">Once it survives real play without breaking, it goes up on Modrinth.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="stack-block reveal">
+      <h3 data-i18n="about.stackTitle">What I build with</h3>
+      <div class="stack-tags">
+        <span class="tag">Java</span>
+        <span class="tag">Fabric</span>
+        <span class="tag">Forge</span>
+        <span class="tag">NeoForge</span>
+        <span class="tag">Quilt</span>
+        <span class="tag">Gradle</span>
+        <span class="tag">Git</span>
+      </div>
+    </div>
   </section>
 
   <section id="projects" class="projects">
-    <h2 data-i18n="projects.heading">Everything I&rsquo;ve shipped</h2>
-    <p class="section-sub muted" data-i18n="projects.subtext">New releases show up here the moment I publish them on Modrinth — no need to refresh or check back.</p>
+    <div class="projects-head reveal">
+      <div class="projects-head-text">
+        <h2 data-i18n="projects.heading">Everything I&rsquo;ve shipped</h2>
+        <p class="section-sub muted" data-i18n="projects.subtext">New releases show up here the moment I publish them on Modrinth, no need to refresh or check back.</p>
+      </div>
+      <div class="stats-row" id="stats-row" hidden>
+        <div class="stat-chip">
+          <span class="stat-chip-icon"></span>
+          <span class="stat-chip-value" id="stat-downloads">0</span>
+          <span class="stat-chip-label" data-i18n="stats.downloads">downloads</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-icon"></span>
+          <span class="stat-chip-value" id="stat-projects">0</span>
+          <span class="stat-chip-label" data-i18n="stats.projects">projects</span>
+        </div>
+        <div class="stat-chip">
+          <span class="stat-chip-icon"></span>
+          <span class="stat-chip-value" id="stat-followers">0</span>
+          <span class="stat-chip-label" data-i18n="stats.followers">followers</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="filter-tabs" id="filter-tabs" hidden></div>
+
     <div id="projects-grid" class="projects-grid">
       <div class="project-card glass-panel skeleton"></div>
       <div class="project-card glass-panel skeleton"></div>
       <div class="project-card glass-panel skeleton"></div>
+    </div>
+  </section>
+
+  <section id="activity" class="activity">
+    <div class="reveal">
+      <h2 data-i18n="activity.heading">What I&rsquo;ve been doing</h2>
+      <p class="section-sub muted" data-i18n="activity.subtext">A live feed straight from GitHub, commits, releases, whatever I touched last.</p>
+    </div>
+    <div id="activity-list" class="activity-list">
+      <div class="activity-row skeleton"></div>
+      <div class="activity-row skeleton"></div>
+      <div class="activity-row skeleton"></div>
     </div>
   </section>
 
@@ -122,6 +253,20 @@
         </summary>
         <p data-i18n="faq.a4">Open an issue on the project’s GitHub repo. I read every one.</p>
       </details>
+      <details class="faq-item glass-panel">
+        <summary>
+          <span data-i18n="faq.q5">What do you build with?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </summary>
+        <p data-i18n="faq.a5">Java, mainly on Fabric, then ported to Forge, NeoForge and Quilt for every supported version. Builds run through Gradle, everything lives in Git.</p>
+      </details>
+      <details class="faq-item glass-panel">
+        <summary>
+          <span data-i18n="faq.q6">Is the source code public?</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </summary>
+        <p data-i18n="faq.a6">Yes. Every project card links straight to its GitHub repo, issues and pull requests included.</p>
+      </details>
     </div>
   </section>
 
@@ -134,6 +279,10 @@
   </section>
 
 </main>
+
+<button type="button" class="back-to-top" id="back-to-top" data-i18n-aria="backToTop.aria" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
+</button>
 
 <footer class="site-footer">
   <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
