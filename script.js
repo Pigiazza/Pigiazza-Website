@@ -47,6 +47,7 @@ const TRANSLATIONS = {
     "hero.ctaProjects": "See what I’ve built",
     "hero.ctaContact": "Say hello",
     "about.statement": "Every project starts the same way: there’s something Minecraft doesn’t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.",
+    "nav.faq": "FAQ",
     "projects.heading": "Everything I’ve shipped",
     "projects.subtext": "New releases show up here the moment I publish them on Modrinth — no need to refresh or check back.",
     "projects.emptyTitle": "Nothing published yet",
@@ -54,6 +55,15 @@ const TRANSLATIONS = {
     "projects.emptyLink": "Visit my Modrinth profile",
     "projects.errorTitle": "Can’t reach Modrinth right now",
     "projects.errorText": "Try again in a moment, or check the profile directly.",
+    "faq.heading": "Questions people actually ask",
+    "faq.q1": "Are your mods free?",
+    "faq.a1": "Always. There’s a Ko-fi link below if you’d like to support the work, but it’s never required.",
+    "faq.q2": "Do you take requests?",
+    "faq.a2": "Sometimes — if it’s something I’d genuinely want to build myself, I’ll consider it.",
+    "faq.q3": "How often do things get updated?",
+    "faq.a3": "Whenever something breaks or I find a better way to do it. There’s no fixed schedule — it’s just me.",
+    "faq.q4": "Found a bug?",
+    "faq.a4": "Open an issue on the project’s GitHub repo. I read every one.",
     "contact.heading": "Find me elsewhere",
     "contact.subtext": "You’ll find the code on GitHub, downloads on Modrinth, and a coffee jar on Ko-fi if you’re feeling generous.",
     "footer.tagline": "Made solo, mostly at night.",
@@ -73,6 +83,7 @@ const TRANSLATIONS = {
     "hero.ctaProjects": "Guarda cosa ho creato",
     "hero.ctaContact": "Scrivimi",
     "about.statement": "Ogni progetto nasce allo stesso modo: c'è qualcosa che Minecraft non ha ancora, quindi lo creo. Poi mi assicuro che regga davvero prima di farlo vedere a chiunque altro.",
+    "nav.faq": "FAQ",
     "projects.heading": "Tutto quello che ho pubblicato",
     "projects.subtext": "Ogni nuovo progetto compare qui non appena lo pubblico su Modrinth — non serve aggiornare la pagina.",
     "projects.emptyTitle": "Ancora nulla di pubblicato",
@@ -80,6 +91,15 @@ const TRANSLATIONS = {
     "projects.emptyLink": "Vai al mio profilo Modrinth",
     "projects.errorTitle": "Non riesco a contattare Modrinth in questo momento",
     "projects.errorText": "Riprova tra un attimo, oppure controlla direttamente il profilo.",
+    "faq.heading": "Le domande che fanno davvero",
+    "faq.q1": "Le tue mod sono gratis?",
+    "faq.a1": "Sempre. Qui sotto c'è un link a Ko-fi se vuoi supportare il lavoro, ma non è mai obbligatorio.",
+    "faq.q2": "Accetti richieste?",
+    "faq.a2": "A volte — se è qualcosa che vorrei davvero costruire anche per me, la considero.",
+    "faq.q3": "Ogni quanto aggiorni le cose?",
+    "faq.a3": "Quando qualcosa si rompe o trovo un modo migliore di farla. Non c'è un calendario fisso — sono solo io.",
+    "faq.q4": "Hai trovato un bug?",
+    "faq.a4": "Apri una issue sulla repo GitHub del progetto. Le leggo tutte.",
     "contact.heading": "Dove trovarmi",
     "contact.subtext": "Trovi il codice su GitHub, i download su Modrinth, e un barattolo per il caffè su Ko-fi se ti va di essere generoso.",
     "footer.tagline": "Fatto da solo, soprattutto di notte.",
@@ -239,16 +259,6 @@ function renderProjectsUI() {
     return;
   }
 
-  if (projectsState.status === "error") {
-    grid.innerHTML = `
-      <div class="projects-empty glass-panel">
-        <h3>${escapeHtml(t("projects.errorTitle"))}</h3>
-        <p class="muted">${escapeHtml(t("projects.errorText"))}</p>
-        <a class="btn btn-primary" href="https://modrinth.com/user/${CONFIG.modrinthUsername}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("projects.emptyLink"))}</a>
-      </div>`;
-    return;
-  }
-
   grid.innerHTML = projectsState.projects.map(projectCard).join("");
 }
 
@@ -269,7 +279,7 @@ async function loadProjects() {
     renderProjectsUI();
   } catch (err) {
     console.warn("Impossibile caricare i progetti Modrinth:", err);
-    projectsState = { status: "error", projects: [] };
+    projectsState = { status: "empty", projects: [] };
     renderProjectsUI();
   }
 }
@@ -296,8 +306,8 @@ function openProjectModal(project) {
     <span class="stat">${ICON_DOWNLOAD} ${formatCount(project.downloads || 0)}</span>
     <span class="stat">${ICON_HEART} ${formatCount(project.followers || 0)}</span>`;
 
-  const link = `https://modrinth.com/${project.project_type}/${project.slug}`;
-  document.getElementById("modal-link").href = link;
+  document.getElementById("modal-link").href = `https://modrinth.com/${project.project_type}/${project.slug}`;
+  document.getElementById("modal-link-label").textContent = t("modal.openLink");
 
   if (project.body && window.marked && window.DOMPurify) {
     const rawHtml = window.marked.parse(project.body);
@@ -340,19 +350,12 @@ const menuToggle = document.getElementById("menu-toggle");
 const siteMenu = document.getElementById("site-menu");
 let menuLastFocused = null;
 
-function bumpMenuToggle() {
-  menuToggle.classList.remove("is-bumping");
-  void menuToggle.offsetWidth; // forza il reflow cosi l'animazione riparte ogni volta
-  menuToggle.classList.add("is-bumping");
-}
-
 function openMenu() {
   menuLastFocused = document.activeElement;
-  bumpMenuToggle();
   menuToggle.classList.add("is-open");
   menuToggle.setAttribute("aria-expanded", "true");
   menuToggle.setAttribute("aria-label", "Close menu");
-  requestAnimationFrame(() => siteMenu.classList.add("is-open"));
+  siteMenu.classList.add("is-open");
   siteMenu.removeAttribute("inert");
   siteMenu.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -361,7 +364,6 @@ function openMenu() {
 }
 
 function closeMenu() {
-  bumpMenuToggle();
   menuToggle.classList.remove("is-open");
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open menu");
@@ -384,6 +386,13 @@ siteMenu.addEventListener("click", (e) => {
 
 siteMenu.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
+});
+
+// Clic ovunque fuori dal pannello (e fuori dal bottone stesso) lo chiude.
+document.addEventListener("click", (e) => {
+  if (!siteMenu.classList.contains("is-open")) return;
+  if (siteMenu.contains(e.target) || menuToggle.contains(e.target)) return;
+  closeMenu();
 });
 
 document.addEventListener("keydown", (e) => {
@@ -436,21 +445,31 @@ function updateParallax() {
   });
 }
 
-if (!prefersReducedMotion && parallaxEls.length) {
-  let ticking = false;
-  window.addEventListener(
-    "scroll",
-    () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        updateParallax();
-        ticking = false;
-      });
-    },
-    { passive: true }
-  );
+// --- Navbar: in cima alla pagina l'header è "volante" (nessuno sfondo);
+// appena si scrolla oltre l'hero, prende una barra di vetro con un piccolo bounce. ---
+
+const siteHeader = document.getElementById("site-header");
+const heroText = document.querySelector(".hero-text");
+
+function updateHeaderNav() {
+  const threshold = heroText ? heroText.offsetTop + heroText.offsetHeight * 0.7 : 120;
+  siteHeader.classList.toggle("is-scrolled", window.scrollY > threshold);
 }
+
+let scrollTicking = false;
+function onScroll() {
+  if (scrollTicking) return;
+  scrollTicking = true;
+  requestAnimationFrame(() => {
+    if (!prefersReducedMotion) updateParallax();
+    updateHeaderNav();
+    scrollTicking = false;
+  });
+}
+
+window.addEventListener("scroll", onScroll, { passive: true });
+window.addEventListener("resize", updateHeaderNav);
+updateHeaderNav();
 
 document.getElementById("year").textContent = new Date().getFullYear();
 applyLanguage(currentLang);
