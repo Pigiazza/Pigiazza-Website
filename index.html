@@ -19,25 +19,12 @@
 </div>
 
 <header class="site-header">
-  <a href="#top" class="brand-mark">
-    <svg class="brand-gem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true">
-      <path d="M4 9L12 3L20 9L12 21L4 9Z" />
-      <path d="M4 9H20" />
-      <path d="M8.5 9L12 3L15.5 9" />
-      <path d="M8.5 9L12 21" />
-      <path d="M15.5 9L12 21" />
-    </svg>
-    <span class="brand-word">Pigiazza</span>
-  </a>
-
   <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
     <span class="menu-bar"></span>
     <span class="menu-bar"></span>
     <span class="menu-bar"></span>
   </button>
 </header>
-
-<div class="menu-backdrop" id="menu-backdrop" hidden></div>
 
 <nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
   <ul class="menu-links">
@@ -60,8 +47,8 @@
 
   <section class="hero">
     <div class="hero-text">
-      <h1 data-i18n-html="hero.heading">I build Minecraft mods like someone&rsquo;s going to notice.</h1>
-      <p class="hero-sub" data-i18n="hero.sub">One developer. Mods, plugins, and datapacks built with more care than they probably need — then shipped anyway.</p>
+      <h1 data-i18n="hero.heading">I still play Minecraft. So I started building for it.</h1>
+      <p class="hero-sub" data-i18n="hero.sub">New to modding. I make things I want to use myself, test them properly, then publish them on Modrinth.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary" data-i18n="hero.ctaProjects">See what I&rsquo;ve built</a>
         <a href="#contact" class="btn btn-ghost" data-i18n="hero.ctaContact">Say hello</a>
@@ -71,11 +58,7 @@
     <div class="hero-visual" aria-hidden="true">
       <div class="glass-panel float-shard float-shard--a"></div>
       <div class="glass-panel avatar-panel">
-        <img
-          id="avatar-img"
-          alt=""
-          src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%23262336'/%3E%3Ccircle cx='100' cy='80' r='36' fill='%233a3550'/%3E%3Cellipse cx='100' cy='190' rx='70' ry='60' fill='%233a3550'/%3E%3C/svg%3E"
-        />
+        <img id="avatar-img" alt="" src="assets/profile icon.png" />
       </div>
       <div class="glass-panel float-shard float-shard--b"></div>
     </div>
@@ -87,24 +70,24 @@
       <li class="craft-step glass-panel" style="--i:0">
         <span class="step-index">01</span>
         <h3 data-i18n="craft.step1Title">Prototype</h3>
-        <p data-i18n="craft.step1Text">A quick, ugly, functional first pass — just enough to prove the idea holds up.</p>
+        <p data-i18n="craft.step1Text">Get something working, even if it&rsquo;s rough.</p>
       </li>
       <li class="craft-step glass-panel" style="--i:1">
         <span class="step-index">02</span>
         <h3 data-i18n="craft.step2Title">Playtest</h3>
-        <p data-i18n="craft.step2Text">Real worlds, real bugs, real friends breaking things on purpose.</p>
+        <p data-i18n="craft.step2Text">Throw it into real worlds and let people try to break it.</p>
       </li>
       <li class="craft-step glass-panel" style="--i:2">
         <span class="step-index">03</span>
         <h3 data-i18n="craft.step3Title">Ship</h3>
-        <p data-i18n="craft.step3Text">Polished, versioned, documented — then straight onto Modrinth.</p>
+        <p data-i18n="craft.step3Text">Clean it up, write proper docs, and publish it.</p>
       </li>
     </ol>
   </section>
 
   <section id="projects" class="projects">
     <h2 data-i18n="projects.heading">Everything I&rsquo;ve shipped</h2>
-    <p class="section-sub muted" data-i18n="projects.subtext">Pulled straight from Modrinth — publish something new and it lands here on its own.</p>
+    <p class="section-sub muted" data-i18n="projects.subtext">Synced from Modrinth automatically. Publish something new and it just shows up here.</p>
     <div id="projects-grid" class="projects-grid">
       <div class="project-card glass-panel skeleton"></div>
       <div class="project-card glass-panel skeleton"></div>
@@ -115,7 +98,7 @@
   <section id="contact" class="contact">
     <div class="glass-panel contact-panel">
       <h2 data-i18n="contact.heading">Find me elsewhere</h2>
-      <p class="muted" data-i18n="contact.subtext">GitHub for the code, Modrinth for the downloads, Ko-fi if you&rsquo;d like to buy me a coffee.</p>
+      <p class="muted" data-i18n="contact.subtext">GitHub has the code, Modrinth has the downloads, and Ko-fi exists if you want to toss a few coins my way.</p>
       <div class="contact-grid" id="contact-grid"></div>
     </div>
   </section>
@@ -123,7 +106,7 @@
 </main>
 
 <footer class="site-footer">
-  <p><span data-i18n="footer.tagline">Built solo, shipped with care.</span> © <span id="year"></span> Pigiazza</p>
+  <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
 <div class="modal-overlay" id="project-modal" hidden>
@@ -151,17 +134,6 @@
     <div class="modal-body" id="modal-body">
       <p class="muted" data-i18n="modal.loading">Loading description…</p>
     </div>
-  </div>
-</div>
-
-<!-- Widget temporaneo per confrontare le 4 palette — da rimuovere una volta scelta quella definitiva -->
-<div class="palette-picker" id="palette-picker">
-  <span class="palette-picker-label">Preview palette</span>
-  <div class="palette-swatches">
-    <button type="button" class="palette-swatch" data-palette="emerald" aria-label="Emerald Circuit"></button>
-    <button type="button" class="palette-swatch" data-palette="amber" aria-label="Molten Amber"></button>
-    <button type="button" class="palette-swatch" data-palette="aurora" aria-label="Aurora Violet"></button>
-    <button type="button" class="palette-swatch" data-palette="glacier" aria-label="Glacier Cyan"></button>
   </div>
 </div>
 

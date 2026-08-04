@@ -24,27 +24,27 @@ const TRANSLATIONS = {
     "nav.projects": "Projects",
     "nav.contact": "Contact",
     "nav.langLabel": "Language",
-    "hero.heading": "I build Minecraft mods like someone’s going to notice.",
-    "hero.sub": "One developer. Mods, plugins, and datapacks built with more care than they probably need — then shipped anyway.",
+    "hero.heading": "I still play Minecraft. So I started building for it.",
+    "hero.sub": "New to modding. I make things I want to use myself, test them properly, then publish them on Modrinth.",
     "hero.ctaProjects": "See what I’ve built",
     "hero.ctaContact": "Say hello",
     "craft.heading": "How I build",
     "craft.step1Title": "Prototype",
-    "craft.step1Text": "A quick, ugly, functional first pass — just enough to prove the idea holds up.",
+    "craft.step1Text": "Get something working, even if it’s rough.",
     "craft.step2Title": "Playtest",
-    "craft.step2Text": "Real worlds, real bugs, real friends breaking things on purpose.",
+    "craft.step2Text": "Throw it into real worlds and let people try to break it.",
     "craft.step3Title": "Ship",
-    "craft.step3Text": "Polished, versioned, documented — then straight onto Modrinth.",
+    "craft.step3Text": "Clean it up, write proper docs, and publish it.",
     "projects.heading": "Everything I’ve shipped",
-    "projects.subtext": "Pulled straight from Modrinth — publish something new and it lands here on its own.",
-    "projects.emptyTitle": "Nothing public yet",
-    "projects.emptyText": "The first release is on its way. Follow along on Modrinth, or check back soon.",
+    "projects.subtext": "Synced from Modrinth automatically. Publish something new and it just shows up here.",
+    "projects.emptyTitle": "Nothing published yet",
+    "projects.emptyText": "The first one’s still cooking. Follow my Modrinth to see it the moment it’s live.",
     "projects.emptyLink": "Visit my Modrinth profile",
     "projects.errorTitle": "Can’t reach Modrinth right now",
     "projects.errorText": "Try again in a moment, or check the profile directly.",
     "contact.heading": "Find me elsewhere",
-    "contact.subtext": "GitHub for the code, Modrinth for the downloads, Ko-fi if you’d like to buy me a coffee.",
-    "footer.tagline": "Built solo, shipped with care.",
+    "contact.subtext": "GitHub has the code, Modrinth has the downloads, and Ko-fi exists if you want to toss a few coins my way.",
+    "footer.tagline": "Made solo, mostly at night.",
     "modal.close": "Close",
     "modal.openLink": "Open on Modrinth",
     "modal.loading": "Loading description…",
@@ -55,27 +55,27 @@ const TRANSLATIONS = {
     "nav.projects": "Progetti",
     "nav.contact": "Contatti",
     "nav.langLabel": "Lingua",
-    "hero.heading": "Creo mod per Minecraft come se qualcuno le notasse davvero.",
-    "hero.sub": "Un solo sviluppatore. Mod, plugin e datapack curati più del necessario — e pubblicati comunque.",
+    "hero.heading": "Gioco ancora a Minecraft. Per questo ho iniziato a costruirci sopra.",
+    "hero.sub": "Sono alle prime armi con le mod. Creo cose che voglio usare io per primo, le testo sul serio, poi le pubblico su Modrinth.",
     "hero.ctaProjects": "Guarda cosa ho creato",
     "hero.ctaContact": "Scrivimi",
     "craft.heading": "Come lavoro",
     "craft.step1Title": "Prototipo",
-    "craft.step1Text": "Una prima versione rapida, grezza, che serve solo a dimostrare che l'idea funziona.",
+    "craft.step1Text": "Faccio funzionare qualcosa, anche se è grezzo.",
     "craft.step2Title": "Playtest",
-    "craft.step2Text": "Mondi veri, bug veri, amici che rompono tutto apposta.",
+    "craft.step2Text": "Lo butto in mondi veri e lascio che la gente provi a romperlo.",
     "craft.step3Title": "Rilascio",
-    "craft.step3Text": "Rifinito, versionato, documentato — poi dritto su Modrinth.",
+    "craft.step3Text": "Lo rifinisco, scrivo una documentazione decente, e lo pubblico.",
     "projects.heading": "Tutto quello che ho pubblicato",
-    "projects.subtext": "Preso in tempo reale da Modrinth: pubblica qualcosa di nuovo e comparirà qui da solo.",
-    "projects.emptyTitle": "Ancora nulla di pubblico",
-    "projects.emptyText": "Il primo rilascio è in arrivo. Seguimi su Modrinth, o torna a controllare tra un po'.",
+    "projects.subtext": "Sincronizzato da Modrinth in automatico. Pubblico qualcosa di nuovo e compare qui da solo.",
+    "projects.emptyTitle": "Ancora nulla di pubblicato",
+    "projects.emptyText": "Il primo progetto è ancora in lavorazione. Segui il mio Modrinth per essere il primo a saperlo.",
     "projects.emptyLink": "Vai al mio profilo Modrinth",
     "projects.errorTitle": "Non riesco a contattare Modrinth in questo momento",
     "projects.errorText": "Riprova tra un attimo, oppure controlla direttamente il profilo.",
     "contact.heading": "Dove trovarmi",
-    "contact.subtext": "GitHub per il codice, Modrinth per i download, Ko-fi se vuoi offrirmi un caffè.",
-    "footer.tagline": "Costruito da solo, rilasciato con cura.",
+    "contact.subtext": "Su GitHub trovi il codice, su Modrinth i download, su Ko-fi puoi offrirmi un caffè se ti va.",
+    "footer.tagline": "Fatto da solo, soprattutto di notte.",
     "modal.close": "Chiudi",
     "modal.openLink": "Apri su Modrinth",
     "modal.loading": "Caricamento descrizione…",
@@ -96,10 +96,6 @@ function applyLanguage(lang) {
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     el.textContent = t(el.dataset.i18n);
-  });
-
-  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
-    el.innerHTML = t(el.dataset.i18nHtml);
   });
 
   document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
@@ -144,20 +140,6 @@ function renderSocials() {
       </a>`
     )
     .join("");
-}
-
-async function loadProfile() {
-  try {
-    const res = await fetch(`https://api.modrinth.com/v2/user/${CONFIG.modrinthUsername}`);
-    if (!res.ok) return;
-    const user = await res.json();
-    if (user.avatar_url) {
-      document.getElementById("avatar-img").src = user.avatar_url;
-    }
-    // La copy del sito è scritta a mano nelle traduzioni sopra, non presa dal bio di Modrinth.
-  } catch (err) {
-    console.warn("Impossibile caricare il profilo Modrinth:", err);
-  }
 }
 
 function projectCard(project) {
@@ -298,22 +280,27 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !modal.hidden) closeProjectModal();
 });
 
-// --- Menu a scomparsa (hamburger con bounce, pannello da sinistra) ---
+// --- Menu a comparsa (hamburger a sinistra, si espande dal centro del bottone) ---
 
 const menuToggle = document.getElementById("menu-toggle");
-const menuBackdrop = document.getElementById("menu-backdrop");
 const siteMenu = document.getElementById("site-menu");
 let menuLastFocused = null;
 
+function setMenuOrigin() {
+  const rect = menuToggle.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  siteMenu.style.setProperty("--menu-origin-x", `${x}px`);
+  siteMenu.style.setProperty("--menu-origin-y", `${y}px`);
+}
+
 function openMenu() {
   menuLastFocused = document.activeElement;
+  setMenuOrigin();
   menuToggle.classList.add("is-open");
   menuToggle.setAttribute("aria-expanded", "true");
-  menuBackdrop.hidden = false;
-  requestAnimationFrame(() => {
-    menuBackdrop.classList.add("is-visible");
-    siteMenu.classList.add("is-open");
-  });
+  menuToggle.setAttribute("aria-label", "Close menu");
+  requestAnimationFrame(() => siteMenu.classList.add("is-open"));
   siteMenu.removeAttribute("inert");
   siteMenu.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
@@ -324,14 +311,11 @@ function openMenu() {
 function closeMenu() {
   menuToggle.classList.remove("is-open");
   menuToggle.setAttribute("aria-expanded", "false");
-  menuBackdrop.classList.remove("is-visible");
+  menuToggle.setAttribute("aria-label", "Open menu");
   siteMenu.classList.remove("is-open");
   siteMenu.setAttribute("inert", "");
   siteMenu.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
-  setTimeout(() => {
-    if (!siteMenu.classList.contains("is-open")) menuBackdrop.hidden = true;
-  }, 450);
   if (menuLastFocused) menuLastFocused.focus();
 }
 
@@ -340,29 +324,23 @@ menuToggle.addEventListener("click", () => {
   else openMenu();
 });
 
-menuBackdrop.addEventListener("click", closeMenu);
+siteMenu.addEventListener("click", (e) => {
+  if (e.target === siteMenu) closeMenu();
+});
 
 siteMenu.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
+});
+
+window.addEventListener("resize", () => {
+  if (siteMenu.classList.contains("is-open")) setMenuOrigin();
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && siteMenu.classList.contains("is-open")) closeMenu();
 });
 
-// --- Palette picker (widget temporaneo per confrontare le 4 combinazioni colore) ---
-
-document.querySelectorAll(".palette-swatch").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    document.body.dataset.palette = btn.dataset.palette;
-    document.querySelectorAll(".palette-swatch").forEach((b) => b.classList.toggle("active", b === btn));
-  });
-});
-
-document.querySelector(`.palette-swatch[data-palette="${document.body.dataset.palette}"]`)?.classList.add("active");
-
 document.getElementById("year").textContent = new Date().getFullYear();
 applyLanguage(currentLang);
 renderSocials();
-loadProfile();
 loadProjects();
