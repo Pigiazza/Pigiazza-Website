@@ -15,35 +15,47 @@ const ICON_DOWNLOAD =
 const ICON_HEART =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 
+// Bandiere disegnate come SVG (niente emoji).
+const FLAGS = {
+  en: {
+    label: "English",
+    svg: '<svg viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="36" fill="#0a3d91"/><g stroke="#fff" stroke-width="7"><path d="M0,0 L60,36 M60,0 L0,36"/></g><g stroke="#cf142b" stroke-width="3"><path d="M0,0 L60,36 M60,0 L0,36"/></g><g stroke="#fff" stroke-width="11"><path d="M30,0 V36 M0,18 H60"/></g><g stroke="#cf142b" stroke-width="6.5"><path d="M30,0 V36 M0,18 H60"/></g></svg>',
+  },
+  it: {
+    label: "Italiano",
+    svg: '<svg viewBox="0 0 3 2" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="2" x="0" fill="#009246"/><rect width="1" height="2" x="1" fill="#f1f2f1"/><rect width="1" height="2" x="2" fill="#ce2b37"/></svg>',
+  },
+};
+
 // --- Traduzioni ---
+
+const ROTATING_WORDS = {
+  en: ["Mods", "Plugins", "Datapacks", "Servers"],
+  it: ["Mod", "Plugin", "Datapack", "Server"],
+};
 
 const TRANSLATIONS = {
   en: {
     "nav.home": "Home",
-    "nav.craft": "Craft",
+    "nav.about": "About",
     "nav.projects": "Projects",
     "nav.contact": "Contact",
     "nav.langLabel": "Language",
-    "hero.heading": "I still play Minecraft. So I started building for it.",
-    "hero.sub": "New to modding. I make things I want to use myself, test them properly, then publish them on Modrinth.",
+    "hero.headingPre": "The place to find",
+    "hero.headingPost": "made by someone who lives and breathes Minecraft.",
+    "hero.sub": "New to modding. I build things I actually want to use, test them properly, then publish them.",
     "hero.ctaProjects": "See what I’ve built",
     "hero.ctaContact": "Say hello",
-    "craft.heading": "How I build",
-    "craft.step1Title": "Prototype",
-    "craft.step1Text": "Get something working, even if it’s rough.",
-    "craft.step2Title": "Playtest",
-    "craft.step2Text": "Throw it into real worlds and let people try to break it.",
-    "craft.step3Title": "Ship",
-    "craft.step3Text": "Clean it up, write proper docs, and publish it.",
+    "about.statement": "Every project starts the same way: there’s something Minecraft doesn’t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.",
     "projects.heading": "Everything I’ve shipped",
-    "projects.subtext": "Synced from Modrinth automatically. Publish something new and it just shows up here.",
+    "projects.subtext": "New releases show up here the moment I publish them on Modrinth — no need to refresh or check back.",
     "projects.emptyTitle": "Nothing published yet",
-    "projects.emptyText": "The first one’s still cooking. Follow my Modrinth to see it the moment it’s live.",
+    "projects.emptyText": "Still cooking. Check back soon, or follow along so you don’t miss the first drop.",
     "projects.emptyLink": "Visit my Modrinth profile",
     "projects.errorTitle": "Can’t reach Modrinth right now",
     "projects.errorText": "Try again in a moment, or check the profile directly.",
     "contact.heading": "Find me elsewhere",
-    "contact.subtext": "GitHub has the code, Modrinth has the downloads, and Ko-fi exists if you want to toss a few coins my way.",
+    "contact.subtext": "You’ll find the code on GitHub, downloads on Modrinth, and a coffee jar on Ko-fi if you’re feeling generous.",
     "footer.tagline": "Made solo, mostly at night.",
     "modal.close": "Close",
     "modal.openLink": "Open on Modrinth",
@@ -51,30 +63,25 @@ const TRANSLATIONS = {
   },
   it: {
     "nav.home": "Home",
-    "nav.craft": "Metodo",
+    "nav.about": "Chi sono",
     "nav.projects": "Progetti",
     "nav.contact": "Contatti",
     "nav.langLabel": "Lingua",
-    "hero.heading": "Gioco ancora a Minecraft. Per questo ho iniziato a costruirci sopra.",
-    "hero.sub": "Sono alle prime armi con le mod. Creo cose che voglio usare io per primo, le testo sul serio, poi le pubblico su Modrinth.",
+    "hero.headingPre": "Il posto dove trovare",
+    "hero.headingPost": "creati da chi vive Minecraft in prima persona.",
+    "hero.sub": "Sono alle prime armi con le mod. Creo cose che voglio usare io per primo, le testo sul serio, poi le pubblico.",
     "hero.ctaProjects": "Guarda cosa ho creato",
     "hero.ctaContact": "Scrivimi",
-    "craft.heading": "Come lavoro",
-    "craft.step1Title": "Prototipo",
-    "craft.step1Text": "Faccio funzionare qualcosa, anche se è grezzo.",
-    "craft.step2Title": "Playtest",
-    "craft.step2Text": "Lo butto in mondi veri e lascio che la gente provi a romperlo.",
-    "craft.step3Title": "Rilascio",
-    "craft.step3Text": "Lo rifinisco, scrivo una documentazione decente, e lo pubblico.",
+    "about.statement": "Ogni progetto nasce allo stesso modo: c'è qualcosa che Minecraft non ha ancora, quindi lo creo. Poi mi assicuro che regga davvero prima di farlo vedere a chiunque altro.",
     "projects.heading": "Tutto quello che ho pubblicato",
-    "projects.subtext": "Sincronizzato da Modrinth in automatico. Pubblico qualcosa di nuovo e compare qui da solo.",
+    "projects.subtext": "Ogni nuovo progetto compare qui non appena lo pubblico su Modrinth — non serve aggiornare la pagina.",
     "projects.emptyTitle": "Ancora nulla di pubblicato",
-    "projects.emptyText": "Il primo progetto è ancora in lavorazione. Segui il mio Modrinth per essere il primo a saperlo.",
+    "projects.emptyText": "Ancora in lavorazione. Torna a dare un'occhiata, o seguimi per non perderti il primo rilascio.",
     "projects.emptyLink": "Vai al mio profilo Modrinth",
     "projects.errorTitle": "Non riesco a contattare Modrinth in questo momento",
     "projects.errorText": "Riprova tra un attimo, oppure controlla direttamente il profilo.",
     "contact.heading": "Dove trovarmi",
-    "contact.subtext": "Su GitHub trovi il codice, su Modrinth i download, su Ko-fi puoi offrirmi un caffè se ti va.",
+    "contact.subtext": "Trovi il codice su GitHub, i download su Modrinth, e un barattolo per il caffè su Ko-fi se ti va di essere generoso.",
     "footer.tagline": "Fatto da solo, soprattutto di notte.",
     "modal.close": "Chiudi",
     "modal.openLink": "Apri su Modrinth",
@@ -102,15 +109,62 @@ function applyLanguage(lang) {
     el.setAttribute("aria-label", t(el.dataset.i18nAria));
   });
 
-  document.querySelectorAll(".lang-opt").forEach((opt) => {
+  document.getElementById("lang-current-flag").innerHTML = FLAGS[currentLang].svg;
+  document.querySelectorAll(".lang-option").forEach((opt) => {
     opt.classList.toggle("active", opt.dataset.lang === currentLang);
   });
+
+  if (typeof showRotatingWord === "function") {
+    rotatingWordIndex = 0;
+    showRotatingWord();
+  }
 
   renderProjectsUI();
 }
 
-document.querySelectorAll(".lang-opt").forEach((btn) => {
-  btn.addEventListener("click", () => applyLanguage(btn.dataset.lang));
+// --- Dropdown lingua (bandiere SVG) ---
+
+const langDropdown = document.getElementById("lang-dropdown");
+const langToggle = document.getElementById("lang-toggle");
+const langMenu = document.getElementById("lang-menu");
+
+langMenu.innerHTML = Object.entries(FLAGS)
+  .map(
+    ([code, flag]) => `
+    <li>
+      <button type="button" class="lang-option" data-lang="${code}">
+        <span class="flag-icon">${flag.svg}</span>
+        ${flag.label}
+      </button>
+    </li>`
+  )
+  .join("");
+
+function openLangMenu() {
+  langMenu.hidden = false;
+  langToggle.setAttribute("aria-expanded", "true");
+}
+
+function closeLangMenu() {
+  langMenu.hidden = true;
+  langToggle.setAttribute("aria-expanded", "false");
+}
+
+langToggle.addEventListener("click", (e) => {
+  e.stopPropagation();
+  if (langMenu.hidden) openLangMenu();
+  else closeLangMenu();
+});
+
+langMenu.querySelectorAll(".lang-option").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    applyLanguage(btn.dataset.lang);
+    closeLangMenu();
+  });
+});
+
+document.addEventListener("click", (e) => {
+  if (!langMenu.hidden && !langDropdown.contains(e.target)) closeLangMenu();
 });
 
 function escapeHtml(str) {
@@ -286,17 +340,15 @@ const menuToggle = document.getElementById("menu-toggle");
 const siteMenu = document.getElementById("site-menu");
 let menuLastFocused = null;
 
-function setMenuOrigin() {
-  const rect = menuToggle.getBoundingClientRect();
-  const x = rect.left + rect.width / 2;
-  const y = rect.top + rect.height / 2;
-  siteMenu.style.setProperty("--menu-origin-x", `${x}px`);
-  siteMenu.style.setProperty("--menu-origin-y", `${y}px`);
+function bumpMenuToggle() {
+  menuToggle.classList.remove("is-bumping");
+  void menuToggle.offsetWidth; // forza il reflow cosi l'animazione riparte ogni volta
+  menuToggle.classList.add("is-bumping");
 }
 
 function openMenu() {
   menuLastFocused = document.activeElement;
-  setMenuOrigin();
+  bumpMenuToggle();
   menuToggle.classList.add("is-open");
   menuToggle.setAttribute("aria-expanded", "true");
   menuToggle.setAttribute("aria-label", "Close menu");
@@ -309,6 +361,7 @@ function openMenu() {
 }
 
 function closeMenu() {
+  bumpMenuToggle();
   menuToggle.classList.remove("is-open");
   menuToggle.setAttribute("aria-expanded", "false");
   menuToggle.setAttribute("aria-label", "Open menu");
@@ -316,6 +369,7 @@ function closeMenu() {
   siteMenu.setAttribute("inert", "");
   siteMenu.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
+  closeLangMenu();
   if (menuLastFocused) menuLastFocused.focus();
 }
 
@@ -332,15 +386,74 @@ siteMenu.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
 });
 
-window.addEventListener("resize", () => {
-  if (siteMenu.classList.contains("is-open")) setMenuOrigin();
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!langMenu.hidden) closeLangMenu();
+  else if (siteMenu.classList.contains("is-open")) closeMenu();
 });
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && siteMenu.classList.contains("is-open")) closeMenu();
-});
+// --- Parola rotante nell'hero (Mods / Plugins / Datapacks / Servers) ---
+
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const rotatingWordEl = document.getElementById("rotating-word");
+let rotatingWordIndex = 0;
+let rotatingWordTimer = null;
+
+function showRotatingWord() {
+  const words = ROTATING_WORDS[currentLang] || ROTATING_WORDS.en;
+  rotatingWordEl.textContent = words[rotatingWordIndex % words.length];
+  if (prefersReducedMotion) return;
+  // Web Animations API invece di CSS animation: ogni chiamata crea un'animazione
+  // indipendente, quindi non serve nessun trucco di reset per farla ripartire.
+  rotatingWordEl.animate(
+    [
+      { opacity: 0, transform: "translateY(-55%)" },
+      { opacity: 1, transform: "translateY(0)" },
+    ],
+    { duration: 450, easing: "cubic-bezier(0.25, 1, 0.5, 1)", fill: "both" }
+  );
+}
+
+function startRotatingWord() {
+  showRotatingWord();
+  if (prefersReducedMotion) return;
+  clearInterval(rotatingWordTimer);
+  rotatingWordTimer = setInterval(() => {
+    rotatingWordIndex += 1;
+    showRotatingWord();
+  }, 1500);
+}
+
+// --- Parallax: gli elementi decorativi si spostano leggermente allo scroll ---
+
+const parallaxEls = Array.from(document.querySelectorAll("[data-parallax]"));
+
+function updateParallax() {
+  const scrollY = window.scrollY;
+  parallaxEls.forEach((el) => {
+    const speed = parseFloat(el.dataset.parallax);
+    el.style.transform = `translateY(${scrollY * speed}px)`;
+  });
+}
+
+if (!prefersReducedMotion && parallaxEls.length) {
+  let ticking = false;
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateParallax();
+        ticking = false;
+      });
+    },
+    { passive: true }
+  );
+}
 
 document.getElementById("year").textContent = new Date().getFullYear();
 applyLanguage(currentLang);
 renderSocials();
 loadProjects();
+startRotatingWord();

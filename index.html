@@ -5,9 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pigiazza — Minecraft Developer</title>
 <meta name="description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
-<link rel="preconnect" href="https://api.fontshare.com" />
-<link href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=4" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body data-palette="aurora">
 
@@ -29,16 +30,19 @@
 <nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
   <ul class="menu-links">
     <li style="--i:0"><a href="#top" data-i18n="nav.home">Home</a></li>
-    <li style="--i:1"><a href="#craft" data-i18n="nav.craft">Craft</a></li>
+    <li style="--i:1"><a href="#about" data-i18n="nav.about">About</a></li>
     <li style="--i:2"><a href="#projects" data-i18n="nav.projects">Projects</a></li>
     <li style="--i:3"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
 
   <div class="menu-footer" style="--i:4">
     <span class="menu-footer-label" data-i18n="nav.langLabel">Language</span>
-    <div class="lang-switch" role="group" aria-label="Language">
-      <button type="button" class="lang-opt" data-lang="en">EN</button>
-      <button type="button" class="lang-opt" data-lang="it">IT</button>
+    <div class="lang-dropdown" id="lang-dropdown">
+      <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
+        <span class="flag-icon" id="lang-current-flag"></span>
+        <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <ul class="lang-menu" id="lang-menu" hidden></ul>
     </div>
   </div>
 </nav>
@@ -47,8 +51,12 @@
 
   <section class="hero">
     <div class="hero-text">
-      <h1 data-i18n="hero.heading">I still play Minecraft. So I started building for it.</h1>
-      <p class="hero-sub" data-i18n="hero.sub">New to modding. I make things I want to use myself, test them properly, then publish them on Modrinth.</p>
+      <h1>
+        <span data-i18n="hero.headingPre">The place to find</span>
+        <span class="rotating-word-wrap"><span class="rotating-word" id="rotating-word">Mods</span></span>
+        <span data-i18n="hero.headingPost">made by someone who lives and breathes Minecraft.</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">New to modding. I build things I actually want to use, test them properly, then publish them.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary" data-i18n="hero.ctaProjects">See what I&rsquo;ve built</a>
         <a href="#contact" class="btn btn-ghost" data-i18n="hero.ctaContact">Say hello</a>
@@ -56,38 +64,26 @@
     </div>
 
     <div class="hero-visual" aria-hidden="true">
-      <div class="glass-panel float-shard float-shard--a"></div>
-      <div class="glass-panel avatar-panel">
+      <div class="glass-panel float-shard float-shard--a" data-parallax="0.14"></div>
+      <div class="glass-panel avatar-panel" data-parallax="0.05">
         <img id="avatar-img" alt="" src="assets/profile icon.png" />
       </div>
-      <div class="glass-panel float-shard float-shard--b"></div>
+      <div class="glass-panel float-shard float-shard--b" data-parallax="-0.1"></div>
     </div>
   </section>
 
-  <section id="craft" class="craft">
-    <h2 data-i18n="craft.heading">How I build</h2>
-    <ol class="craft-steps">
-      <li class="craft-step glass-panel" style="--i:0">
-        <span class="step-index">01</span>
-        <h3 data-i18n="craft.step1Title">Prototype</h3>
-        <p data-i18n="craft.step1Text">Get something working, even if it&rsquo;s rough.</p>
-      </li>
-      <li class="craft-step glass-panel" style="--i:1">
-        <span class="step-index">02</span>
-        <h3 data-i18n="craft.step2Title">Playtest</h3>
-        <p data-i18n="craft.step2Text">Throw it into real worlds and let people try to break it.</p>
-      </li>
-      <li class="craft-step glass-panel" style="--i:2">
-        <span class="step-index">03</span>
-        <h3 data-i18n="craft.step3Title">Ship</h3>
-        <p data-i18n="craft.step3Text">Clean it up, write proper docs, and publish it.</p>
-      </li>
-    </ol>
+  <section id="about" class="about">
+    <div class="about-visual" aria-hidden="true">
+      <div class="glass-panel about-shard about-shard--a" data-parallax="-0.12"></div>
+      <div class="glass-panel about-shard about-shard--b" data-parallax="0.18"></div>
+      <div class="glass-panel about-shard about-shard--c" data-parallax="-0.08"></div>
+    </div>
+    <p class="about-statement" data-i18n="about.statement">Every project starts the same way: there&rsquo;s something Minecraft doesn&rsquo;t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.</p>
   </section>
 
   <section id="projects" class="projects">
     <h2 data-i18n="projects.heading">Everything I&rsquo;ve shipped</h2>
-    <p class="section-sub muted" data-i18n="projects.subtext">Synced from Modrinth automatically. Publish something new and it just shows up here.</p>
+    <p class="section-sub muted" data-i18n="projects.subtext">New releases show up here the moment I publish them on Modrinth — no need to refresh or check back.</p>
     <div id="projects-grid" class="projects-grid">
       <div class="project-card glass-panel skeleton"></div>
       <div class="project-card glass-panel skeleton"></div>
@@ -98,7 +94,7 @@
   <section id="contact" class="contact">
     <div class="glass-panel contact-panel">
       <h2 data-i18n="contact.heading">Find me elsewhere</h2>
-      <p class="muted" data-i18n="contact.subtext">GitHub has the code, Modrinth has the downloads, and Ko-fi exists if you want to toss a few coins my way.</p>
+      <p class="muted" data-i18n="contact.subtext">You&rsquo;ll find the code on GitHub, downloads on Modrinth, and a coffee jar on Ko-fi if you&rsquo;re feeling generous.</p>
       <div class="contact-grid" id="contact-grid"></div>
     </div>
   </section>
