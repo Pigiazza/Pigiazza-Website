@@ -41,14 +41,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=5" />
+<link rel="stylesheet" href="style.css?v=7" />
 
 <!-- Analytics: richiede un account Plausible (plausible.io) collegato al dominio
      reale del sito. "pigiazza.example" e' un segnaposto: va sostituito con il
      dominio effettivo una volta scelto, altrimenti lo script non traccia nulla. -->
 <script defer data-domain="pigiazza.example" src="https://plausible.io/js/script.js"></script>
 </head>
-<body data-palette="emerald" data-theme="dark">
+<body data-palette="sakura">
 
 <div class="noise-overlay" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true">
@@ -66,17 +66,11 @@
     <span class="menu-bar"></span>
   </button>
 
-  <div class="header-controls">
-    <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode">
-      <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
-      </svg>
-      <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
-      </svg>
-    </button>
+  <a class="site-wordmark" href="#top" aria-label="Pigiazza — home">
+    <img src="assets/pigiazza.png" alt="Pigiazza" />
+  </a>
 
+  <div class="header-controls">
     <div class="lang-dropdown" id="lang-dropdown">
       <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
         <span class="lang-current-code" id="lang-current-code">EN</span>
@@ -92,15 +86,19 @@
     <li style="--i:0"><a href="#top" data-i18n="nav.home">Home</a></li>
     <li style="--i:1"><a href="#about" data-i18n="nav.about">About</a></li>
     <li style="--i:2"><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-    <li style="--i:3"><a href="#activity" data-i18n="nav.activity">Activity</a></li>
-    <li style="--i:4"><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
-    <li style="--i:5"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+    <li style="--i:3"><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+    <li style="--i:4"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
   </ul>
 </nav>
 
 <main id="top">
 
   <section class="hero">
+    <div class="hero-scene" aria-hidden="true">
+      <img class="hero-landscape" src="assets/landscape-day.webp" alt="" fetchpriority="high" />
+      <div class="hero-scene-veil"></div>
+    </div>
+
     <div class="hero-text">
       <h1>
         <span data-i18n="hero.headingPre">The place to find</span>
@@ -114,12 +112,10 @@
       </div>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="glass-panel float-shard float-shard--a" data-parallax="0.14"></div>
-      <div class="glass-panel avatar-panel" data-parallax="0.05">
-        <img id="avatar-img" alt="" src="assets/profile icon.png" />
-      </div>
-      <div class="glass-panel float-shard float-shard--b" data-parallax="-0.1"></div>
+    <div class="hero-visual">
+      <div class="glass-panel float-shard float-shard--a" data-parallax="0.14" aria-hidden="true"></div>
+      <div class="social-orbit" id="social-orbit" data-parallax="0.05"></div>
+      <div class="glass-panel float-shard float-shard--b" data-parallax="-0.1" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -127,7 +123,6 @@
     <div class="about-visual" aria-hidden="true">
       <div class="glass-panel about-shard about-shard--a" data-parallax="-0.12"></div>
       <div class="glass-panel about-shard about-shard--b" data-parallax="0.18"></div>
-      <div class="glass-panel about-shard about-shard--c" data-parallax="-0.08"></div>
     </div>
 
     <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: there&rsquo;s something Minecraft doesn&rsquo;t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.</p>
@@ -138,40 +133,47 @@
       <p data-i18n="about.bio3">Fabric is home base, but every mod ships for Forge, NeoForge and Quilt too, across every Minecraft version that supports it, so nobody&rsquo;s left out over a loader choice.</p>
     </div>
 
-    <ol class="process-list reveal">
-      <li class="process-step">
-        <span class="process-num">1</span>
-        <div>
-          <h3 data-i18n="about.step1Title">Idea</h3>
-          <p data-i18n="about.step1Text">Something&rsquo;s missing or annoying in my own world. That&rsquo;s the whole brief.</p>
-        </div>
+    <ol class="flow" id="flow">
+      <li class="flow-step reveal reveal-stagger" style="--i:0">
+        <span class="flow-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 18h6" /><path d="M10 22h4" />
+            <path d="M15.1 14a5 5 0 1 0-6.2 0c.6.5 1.1 1.2 1.1 2h4c0-.8.5-1.5 1.1-2Z" />
+          </svg>
+        </span>
+        <h3 data-i18n="about.step1Title">Idea</h3>
+        <p data-i18n="about.step1Text">Something&rsquo;s missing or annoying in my own world. That&rsquo;s the whole brief.</p>
       </li>
-      <li class="process-step">
-        <span class="process-num">2</span>
-        <div>
-          <h3 data-i18n="about.step2Title">Build</h3>
-          <p data-i18n="about.step2Text">Heads-down in the code, running it on my own server the whole time.</p>
-        </div>
+      <li class="flow-step reveal reveal-stagger" style="--i:1">
+        <span class="flow-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m8 8-5 4 5 4" /><path d="m16 8 5 4-5 4" /><path d="m13.5 5-3 14" />
+          </svg>
+        </span>
+        <h3 data-i18n="about.step2Title">Build</h3>
+        <p data-i18n="about.step2Text">Heads-down in the code, running it on my own server the whole time.</p>
       </li>
-      <li class="process-step">
-        <span class="process-num">3</span>
-        <div>
-          <h3 data-i18n="about.step3Title">Ship</h3>
-          <p data-i18n="about.step3Text">Once it survives real play without breaking, it goes up on Modrinth.</p>
-        </div>
+      <li class="flow-step reveal reveal-stagger" style="--i:2">
+        <span class="flow-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 4 9v12h16V9Z" /><path d="M12 3v6" /><path d="m9 12 3-3 3 3" /><path d="M12 9v8" />
+          </svg>
+        </span>
+        <h3 data-i18n="about.step3Title">Ship</h3>
+        <p data-i18n="about.step3Text">Once it survives real play without breaking, it goes up on Modrinth.</p>
       </li>
     </ol>
 
-    <div class="stack-block reveal">
-      <h3 data-i18n="about.stackTitle">What I build with</h3>
+    <div class="stack-block">
+      <h3 class="reveal" data-i18n="about.stackTitle">What I build with</h3>
       <div class="stack-tags">
-        <span class="tag">Java</span>
-        <span class="tag">Fabric</span>
-        <span class="tag">Forge</span>
-        <span class="tag">NeoForge</span>
-        <span class="tag">Quilt</span>
-        <span class="tag">Gradle</span>
-        <span class="tag">Git</span>
+        <span class="tag reveal reveal-stagger" style="--i:0">Java</span>
+        <span class="tag reveal reveal-stagger" style="--i:1">Fabric</span>
+        <span class="tag reveal reveal-stagger" style="--i:2">Forge</span>
+        <span class="tag reveal reveal-stagger" style="--i:3">NeoForge</span>
+        <span class="tag reveal reveal-stagger" style="--i:4">Quilt</span>
+        <span class="tag reveal reveal-stagger" style="--i:5">Gradle</span>
+        <span class="tag reveal reveal-stagger" style="--i:6">Git</span>
       </div>
     </div>
   </section>
@@ -210,63 +212,63 @@
     </div>
   </section>
 
-  <section id="activity" class="activity">
-    <div class="reveal">
-      <h2 data-i18n="activity.heading">What I&rsquo;ve been doing</h2>
-      <p class="section-sub muted" data-i18n="activity.subtext">A live feed straight from GitHub, commits, releases, whatever I touched last.</p>
-    </div>
-    <div id="activity-list" class="activity-list">
-      <div class="activity-row skeleton"></div>
-      <div class="activity-row skeleton"></div>
-      <div class="activity-row skeleton"></div>
-    </div>
-  </section>
-
   <section id="faq" class="faq">
     <h2 data-i18n="faq.heading">Questions people actually ask</h2>
     <div class="faq-list">
-      <details class="faq-item glass-panel">
-        <summary>
+      <div class="faq-item glass-panel">
+        <button type="button" class="faq-summary" aria-expanded="false" aria-controls="faq-answer-1">
           <span data-i18n="faq.q1">Are your mods free?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </summary>
-        <p data-i18n="faq.a1">Always. There’s a Ko-fi link below if you’d like to support the work, but it’s never required.</p>
-      </details>
-      <details class="faq-item glass-panel">
-        <summary>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div class="faq-answer-wrap" id="faq-answer-1">
+          <div class="faq-answer-inner"><p data-i18n="faq.a1">Always. There’s a Ko-fi link below if you’d like to support the work, but it’s never required.</p></div>
+        </div>
+      </div>
+      <div class="faq-item glass-panel">
+        <button type="button" class="faq-summary" aria-expanded="false" aria-controls="faq-answer-2">
           <span data-i18n="faq.q2">Do you take requests?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </summary>
-        <p data-i18n="faq.a2">Sometimes — if it’s something I’d genuinely want to build myself, I’ll consider it.</p>
-      </details>
-      <details class="faq-item glass-panel">
-        <summary>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div class="faq-answer-wrap" id="faq-answer-2">
+          <div class="faq-answer-inner"><p data-i18n="faq.a2">Sometimes — if it’s something I’d genuinely want to build myself, I’ll consider it.</p></div>
+        </div>
+      </div>
+      <div class="faq-item glass-panel">
+        <button type="button" class="faq-summary" aria-expanded="false" aria-controls="faq-answer-3">
           <span data-i18n="faq.q3">How often do things get updated?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </summary>
-        <p data-i18n="faq.a3">Whenever something breaks or I find a better way to do it. There’s no fixed schedule — it’s just me.</p>
-      </details>
-      <details class="faq-item glass-panel">
-        <summary>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div class="faq-answer-wrap" id="faq-answer-3">
+          <div class="faq-answer-inner"><p data-i18n="faq.a3">Whenever something breaks or I find a better way to do it. There’s no fixed schedule — it’s just me.</p></div>
+        </div>
+      </div>
+      <div class="faq-item glass-panel">
+        <button type="button" class="faq-summary" aria-expanded="false" aria-controls="faq-answer-4">
           <span data-i18n="faq.q4">Found a bug?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </summary>
-        <p data-i18n="faq.a4">Open an issue on the project’s GitHub repo. I read every one.</p>
-      </details>
-      <details class="faq-item glass-panel">
-        <summary>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div class="faq-answer-wrap" id="faq-answer-4">
+          <div class="faq-answer-inner"><p data-i18n="faq.a4">Open an issue on the project’s GitHub repo. I read every one.</p></div>
+        </div>
+      </div>
+      <div class="faq-item glass-panel">
+        <button type="button" class="faq-summary" aria-expanded="false" aria-controls="faq-answer-5">
           <span data-i18n="faq.q5">What do you build with?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </summary>
-        <p data-i18n="faq.a5">Java, mainly on Fabric, then ported to Forge, NeoForge and Quilt for every supported version. Builds run through Gradle, everything lives in Git.</p>
-      </details>
-      <details class="faq-item glass-panel">
-        <summary>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div class="faq-answer-wrap" id="faq-answer-5">
+          <div class="faq-answer-inner"><p data-i18n="faq.a5">Java, mainly on Fabric, then ported to Forge, NeoForge and Quilt for every supported version. Builds run through Gradle, everything lives in Git.</p></div>
+        </div>
+      </div>
+      <div class="faq-item glass-panel">
+        <button type="button" class="faq-summary" aria-expanded="false" aria-controls="faq-answer-6">
           <span data-i18n="faq.q6">Is the source code public?</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-        </summary>
-        <p data-i18n="faq.a6">Yes. Every project card links straight to its GitHub repo, issues and pull requests included.</p>
-      </details>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+        </button>
+        <div class="faq-answer-wrap" id="faq-answer-6">
+          <div class="faq-answer-inner"><p data-i18n="faq.a6">Yes. Every project card links straight to its GitHub repo, issues and pull requests included.</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -318,6 +320,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
-<script src="script.js?v=4"></script>
+<script src="script.js?v=7"></script>
 </body>
 </html>

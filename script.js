@@ -1,7 +1,6 @@
 // Modifica qui se i tuoi username sui vari servizi non coincidono tutti con "Pigiazza".
 const CONFIG = {
   modrinthUsername: "Pigiazza",
-  githubUsername: "Pigiazza",
   socials: [
     { key: "github", name: "GitHub", url: "https://github.com/Pigiazza", icon: "assets/github.png" },
     { key: "modrinth", name: "Modrinth", url: "https://modrinth.com/user/Pigiazza", icon: "assets/modrinth.png" },
@@ -18,35 +17,6 @@ const ICON_HEART =
 
 const ICON_BOX =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>';
-
-// --- Icone per il feed attività (eventi pubblici GitHub) ---
-
-const ICON_COMMIT =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M3 12h6M15 12h6"/></svg>';
-
-const ICON_PLUS =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>';
-
-const ICON_GLOBE =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18Z"/></svg>';
-
-const ICON_TAG =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m20.6 12.6-7.9 7.9a2 2 0 0 1-2.8 0L3 13.6V3h10.6l7 7a2 2 0 0 1 0 2.6Z"/><circle cx="7.5" cy="7.5" r="1"/></svg>';
-
-const ICON_ISSUE =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>';
-
-const ICON_PR =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M6 8.5v7M8.5 6H14a4 4 0 0 1 4 4v2.5"/></svg>';
-
-const ICON_FORK =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="5" r="2"/><circle cx="18" cy="5" r="2"/><circle cx="12" cy="19" r="2"/><path d="M6 7v2a4 4 0 0 0 4 4M18 7v2a4 4 0 0 1-4 4M12 13v4"/></svg>';
-
-const ICON_STAR =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8l-6.2 3.2L7 14.2l-5-4.9 6.9-1z"/></svg>';
-
-const ICON_BOOK =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>';
 
 // Lingue: codice breve mostrato al posto delle bandiere, più nome esteso nel menu.
 const LANGS = {
@@ -84,22 +54,7 @@ const TRANSLATIONS = {
     "about.step3Title": "Ship",
     "about.step3Text": "Once it survives real play without breaking, it goes up on Modrinth.",
     "about.stackTitle": "What I build with",
-    "nav.activity": "Activity",
     "nav.faq": "FAQ",
-    "activity.heading": "What I’ve been doing",
-    "activity.subtext": "A live feed straight from GitHub, commits, releases, whatever I touched last.",
-    "activity.emptyText": "No public activity in the last few days. Check the profile directly.",
-    "activity.push": "Pushed to {repo}",
-    "activity.createRepo": "Created a new repository: {repo}",
-    "activity.createRef": "Created a new branch on {repo}",
-    "activity.public": "Made {repo} public",
-    "activity.release": "Published a release on {repo}",
-    "activity.issue": "Updated an issue on {repo}",
-    "activity.pr": "Updated a pull request on {repo}",
-    "activity.fork": "Forked {repo}",
-    "activity.star": "Starred {repo}",
-    "activity.wiki": "Updated the wiki on {repo}",
-    "activity.generic": "Updated {repo}",
     "projects.heading": "Everything I’ve shipped",
     "projects.subtext": "New releases show up here the moment I publish them on Modrinth, no need to refresh or check back.",
     "projects.emptyTitle": "Nothing published yet",
@@ -132,8 +87,6 @@ const TRANSLATIONS = {
     "modal.openLink": "Open on Modrinth",
     "modal.loading": "Loading description…",
     "backToTop.aria": "Back to top",
-    "theme.toLight": "Switch to light mode",
-    "theme.toDark": "Switch to dark mode",
   },
   it: {
     "nav.home": "Home",
@@ -157,22 +110,7 @@ const TRANSLATIONS = {
     "about.step3Title": "Pubblicazione",
     "about.step3Text": "Quando regge al gioco vero senza rompersi, va su Modrinth.",
     "about.stackTitle": "Con cosa costruisco",
-    "nav.activity": "Attività",
     "nav.faq": "FAQ",
-    "activity.heading": "Cosa sto facendo",
-    "activity.subtext": "Uno stream in diretta da GitHub, commit, release, l'ultima cosa che ho toccato.",
-    "activity.emptyText": "Nessuna attività pubblica negli ultimi giorni. Controlla direttamente il profilo.",
-    "activity.push": "Push su {repo}",
-    "activity.createRepo": "Creata una nuova repository: {repo}",
-    "activity.createRef": "Creato un nuovo branch su {repo}",
-    "activity.public": "Reso pubblico {repo}",
-    "activity.release": "Pubblicata una release su {repo}",
-    "activity.issue": "Aggiornata una issue su {repo}",
-    "activity.pr": "Aggiornata una pull request su {repo}",
-    "activity.fork": "Fork di {repo}",
-    "activity.star": "Aggiunta una stella a {repo}",
-    "activity.wiki": "Aggiornata la wiki su {repo}",
-    "activity.generic": "Aggiornato {repo}",
     "projects.heading": "Tutto quello che ho pubblicato",
     "projects.subtext": "Ogni nuovo progetto compare qui non appena lo pubblico su Modrinth, non serve aggiornare la pagina.",
     "projects.emptyTitle": "Ancora nulla di pubblicato",
@@ -205,8 +143,6 @@ const TRANSLATIONS = {
     "modal.openLink": "Apri su Modrinth",
     "modal.loading": "Caricamento descrizione…",
     "backToTop.aria": "Torna in cima",
-    "theme.toLight": "Passa alla modalità chiara",
-    "theme.toDark": "Passa alla modalità scura",
   },
 };
 
@@ -235,18 +171,12 @@ function applyLanguage(lang) {
     opt.classList.toggle("active", opt.dataset.lang === currentLang);
   });
 
-  const themeToggleEl = document.getElementById("theme-toggle");
-  if (themeToggleEl) {
-    themeToggleEl.setAttribute("aria-label", t(currentTheme === "light" ? "theme.toDark" : "theme.toLight"));
-  }
-
   if (typeof showRotatingWord === "function") {
     rotatingWordIndex = 0;
     showRotatingWord();
   }
 
   renderProjectsUI();
-  renderActivityUI();
 }
 
 // --- Dropdown lingua (codice testuale, niente bandiere) ---
@@ -294,27 +224,6 @@ document.addEventListener("click", (e) => {
   if (!langMenu.hidden && !langDropdown.contains(e.target)) closeLangMenu();
 });
 
-// --- Sole/luna: chiaro o scuro, salvato come la lingua. Se l'utente non ha
-// mai scelto, si parte dalla preferenza di sistema. ---
-
-const THEME_STORAGE_KEY = "pigiazza-theme";
-const themeToggle = document.getElementById("theme-toggle");
-const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-let currentTheme = localStorage.getItem(THEME_STORAGE_KEY) || (prefersLight ? "light" : "dark");
-
-function applyTheme(theme) {
-  currentTheme = theme === "light" ? "light" : "dark";
-  localStorage.setItem(THEME_STORAGE_KEY, currentTheme);
-  document.body.dataset.theme = currentTheme;
-  themeToggle.setAttribute("aria-label", t(currentTheme === "light" ? "theme.toDark" : "theme.toLight"));
-}
-
-themeToggle.addEventListener("click", () => {
-  applyTheme(currentTheme === "light" ? "dark" : "light");
-});
-
-applyTheme(currentTheme);
-
 function escapeHtml(str) {
   return String(str ?? "").replace(/[&<>"']/g, (c) => ({
     "&": "&amp;",
@@ -344,12 +253,110 @@ function renderSocials() {
     .join("");
 }
 
-function projectCard(project) {
+// --- Social orbit nell'hero: un logo alla volta, esce a sinistra ed entra il
+// successivo da destra. Ogni logo e' un link al profilo corrispondente. ---
+
+function renderSocialOrbit() {
+  const orbit = document.getElementById("social-orbit");
+  if (!orbit) return;
+
+  orbit.innerHTML = `
+    <div class="social-orbit-window">
+      ${CONFIG.socials
+        .map(
+          (s, i) => `
+        <a class="social-slide${i === 0 ? " is-current" : ""}"
+           href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer"
+           aria-label="${escapeHtml(s.name)}"${i === 0 ? "" : ' tabindex="-1" aria-hidden="true"'}>
+          <img src="${escapeHtml(s.icon)}" alt="" />
+        </a>`
+        )
+        .join("")}
+    </div>
+    <div class="social-orbit-dots">
+      ${CONFIG.socials
+        .map(
+          (s, i) =>
+            `<button type="button" class="social-dot${i === 0 ? " is-active" : ""}" data-index="${i}" aria-label="${escapeHtml(s.name)}"></button>`
+        )
+        .join("")}
+    </div>`;
+
+  const slides = Array.from(orbit.querySelectorAll(".social-slide"));
+  const dots = Array.from(orbit.querySelectorAll(".social-dot"));
+  if (slides.length < 2) return;
+
+  let index = 0;
+  let timer = null;
+
+  // Riporta uno slide a destra (posizione di partenza) SENZA animare: serve a
+  // chi era uscito a sinistra e deve rientrare dal lato giusto. Il reflow
+  // forzato applica la posizione prima di riattivare la transizione, quindi
+  // non dipende da requestAnimationFrame: con rAF rallentato (scheda in
+  // background) i tempi saltavano e gli slide restavano tutti visibili.
+  function park(el) {
+    el.classList.add("is-instant");
+    el.classList.remove("is-leaving", "is-current");
+    void el.offsetWidth;
+    el.classList.remove("is-instant");
+  }
+
+  function show(next) {
+    if (next === index) return;
+    const current = slides[index];
+    const upcoming = slides[next];
+
+    park(upcoming);
+
+    // Chi esce va a sinistra; chi entra scorre da destra al centro.
+    current.classList.remove("is-current");
+    current.classList.add("is-leaving");
+    current.setAttribute("tabindex", "-1");
+    current.setAttribute("aria-hidden", "true");
+
+    upcoming.classList.add("is-current");
+    upcoming.removeAttribute("tabindex");
+    upcoming.removeAttribute("aria-hidden");
+
+    dots[index].classList.remove("is-active");
+    dots[next].classList.add("is-active");
+
+    index = next;
+  }
+
+  function start() {
+    if (prefersReducedMotion) return;
+    stop();
+    timer = window.setInterval(() => show((index + 1) % slides.length), 2000);
+  }
+
+  function stop() {
+    window.clearInterval(timer);
+  }
+
+  dots.forEach((dot) => {
+    dot.addEventListener("click", () => {
+      show(Number(dot.dataset.index));
+      start();
+    });
+  });
+
+  // Ferma la rotazione mentre si guarda o si naviga da tastiera, cosi' il
+  // logo non cambia proprio mentre lo si sta per cliccare.
+  orbit.addEventListener("mouseenter", stop);
+  orbit.addEventListener("mouseleave", start);
+  orbit.addEventListener("focusin", stop);
+  orbit.addEventListener("focusout", start);
+
+  start();
+}
+
+function projectCard(project, index) {
   const tags = (project.categories || []).slice(0, 4);
   const icon = project.icon_url || "";
 
   return `
-    <button type="button" class="project-card glass-panel" data-slug="${escapeHtml(project.slug)}">
+    <button type="button" class="project-card glass-panel stagger-in" style="--i:${index}" data-slug="${escapeHtml(project.slug)}">
       <div class="project-head">
         ${icon ? `<img class="project-icon" src="${escapeHtml(icon)}" alt="" loading="lazy" />` : `<div class="project-icon"></div>`}
         <div class="project-title-wrap">
@@ -501,94 +508,16 @@ async function loadProjects() {
 // slug -> project object, per aprire il modal senza rifare la fetch
 const projectsBySlug = new Map();
 
-// --- Attività: feed live degli eventi pubblici GitHub, stesso pattern di loadProjects ---
+// --- FAQ: accordion animato a mano (grid-template-rows in CSS) invece del
+// toggle istantaneo nativo di <details>, che non si puo' animare. ---
 
-function formatRelativeTime(dateStr) {
-  const diffMs = Date.now() - new Date(dateStr).getTime();
-  const diffMin = Math.round(diffMs / 60000);
-  const diffH = Math.round(diffMin / 60);
-  const diffD = Math.round(diffH / 24);
-  const rtf = new Intl.RelativeTimeFormat(currentLang, { numeric: "auto" });
-  if (diffMin < 60) return rtf.format(-diffMin, "minute");
-  if (diffH < 24) return rtf.format(-diffH, "hour");
-  if (diffD < 30) return rtf.format(-diffD, "day");
-  return rtf.format(-Math.round(diffD / 30), "month");
-}
-
-function activityLabel(event) {
-  const [owner, repoShort] = event.repo.name.split("/");
-  const repo = owner === CONFIG.githubUsername ? repoShort : event.repo.name;
-
-  switch (event.type) {
-    case "PushEvent":
-      return { icon: ICON_COMMIT, text: t("activity.push").replace("{repo}", repo) };
-    case "CreateEvent":
-      return event.payload.ref_type === "repository"
-        ? { icon: ICON_PLUS, text: t("activity.createRepo").replace("{repo}", repo) }
-        : { icon: ICON_PLUS, text: t("activity.createRef").replace("{repo}", repo) };
-    case "PublicEvent":
-      return { icon: ICON_GLOBE, text: t("activity.public").replace("{repo}", repo) };
-    case "ReleaseEvent":
-      return { icon: ICON_TAG, text: t("activity.release").replace("{repo}", repo) };
-    case "IssuesEvent":
-      return { icon: ICON_ISSUE, text: t("activity.issue").replace("{repo}", repo) };
-    case "PullRequestEvent":
-      return { icon: ICON_PR, text: t("activity.pr").replace("{repo}", repo) };
-    case "ForkEvent":
-      return { icon: ICON_FORK, text: t("activity.fork").replace("{repo}", repo) };
-    case "WatchEvent":
-      return { icon: ICON_STAR, text: t("activity.star").replace("{repo}", repo) };
-    case "GollumEvent":
-      return { icon: ICON_BOOK, text: t("activity.wiki").replace("{repo}", repo) };
-    default:
-      return { icon: ICON_COMMIT, text: t("activity.generic").replace("{repo}", repo) };
-  }
-}
-
-function activityRow(event) {
-  const { icon, text } = activityLabel(event);
-  return `
-    <a class="activity-row" href="https://github.com/${escapeHtml(event.repo.name)}" target="_blank" rel="noopener noreferrer">
-      <span class="activity-icon">${icon}</span>
-      <span class="activity-text">${escapeHtml(text)}</span>
-      <span class="activity-time">${escapeHtml(formatRelativeTime(event.created_at))}</span>
-    </a>`;
-}
-
-let activityState = { status: "loading", events: [] };
-
-function renderActivityUI() {
-  const list = document.getElementById("activity-list");
-  if (!list || activityState.status === "loading") return;
-
-  if (activityState.status === "empty") {
-    list.innerHTML = `<div class="activity-empty glass-panel"><p class="muted">${escapeHtml(t("activity.emptyText"))}</p></div>`;
-    return;
-  }
-
-  list.innerHTML = activityState.events.map(activityRow).join("");
-}
-
-async function loadActivity() {
-  try {
-    const res = await fetch(`https://api.github.com/users/${CONFIG.githubUsername}/events/public?per_page=6`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const events = await res.json();
-
-    if (!events.length) {
-      activityState = { status: "empty", events: [] };
-      renderActivityUI();
-      return;
-    }
-
-    activityState = { status: "loaded", events: events.slice(0, 6) };
-    renderActivityUI();
-  } catch (err) {
-    console.warn("Impossibile caricare l'attività GitHub:", err);
-    activityState = { status: "empty", events: [] };
-    renderActivityUI();
-  }
-}
+document.querySelectorAll(".faq-summary").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const item = btn.closest(".faq-item");
+    const isOpen = item.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", String(isOpen));
+  });
+});
 
 // --- Modal con descrizione completa (Markdown renderizzato, come su Modrinth) ---
 
@@ -721,10 +650,10 @@ function showRotatingWord() {
   // indipendente, quindi non serve nessun trucco di reset per farla ripartire.
   rotatingWordEl.animate(
     [
-      { opacity: 0, transform: "translateY(-38%)" },
-      { opacity: 1, transform: "translateY(0)" },
+      { opacity: 0, transform: "translateY(-38%) scale(0.85)" },
+      { opacity: 1, transform: "translateY(0) scale(1)" },
     ],
-    { duration: 450, easing: "cubic-bezier(0.25, 1, 0.5, 1)", fill: "both" }
+    { duration: 550, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", fill: "both" }
   );
 }
 
@@ -741,24 +670,52 @@ function startRotatingWord() {
 // --- Parallax: gli elementi decorativi si spostano leggermente allo scroll ---
 
 const parallaxEls = Array.from(document.querySelectorAll("[data-parallax]"));
+const heroLandscapes = Array.from(document.querySelectorAll(".hero-landscape"));
 
-function updateParallax() {
-  const scrollY = window.scrollY;
-  parallaxEls.forEach((el) => {
-    const speed = parseFloat(el.dataset.parallax);
-    el.style.transform = `translateY(${scrollY * speed}px)`;
+// Posizione "a riposo" di ogni elemento nel documento, misurata senza
+// trasformazione. Serve perche' lo spostamento va calcolato rispetto al centro
+// del viewport: usando lo scrollY assoluto (come prima) gli elementi in fondo
+// alla pagina accumulavano offset enormi e finivano tagliati dalla sezione.
+let parallaxBase = [];
+
+function measureParallax() {
+  parallaxBase = parallaxEls.map((el) => {
+    const prev = el.style.transform;
+    el.style.transform = "none";
+    const rect = el.getBoundingClientRect();
+    const center = rect.top + window.scrollY + rect.height / 2;
+    el.style.transform = prev;
+    return center;
   });
 }
 
-// --- Navbar: in cima alla pagina l'header è "volante" (nessuno sfondo);
-// appena si scrolla oltre l'hero, prende una barra di vetro con una piccola entrata. ---
+function updateParallax() {
+  const viewportCenter = window.scrollY + window.innerHeight / 2;
+
+  parallaxEls.forEach((el, i) => {
+    const speed = parseFloat(el.dataset.parallax);
+    const distance = parallaxBase[i] - viewportCenter;
+    el.style.transform = `translateY(${distance * speed}px)`;
+  });
+
+  // Il paesaggio scorre piu' lentamente della pagina. Il tetto tiene la corsa
+  // dentro il margine dato dallo scale(1.35), cosi' non si scoprono i bordi.
+  const shift = Math.min(window.scrollY * 0.22, 150);
+  heroLandscapes.forEach((el) => el.style.setProperty("--py", `${shift}px`));
+}
+
+// --- Navbar: hamburger, logo e lingua sono fermi e sempre visibili, in cima
+// alla pagina senza sfondo. Solo quando il titolo dell'hero e' scomparso del
+// tutto dallo schermo (il suo bordo INFERIORE ha superato l'header) compare
+// la barra di vetro dietro agli stessi controlli. ---
 
 const siteHeader = document.getElementById("site-header");
-const heroText = document.querySelector(".hero-text");
+const heroHeading = document.querySelector(".hero-text h1");
 
 function updateHeaderNav() {
-  const threshold = heroText ? heroText.offsetTop + heroText.offsetHeight * 0.7 : 120;
-  siteHeader.classList.toggle("is-scrolled", window.scrollY > threshold);
+  const headerBottom = siteHeader.getBoundingClientRect().bottom;
+  const titleBottom = heroHeading ? heroHeading.getBoundingClientRect().bottom : -Infinity;
+  siteHeader.classList.toggle("is-scrolled", titleBottom < headerBottom);
 }
 
 // --- Back to top: compare solo dopo aver superato l'hero. ---
@@ -787,9 +744,27 @@ function onScroll() {
 }
 
 window.addEventListener("scroll", onScroll, { passive: true });
-window.addEventListener("resize", updateHeaderNav);
+window.addEventListener("resize", () => {
+  updateHeaderNav();
+  if (!prefersReducedMotion) {
+    measureParallax();
+    updateParallax();
+  }
+});
+
 updateHeaderNav();
 updateBackToTop();
+
+if (!prefersReducedMotion) {
+  measureParallax();
+  updateParallax();
+  // Le immagini dell'hero cambiano l'altezza della pagina quando arrivano:
+  // rimisuriamo, altrimenti le basi restano quelle del layout senza immagini.
+  window.addEventListener("load", () => {
+    measureParallax();
+    updateParallax();
+  });
+}
 
 // --- Reveal on scroll: il contenuto è visibile di default (vedi .reveal in
 // CSS), quindi qui si aggiunge lo stato "in attesa" solo se possiamo
@@ -813,9 +788,33 @@ if (!prefersReducedMotion && "IntersectionObserver" in window) {
   revealEls.forEach((el) => revealObserver.observe(el));
 }
 
+// --- Schema Idea → Build → Ship: il filo si disegna quando entra in vista.
+// Come per .reveal, lo stato di partenza è "disegnato" nel CSS e la classe
+// viene tolta solo se possiamo garantire che l'observer la rimetta. ---
+
+const flow = document.getElementById("flow");
+
+if (flow) {
+  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
+    flow.classList.add("is-drawn");
+  } else {
+    const flowObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-drawn");
+          flowObserver.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.35 }
+    );
+    flowObserver.observe(flow);
+  }
+}
+
 document.getElementById("year").textContent = new Date().getFullYear();
 applyLanguage(currentLang);
 renderSocials();
+renderSocialOrbit();
 loadProjects();
-loadActivity();
 startRotatingWord();
