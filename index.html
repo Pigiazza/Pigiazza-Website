@@ -41,7 +41,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=9" />
+<link rel="stylesheet" href="style.css?v=10" />
 
 <!-- Analytics: richiede un account Plausible (plausible.io) collegato al dominio
      reale del sito. "pigiazza.example" e' un segnaposto: va sostituito con il
@@ -83,9 +83,10 @@
 
 <nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
   <ul class="menu-links">
-    <li style="--i:0"><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
-    <li style="--i:1"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
-    <li style="--i:2"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
+    <li style="--i:0"><a href="#top" data-i18n="nav.home">Home</a></li>
+    <li style="--i:1"><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+    <li style="--i:2"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
+    <li style="--i:3"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
   </ul>
 </nav>
 
@@ -176,6 +177,17 @@
     </div>
   </section>
 
+  <section id="latest" class="latest-project">
+    <div class="reveal">
+      <h2 data-i18n="latest.heading">Latest release</h2>
+      <p class="section-sub muted" data-i18n="latest.subtext">The newest thing I&rsquo;ve shipped, straight from Modrinth.</p>
+    </div>
+    <div id="latest-project-grid" class="latest-project-card-wrap">
+      <div class="project-card glass-panel skeleton"></div>
+    </div>
+    <a href="projects.html" class="btn btn-ghost" data-i18n="latest.viewAll">See all projects</a>
+  </section>
+
   <section id="faq" class="faq">
     <h2 data-i18n="faq.heading">Questions people actually ask</h2>
     <div class="faq-list">
@@ -254,7 +266,7 @@
   <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
-<script src="nav.js?v=1"></script>
+<script src="nav.js?v=2"></script>
 <script src="script.js?v=10"></script>
 </body>
 </html>

@@ -12,6 +12,7 @@ const LANGS = {
 
 window.PIGIAZZA_STRINGS = window.PIGIAZZA_STRINGS || { en: {}, it: {} };
 Object.assign(window.PIGIAZZA_STRINGS.en, {
+  "nav.home": "Home",
   "nav.projects": "Projects",
   "nav.reportBug": "Report a bug",
   "nav.wiki": "Wiki",
@@ -20,6 +21,7 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
   "footer.tagline": "Made solo, mostly at night.",
 });
 Object.assign(window.PIGIAZZA_STRINGS.it, {
+  "nav.home": "Home",
   "nav.projects": "Progetti",
   "nav.reportBug": "Segnala un bug",
   "nav.wiki": "Wiki",

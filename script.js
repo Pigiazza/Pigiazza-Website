@@ -1,5 +1,6 @@
-// Modifica qui se il tuo username GitHub non coincide con "Pigiazza".
+// Modifica qui se i tuoi username sui vari servizi non coincidono tutti con "Pigiazza".
 const CONFIG = {
+  modrinthUsername: "Pigiazza",
   socials: [
     { key: "github", name: "GitHub", url: "https://github.com/Pigiazza", icon: "assets/github.png" },
     { key: "modrinth", name: "Modrinth", url: "https://modrinth.com/user/Pigiazza", icon: "assets/modrinth.png" },
@@ -7,6 +8,12 @@ const CONFIG = {
     { key: "kofi", name: "Ko-fi", url: "https://ko-fi.com/pigiazza", icon: "assets/kofi.png" },
   ],
 };
+
+const ICON_DOWNLOAD =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>';
+
+const ICON_HEART =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
 
 // --- Traduzioni: solo le chiavi di questa pagina. nav.js porta le proprie
 // (nav.*, backToTop.aria, footer.tagline) e le unisce allo stesso dizionario
@@ -37,6 +44,12 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
     "about.step3Title": "Ship",
     "about.step3Text": "Once it survives real play without breaking, it goes up on Modrinth.",
     "about.stackTitle": "What I build with",
+    "latest.heading": "Latest release",
+    "latest.subtext": "The newest thing I’ve shipped, straight from Modrinth.",
+    "latest.viewAll": "See all projects",
+    "latest.emptyTitle": "Nothing published yet",
+    "latest.emptyText": "Still cooking. Check back soon, or follow along so you don’t miss the first drop.",
+    "latest.emptyLink": "Visit my Modrinth profile",
     "faq.heading": "Questions people actually ask",
     "faq.q1": "Are your mods free?",
     "faq.a1": "Always. There’s a Ko-fi link below if you’d like to support the work, but it’s never required.",
@@ -81,6 +94,12 @@ Object.assign(window.PIGIAZZA_STRINGS.it, {
     "about.step3Title": "Pubblicazione",
     "about.step3Text": "Quando regge al gioco vero senza rompersi, va su Modrinth.",
     "about.stackTitle": "Con cosa costruisco",
+    "latest.heading": "Ultima uscita",
+    "latest.subtext": "L'ultima cosa che ho pubblicato, presa direttamente da Modrinth.",
+    "latest.viewAll": "Vedi tutti i progetti",
+    "latest.emptyTitle": "Ancora nulla di pubblicato",
+    "latest.emptyText": "Ancora in lavorazione. Torna a dare un'occhiata, o seguimi per non perderti il primo rilascio.",
+    "latest.emptyLink": "Vai al mio profilo Modrinth",
     "faq.heading": "Le domande che fanno davvero",
     "faq.q1": "Le tue mod sono gratis?",
     "faq.a1": "Sempre. Qui sotto c'è un link a Ko-fi se vuoi supportare il lavoro, ma non è mai obbligatorio.",
@@ -113,7 +132,14 @@ window.onLangChange = function () {
     rotatingWordIndex = 0;
     showRotatingWord();
   }
+  renderLatestProject();
 };
+
+function formatCount(n) {
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+  if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  return String(n);
+}
 
 function renderSocials() {
   const grid = document.getElementById("contact-grid");
@@ -224,6 +250,74 @@ function renderSocialOrbit() {
   orbit.addEventListener("focusout", start);
 
   start();
+}
+
+// --- Ultimo progetto pubblicato: solo una card in home, il resto vive su
+// projects.html. Il link della card va dritto su Modrinth: non c'e' piu'
+// un modal in questa pagina. ---
+
+let latestProjectState = { status: "loading", project: null };
+
+function latestProjectCard(project) {
+  const tags = (project.categories || []).slice(0, 4);
+  const icon = project.icon_url || "";
+  const href = `https://modrinth.com/${project.project_type}/${project.slug}`;
+
+  return `
+    <a class="project-card glass-panel stagger-in" style="--i:0" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">
+      <div class="project-head">
+        ${icon ? `<img class="project-icon" src="${escapeHtml(icon)}" alt="" loading="lazy" />` : `<div class="project-icon"></div>`}
+        <div class="project-title-wrap">
+          <span class="project-title">${escapeHtml(project.title)}</span>
+          <span class="project-type">${escapeHtml(project.project_type)}</span>
+        </div>
+      </div>
+      <p class="project-desc">${escapeHtml(project.description)}</p>
+      ${tags.length ? `<div class="project-tags">${tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
+      <div class="project-stats">
+        <span class="stat">${ICON_DOWNLOAD} ${formatCount(project.downloads || 0)}</span>
+        <span class="stat">${ICON_HEART} ${formatCount(project.followers || 0)}</span>
+      </div>
+    </a>`;
+}
+
+function renderLatestProject() {
+  const wrap = document.getElementById("latest-project-grid");
+  if (!wrap || latestProjectState.status === "loading") return;
+
+  if (latestProjectState.status === "empty") {
+    wrap.innerHTML = `
+      <div class="projects-empty glass-panel">
+        <h3>${escapeHtml(t("latest.emptyTitle"))}</h3>
+        <p class="muted">${escapeHtml(t("latest.emptyText"))}</p>
+        <a class="btn btn-primary" href="https://modrinth.com/user/${CONFIG.modrinthUsername}" target="_blank" rel="noopener noreferrer">${escapeHtml(t("latest.emptyLink"))}</a>
+      </div>`;
+    return;
+  }
+
+  wrap.innerHTML = latestProjectCard(latestProjectState.project);
+}
+
+async function loadLatestProject() {
+  try {
+    const res = await fetch(`https://api.modrinth.com/v2/user/${CONFIG.modrinthUsername}/projects`);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const projects = await res.json();
+
+    if (!projects.length) {
+      latestProjectState = { status: "empty", project: null };
+      renderLatestProject();
+      return;
+    }
+
+    const latest = projects.reduce((a, b) => (new Date(a.published) > new Date(b.published) ? a : b));
+    latestProjectState = { status: "loaded", project: latest };
+    renderLatestProject();
+  } catch (err) {
+    console.warn("Impossibile caricare l'ultimo progetto Modrinth:", err);
+    latestProjectState = { status: "empty", project: null };
+    renderLatestProject();
+  }
 }
 
 // --- FAQ: accordion animato a mano (grid-template-rows in CSS) invece del
@@ -390,4 +484,5 @@ if (flow) {
 applyLanguage(currentLang);
 renderSocials();
 renderSocialOrbit();
+loadLatestProject();
 startRotatingWord();

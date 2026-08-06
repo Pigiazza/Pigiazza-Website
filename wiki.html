@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=9" />
+<link rel="stylesheet" href="style.css?v=10" />
 <style>
   .page {
     max-width: 760px;
@@ -131,9 +131,10 @@
 
 <nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
   <ul class="menu-links">
-    <li style="--i:0"><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
-    <li style="--i:1"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
-    <li style="--i:2"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
+    <li style="--i:0"><a href="index.html" data-i18n="nav.home">Home</a></li>
+    <li style="--i:1"><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
+    <li style="--i:2"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
+    <li style="--i:3"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
   </ul>
 </nav>
 
@@ -175,7 +176,7 @@
   <div class="glass-panel page-section">
     <h2 id="pg-docs-title">Project docs</h2>
     <p id="pg-docs-body">Nothing&rsquo;s published yet, so there&rsquo;s nothing project-specific to write up here. Once the first mod ships, its guide moves in.</p>
-    <a class="btn btn-primary" href="index.html#projects">
+    <a class="btn btn-primary" href="projects.html">
       <span id="pg-docs-cta">See what&rsquo;s live</span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
     </a>
@@ -236,7 +237,7 @@
     document.getElementById("pg-docs-cta").textContent = t("pg.docsCta");
   };
 </script>
-<script src="nav.js?v=1"></script>
+<script src="nav.js?v=2"></script>
 <script>applyLanguage(currentLang);</script>
 </body>
 </html>
