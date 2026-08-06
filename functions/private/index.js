@@ -438,6 +438,75 @@ function renderPrivatePage(email) {
   }
   #repo-modal-topics:empty { display: none; }
 
+  .repo-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  /* --- Sfoglia i file --- */
+
+  .browse-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 0.88rem;
+    min-width: 0;
+  }
+
+  .crumb {
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: var(--ink-soft);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .crumb:hover { background: var(--glass-tint-strong); color: var(--ink); }
+  .crumb:last-of-type { color: var(--ink); }
+
+  .crumb-sep { color: var(--ink-mute); }
+
+  .browse-row {
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .file-viewer {
+    padding: clamp(24px, 4vw, 40px);
+    line-height: 1.7;
+  }
+  .file-viewer :is(h1, h2, h3) { font-family: "Fredoka", sans-serif; margin: 24px 0 10px; }
+  .file-viewer img { max-width: 100%; border-radius: var(--radius-sm); }
+  .file-viewer pre {
+    background: var(--glass-tint-strong);
+    padding: 14px 16px;
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+  }
+
+  .code-viewer {
+    padding: 20px 24px;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--ink);
+    white-space: pre;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .icon-btn, .icon-pick, .color-pick, .row-disclosure, .tree-row, .btn {
       transition: none !important;
@@ -461,23 +530,35 @@ function renderPrivatePage(email) {
     <a class="btn btn-ghost" href="/api/logout">Esci</a>
   </div>
 
-  <div class="organizer-toolbar">
-    <label class="organizer-search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
-      <input type="search" class="field-input" id="organizer-search" placeholder="Cerca un repo…" aria-label="Cerca un repo" />
-    </label>
-    <button type="button" class="icon-btn" id="organizer-refresh" aria-label="Aggiorna">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
-    </button>
-    <button type="button" class="btn btn-primary" id="organizer-new-folder">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
-      <span>Nuova cartella</span>
-    </button>
+  <div id="organizer-main">
+    <div class="organizer-toolbar">
+      <label class="organizer-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+        <input type="search" class="field-input" id="organizer-search" placeholder="Cerca un repo…" aria-label="Cerca un repo" />
+      </label>
+      <button type="button" class="icon-btn" id="organizer-refresh" aria-label="Aggiorna">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+      </button>
+      <button type="button" class="btn btn-primary" id="organizer-new-folder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+        <span>Nuova cartella</span>
+      </button>
+    </div>
+
+    <p class="organizer-status" id="organizer-status" role="status" aria-live="polite"></p>
+
+    <div id="organizer-tree"></div>
   </div>
 
-  <p class="organizer-status" id="organizer-status" role="status" aria-live="polite"></p>
-
-  <div id="organizer-tree"></div>
+  <div id="browse-view" hidden>
+    <div class="browse-toolbar">
+      <button type="button" class="icon-btn" id="browse-back" aria-label="Torna all'organizer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+      </button>
+      <nav class="breadcrumb" id="browse-breadcrumb" aria-label="Percorso nel repository"></nav>
+    </div>
+    <div id="browse-body"></div>
+  </div>
 </div>
 
 <!-- Widget di dettaglio repo -->
@@ -498,10 +579,16 @@ function renderPrivatePage(email) {
     <div class="project-stats" id="repo-modal-stats"></div>
     <div class="fact-list" id="repo-modal-facts"></div>
     <div id="repo-modal-topics"></div>
-    <a class="btn btn-primary" id="repo-modal-github" href="#" target="_blank" rel="noopener noreferrer">
-      <span>Vai al repository</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-    </a>
+    <div class="repo-modal-actions">
+      <a class="btn btn-primary" id="repo-modal-github" href="#" target="_blank" rel="noopener noreferrer">
+        <span>Vai al repository</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+      </a>
+      <button type="button" class="btn btn-ghost" id="repo-modal-browse">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>
+        <span>Sfoglia i file</span>
+      </button>
+    </div>
   </div>
 </div>
 
@@ -574,6 +661,8 @@ function renderPrivatePage(email) {
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 <script src="/private-app.js"></script>
 </body>
 </html>`;

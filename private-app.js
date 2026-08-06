@@ -684,7 +684,10 @@ document.addEventListener("keydown", (e) => {
 const repoModal = document.getElementById("repo-modal");
 setupModalDismiss(repoModal);
 
+let currentModalRepo = null;
+
 function openRepoModal(repo) {
+  currentModalRepo = repo;
   document.getElementById("repo-modal-icon-wrap").innerHTML = svgIcon(
     (tree.repoMeta[repo.id]?.icon) || DEFAULT_REPO_ICON
   );
@@ -721,6 +724,129 @@ function openRepoModal(repo) {
 
   openModal(repoModal);
 }
+
+document.getElementById("repo-modal-browse").addEventListener("click", () => {
+  if (!currentModalRepo) return;
+  closeModal(repoModal);
+  openBrowse(currentModalRepo);
+});
+
+// ---------------------------------------------------------------------------
+// Sfoglia i file del repo
+// ---------------------------------------------------------------------------
+
+const organizerMainEl = document.getElementById("organizer-main");
+const browseViewEl = document.getElementById("browse-view");
+const browseBodyEl = document.getElementById("browse-body");
+const browseBreadcrumbEl = document.getElementById("browse-breadcrumb");
+
+let browseState = null; // { repo, ref, path }
+
+function openBrowse(repo) {
+  browseState = { repo: repo.id, ref: repo.defaultBranch || "", path: "" };
+  organizerMainEl.hidden = true;
+  browseViewEl.hidden = false;
+  loadBrowsePath("");
+}
+
+function closeBrowse() {
+  browseViewEl.hidden = true;
+  organizerMainEl.hidden = false;
+  browseState = null;
+}
+
+function renderBreadcrumb() {
+  const repoName = browseState.repo.split("/")[1];
+  const parts = browseState.path ? browseState.path.split("/") : [];
+  let acc = "";
+  const crumbs = [`<button type="button" class="crumb" data-crumb-path="">${escapeHtml(repoName)}</button>`];
+  parts.forEach((part) => {
+    acc = acc ? `${acc}/${part}` : part;
+    crumbs.push(`<span class="crumb-sep">/</span><button type="button" class="crumb" data-crumb-path="${escapeHtml(acc)}">${escapeHtml(part)}</button>`);
+  });
+  browseBreadcrumbEl.innerHTML = crumbs.join("");
+}
+
+function fileIconFor(name) {
+  return /readme/i.test(name) ? "book-open" : "file-code";
+}
+
+function renderBrowseEntries(entries) {
+  if (!entries.length) {
+    browseBodyEl.innerHTML = `<div class="tree-empty glass-panel"><p class="muted">Cartella vuota.</p></div>`;
+    return;
+  }
+  browseBodyEl.innerHTML = `<ul class="tree-list" role="list">${entries.map(renderBrowseEntryRow).join("")}</ul>`;
+}
+
+function renderBrowseEntryRow(entry) {
+  const icon = entry.type === "dir" ? DEFAULT_FOLDER_ICON : fileIconFor(entry.name);
+  return `
+    <li class="tree-item">
+      <button type="button" class="tree-row browse-row" data-browse-path="${escapeHtml(entry.path)}" data-browse-type="${entry.type}">
+        <span class="node-icon" style="--badge-bg:${colorBg(DEFAULT_COLOR)};--badge-ink:${colorInk(DEFAULT_COLOR)}">${svgIcon(icon)}</span>
+        <span class="row-main"><span class="row-name">${escapeHtml(entry.name)}</span></span>
+      </button>
+    </li>`;
+}
+
+async function loadBrowsePath(path) {
+  browseState.path = path;
+  renderBreadcrumb();
+  browseBodyEl.innerHTML = renderSkeleton();
+  try {
+    const params = new URLSearchParams({ repo: browseState.repo, path, ref: browseState.ref });
+    const data = await apiGet(`/api/github/tree?${params}`);
+    if (data.isFile) return loadBrowseFile(path);
+    renderBrowseEntries(data.entries);
+  } catch (err) {
+    browseBodyEl.innerHTML = `<div class="tree-empty glass-panel"><p class="muted">${escapeHtml(err.message)}</p></div>`;
+  }
+}
+
+async function loadBrowseFile(path) {
+  browseState.path = path;
+  renderBreadcrumb();
+  browseBodyEl.innerHTML = renderSkeleton();
+  try {
+    const params = new URLSearchParams({ repo: browseState.repo, path, ref: browseState.ref });
+    const data = await apiGet(`/api/github/file?${params}`);
+
+    if (data.isBinary || data.tooLarge) {
+      const message = data.isBinary ? "Anteprima non disponibile per questo tipo di file." : "File troppo grande per l'anteprima.";
+      browseBodyEl.innerHTML = `
+        <div class="tree-empty glass-panel">
+          <p class="muted">${escapeHtml(message)}</p>
+          <a class="btn btn-primary" href="${escapeHtml(data.htmlUrl)}" target="_blank" rel="noopener noreferrer">Apri su GitHub</a>
+        </div>`;
+      return;
+    }
+
+    const isMarkdown = /\.mdx?$/i.test(path);
+    if (isMarkdown && window.marked && window.DOMPurify) {
+      browseBodyEl.innerHTML = `<div class="glass-panel file-viewer">${window.DOMPurify.sanitize(window.marked.parse(data.content))}</div>`;
+    } else {
+      browseBodyEl.innerHTML = `<pre class="glass-panel code-viewer"><code>${escapeHtml(data.content)}</code></pre>`;
+    }
+  } catch (err) {
+    browseBodyEl.innerHTML = `<div class="tree-empty glass-panel"><p class="muted">${escapeHtml(err.message)}</p></div>`;
+  }
+}
+
+browseBodyEl.addEventListener("click", (e) => {
+  const row = e.target.closest("[data-browse-path]");
+  if (!row) return;
+  if (row.dataset.browseType === "dir") loadBrowsePath(row.dataset.browsePath);
+  else loadBrowseFile(row.dataset.browsePath);
+});
+
+browseBreadcrumbEl.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-crumb-path]");
+  if (!btn) return;
+  loadBrowsePath(btn.dataset.crumbPath);
+});
+
+document.getElementById("browse-back").addEventListener("click", closeBrowse);
 
 // ---------------------------------------------------------------------------
 // Modal: nuova cartella / rinomina / icona e colore / sposta
