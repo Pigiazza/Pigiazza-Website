@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Accedi — Pigiazza</title>
+<link rel="icon" href="assets/profile icon.png" type="image/png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=10" />
+<style>
+  .login-page {
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .login-card {
+    max-width: 380px;
+    padding: clamp(36px, 6vw, 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+  }
+  .login-card img { height: 40px; }
+  .login-error {
+    color: oklch(55% 0.18 25);
+    font-size: 0.88rem;
+    min-height: 1.2em;
+  }
+</style>
+</head>
+<body data-palette="sakura">
+
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true">
+  <span class="glow glow-1"></span>
+  <span class="glow glow-2"></span>
+</div>
+
+<main class="login-page">
+  <div class="glass-panel login-card">
+    <img src="assets/pigiazza.png" alt="Pigiazza" />
+    <h1>Area privata</h1>
+    <p class="muted">Accedi con l&rsquo;account Google autorizzato.</p>
+
+    <div id="g_id_onload"
+      data-client_id="INCOLLA_QUI_IL_TUO_GOOGLE_CLIENT_ID"
+      data-callback="handleCredentialResponse"
+      data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin" data-type="standard" data-shape="pill" data-theme="outline" data-text="signin_with" data-size="large"></div>
+
+    <p class="login-error" id="login-error"></p>
+  </div>
+</main>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+  async function handleCredentialResponse(response) {
+    const errorEl = document.getElementById("login-error");
+    errorEl.textContent = "";
+    try {
+      const res = await fetch("/api/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential: response.credential }),
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        window.location.href = "/private/";
+      } else {
+        errorEl.textContent = data.error || "Accesso negato.";
+      }
+    } catch (err) {
+      errorEl.textContent = "Errore di rete, riprova.";
+    }
+  }
+</script>
+</body>
+</html>
