@@ -265,10 +265,8 @@ a { color: inherit; text-decoration: none; }
 
 .site-header > * { pointer-events: auto; }
 
-/* Hamburger, logo e lingua sono fermi e sempre visibili: non spariscono mai.
-   E' solo lo sfondo (.header-bar, sotto) che compare quando il titolo
-   dell'hero e' uscito del tutto dallo schermo (vedi updateHeaderNav in
-   script.js: soglia sul bordo INFERIORE dell'h1, non su quello superiore). */
+/* Hamburger, logo e lingua sono fermi e sempre visibili: non spariscono mai
+   e non seguono lo scroll (.site-header e' position: fixed). */
 
 /* Logo centrato rispetto alla finestra, non allo spazio fra i due gruppi di
    controlli: in assoluto resta al centro anche se a destra c'e' piu' roba. */
@@ -305,33 +303,31 @@ a { color: inherit; text-decoration: none; }
   .site-wordmark { display: none; }
 }
 
-/* Barra di sfondo che compare solo dopo aver scrollato oltre l'hero:
-   in cima alla pagina hamburger e lingua restano "volanti", senza navbar. */
+/* Pillola sempre visibile, staccata dal bordo dello schermo su tutti i lati:
+   niente piu' "appare solo dopo lo scroll", e angoli arrotondati ovunque
+   (prima erano squadrati sopra perche' la barra toccava il bordo). */
 .header-bar {
   position: absolute;
-  inset: 0;
+  top: 14px;
+  bottom: 14px;
+  left: clamp(14px, 3vw, 28px);
+  right: clamp(14px, 3vw, 28px);
   z-index: -1;
-  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-radius: var(--radius-lg);
   background: linear-gradient(155deg, var(--glass-tint-strong), var(--glass-tint) 65%);
   backdrop-filter: blur(24px) saturate(160%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border-bottom: 1px solid var(--glass-edge-dim);
-  box-shadow: 0 12px 30px -18px var(--shadow-color);
-  opacity: 0;
-  transform: scaleY(0.6);
-  transform-origin: top;
-  transition: opacity 0.4s var(--ease-out-quart), transform 0.55s var(--ease-bounce);
+  box-shadow:
+    0 1px 0 0 var(--glass-edge) inset,
+    0 -1px 0 0 var(--glass-edge-dim) inset,
+    0 0 0 1px var(--glass-edge-dim),
+    0 12px 30px -18px var(--shadow-color);
+  transition: opacity 0.35s var(--ease-out-quart), transform 0.45s var(--ease-bounce);
   pointer-events: none;
 }
 
-.site-header.is-scrolled .header-bar {
-  opacity: 1;
-  transform: scaleY(1);
-}
-
-/* A menu aperto il pannello di vetro del menu fa già da sfondo: la navbar
-   sparisce per non sovrapporre due strati di vetro. Stessa specificità della
-   regola sopra, quindi deve stare dopo per vincere quando entrambe attive. */
+/* A menu aperto il pannello di vetro del menu fa già da sfondo: la pillola
+   sparisce per non sovrapporre due strati di vetro. */
 .site-header.menu-open .header-bar {
   opacity: 0;
   transform: scaleY(0.6);

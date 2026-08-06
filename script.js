@@ -18,26 +18,19 @@ const ICON_HEART =
 const ICON_BOX =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 8-9-5-9 5 9 5 9-5Z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg>';
 
-// Lingue: codice breve mostrato al posto delle bandiere, più nome esteso nel menu.
-const LANGS = {
-  en: { code: "EN", label: "English" },
-  it: { code: "IT", label: "Italiano" },
-};
-
-// --- Traduzioni ---
+// --- Traduzioni: solo le chiavi di questa pagina. nav.js porta le proprie
+// (nav.*, backToTop.aria, footer.tagline) e le unisce allo stesso dizionario
+// PRIMA che applyLanguage() venga chiamato in fondo a questo file. ---
 
 const ROTATING_WORDS = {
   en: ["Mods", "Plugins", "Datapacks", "Servers"],
   it: ["Mod", "Plugin", "Datapack", "Server"],
 };
 
-const TRANSLATIONS = {
-  en: {
+Object.assign(window.PIGIAZZA_STRINGS.en, {
     "nav.home": "Home",
     "nav.about": "About",
-    "nav.projects": "Projects",
     "nav.contact": "Contact",
-    "nav.langLabel": "Language",
     "hero.headingPre": "The place to find",
     "hero.headingPost": "made by someone who lives and breathes Minecraft.",
     "hero.sub": "New to modding. I build things I actually want to use, test them properly, then publish them.",
@@ -54,7 +47,6 @@ const TRANSLATIONS = {
     "about.step3Title": "Ship",
     "about.step3Text": "Once it survives real play without breaking, it goes up on Modrinth.",
     "about.stackTitle": "What I build with",
-    "nav.faq": "FAQ",
     "projects.heading": "Everything I’ve shipped",
     "projects.subtext": "New releases show up here the moment I publish them on Modrinth, no need to refresh or check back.",
     "projects.emptyTitle": "Nothing published yet",
@@ -82,18 +74,15 @@ const TRANSLATIONS = {
     "faq.a6": "Yes. Every project card links straight to its GitHub repo, issues and pull requests included.",
     "contact.heading": "Find me elsewhere",
     "contact.subtext": "You’ll find the code on GitHub, downloads on Modrinth, and a coffee jar on Ko-fi if you’re feeling generous.",
-    "footer.tagline": "Made solo, mostly at night.",
     "modal.close": "Close",
     "modal.openLink": "Open on Modrinth",
     "modal.loading": "Loading description…",
-    "backToTop.aria": "Back to top",
-  },
-  it: {
+});
+
+Object.assign(window.PIGIAZZA_STRINGS.it, {
     "nav.home": "Home",
     "nav.about": "Chi sono",
-    "nav.projects": "Progetti",
     "nav.contact": "Contatti",
-    "nav.langLabel": "Lingua",
     "hero.headingPre": "Il posto dove trovare",
     "hero.headingPost": "creati da chi vive Minecraft in prima persona.",
     "hero.sub": "Sono alle prime armi con le mod. Creo cose che voglio usare io per primo, le testo sul serio, poi le pubblico.",
@@ -110,7 +99,6 @@ const TRANSLATIONS = {
     "about.step3Title": "Pubblicazione",
     "about.step3Text": "Quando regge al gioco vero senza rompersi, va su Modrinth.",
     "about.stackTitle": "Con cosa costruisco",
-    "nav.faq": "FAQ",
     "projects.heading": "Tutto quello che ho pubblicato",
     "projects.subtext": "Ogni nuovo progetto compare qui non appena lo pubblico su Modrinth, non serve aggiornare la pagina.",
     "projects.emptyTitle": "Ancora nulla di pubblicato",
@@ -138,101 +126,21 @@ const TRANSLATIONS = {
     "faq.a6": "Sì. Ogni progetto rimanda direttamente alla sua repo GitHub, issue e pull request comprese.",
     "contact.heading": "Dove trovarmi",
     "contact.subtext": "Trovi il codice su GitHub, i download su Modrinth, e un barattolo per il caffè su Ko-fi se ti va di essere generoso.",
-    "footer.tagline": "Fatto da solo, soprattutto di notte.",
     "modal.close": "Chiudi",
     "modal.openLink": "Apri su Modrinth",
     "modal.loading": "Caricamento descrizione…",
-    "backToTop.aria": "Torna in cima",
-  },
-};
+});
 
-const LANG_STORAGE_KEY = "pigiazza-lang";
-let currentLang = localStorage.getItem(LANG_STORAGE_KEY) || "en";
-
-function t(key) {
-  return TRANSLATIONS[currentLang][key] ?? TRANSLATIONS.en[key] ?? key;
-}
-
-function applyLanguage(lang) {
-  currentLang = TRANSLATIONS[lang] ? lang : "en";
-  localStorage.setItem(LANG_STORAGE_KEY, currentLang);
-  document.documentElement.lang = currentLang;
-
-  document.querySelectorAll("[data-i18n]").forEach((el) => {
-    el.textContent = t(el.dataset.i18n);
-  });
-
-  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
-    el.setAttribute("aria-label", t(el.dataset.i18nAria));
-  });
-
-  document.getElementById("lang-current-code").textContent = LANGS[currentLang].code;
-  document.querySelectorAll(".lang-option").forEach((opt) => {
-    opt.classList.toggle("active", opt.dataset.lang === currentLang);
-  });
-
+// currentLang, t(), escapeHtml(), applyLanguage() e il dropdown lingua sono
+// in nav.js, condivisi da tutte le pagine. Qui serve solo ridisegnare i
+// progetti e far ripartire la parola che ruota quando cambia la lingua.
+window.onLangChange = function () {
   if (typeof showRotatingWord === "function") {
     rotatingWordIndex = 0;
     showRotatingWord();
   }
-
   renderProjectsUI();
-}
-
-// --- Dropdown lingua (codice testuale, niente bandiere) ---
-
-const langDropdown = document.getElementById("lang-dropdown");
-const langToggle = document.getElementById("lang-toggle");
-const langMenu = document.getElementById("lang-menu");
-
-langMenu.innerHTML = Object.entries(LANGS)
-  .map(
-    ([code, lang]) => `
-    <li>
-      <button type="button" class="lang-option" data-lang="${code}">
-        <span class="lang-option-code">${lang.code}</span>
-        <span class="lang-option-name">${escapeHtml(lang.label)}</span>
-      </button>
-    </li>`
-  )
-  .join("");
-
-function openLangMenu() {
-  langMenu.hidden = false;
-  langToggle.setAttribute("aria-expanded", "true");
-}
-
-function closeLangMenu() {
-  langMenu.hidden = true;
-  langToggle.setAttribute("aria-expanded", "false");
-}
-
-langToggle.addEventListener("click", (e) => {
-  e.stopPropagation();
-  if (langMenu.hidden) openLangMenu();
-  else closeLangMenu();
-});
-
-langMenu.querySelectorAll(".lang-option").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    applyLanguage(btn.dataset.lang);
-    closeLangMenu();
-  });
-});
-
-document.addEventListener("click", (e) => {
-  if (!langMenu.hidden && !langDropdown.contains(e.target)) closeLangMenu();
-});
-
-function escapeHtml(str) {
-  return String(str ?? "").replace(/[&<>"']/g, (c) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  }[c]));
-}
+};
 
 function formatCount(n) {
   if (n >= 1000000) return (n / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
@@ -576,68 +484,10 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && !modal.hidden) closeProjectModal();
 });
 
-// --- Menu a comparsa (hamburger a sinistra, si espande dal centro del bottone) ---
-
-const menuToggle = document.getElementById("menu-toggle");
-const siteMenu = document.getElementById("site-menu");
-let menuLastFocused = null;
-
-function openMenu() {
-  menuLastFocused = document.activeElement;
-  menuToggle.classList.add("is-open");
-  menuToggle.setAttribute("aria-expanded", "true");
-  menuToggle.setAttribute("aria-label", "Close menu");
-  siteMenu.classList.add("is-open");
-  siteMenu.removeAttribute("inert");
-  siteMenu.setAttribute("aria-hidden", "false");
-  siteHeader.classList.add("menu-open");
-  document.body.style.overflow = "hidden";
-  const firstLink = siteMenu.querySelector("a");
-  if (firstLink) firstLink.focus({ preventScroll: true });
-}
-
-function closeMenu() {
-  menuToggle.classList.remove("is-open");
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Open menu");
-  siteMenu.classList.remove("is-open");
-  siteMenu.setAttribute("inert", "");
-  siteMenu.setAttribute("aria-hidden", "true");
-  siteHeader.classList.remove("menu-open");
-  document.body.style.overflow = "";
-  closeLangMenu();
-  if (menuLastFocused) menuLastFocused.focus();
-}
-
-menuToggle.addEventListener("click", () => {
-  if (siteMenu.classList.contains("is-open")) closeMenu();
-  else openMenu();
-});
-
-siteMenu.addEventListener("click", (e) => {
-  if (e.target === siteMenu) closeMenu();
-});
-
-siteMenu.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", closeMenu);
-});
-
-// Clic ovunque fuori dal pannello (e fuori dal bottone stesso) lo chiude.
-document.addEventListener("click", (e) => {
-  if (!siteMenu.classList.contains("is-open")) return;
-  if (siteMenu.contains(e.target) || menuToggle.contains(e.target)) return;
-  closeMenu();
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key !== "Escape") return;
-  if (!langMenu.hidden) closeLangMenu();
-  else if (siteMenu.classList.contains("is-open")) closeMenu();
-});
-
 // --- Parola rotante nell'hero (Mods / Plugins / Datapacks / Servers) ---
+// prefersReducedMotion, menuToggle/siteMenu/siteHeader e il menu a comparsa
+// sono in nav.js, condiviso da tutte le pagine.
 
-const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const rotatingWordEl = document.getElementById("rotating-word");
 let rotatingWordIndex = 0;
 let rotatingWordTimer = null;
@@ -704,32 +554,8 @@ function updateParallax() {
   heroLandscapes.forEach((el) => el.style.setProperty("--py", `${shift}px`));
 }
 
-// --- Navbar: hamburger, logo e lingua sono fermi e sempre visibili, in cima
-// alla pagina senza sfondo. Solo quando il titolo dell'hero e' scomparso del
-// tutto dallo schermo (il suo bordo INFERIORE ha superato l'header) compare
-// la barra di vetro dietro agli stessi controlli. ---
-
-const siteHeader = document.getElementById("site-header");
-const heroHeading = document.querySelector(".hero-text h1");
-
-function updateHeaderNav() {
-  const headerBottom = siteHeader.getBoundingClientRect().bottom;
-  const titleBottom = heroHeading ? heroHeading.getBoundingClientRect().bottom : -Infinity;
-  siteHeader.classList.toggle("is-scrolled", titleBottom < headerBottom);
-}
-
-// --- Back to top: compare solo dopo aver superato l'hero. ---
-
-const backToTop = document.getElementById("back-to-top");
-backToTop.hidden = false;
-
-function updateBackToTop() {
-  backToTop.classList.toggle("is-visible", window.scrollY > window.innerHeight * 0.6);
-}
-
-backToTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
-});
+// --- Parallasse allo scroll: siteHeader, backToTop e updateBackToTop() sono
+// in nav.js, condiviso da tutte le pagine. ---
 
 let scrollTicking = false;
 function onScroll() {
@@ -737,22 +563,18 @@ function onScroll() {
   scrollTicking = true;
   requestAnimationFrame(() => {
     if (!prefersReducedMotion) updateParallax();
-    updateHeaderNav();
-    updateBackToTop();
     scrollTicking = false;
   });
 }
 
 window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("resize", () => {
-  updateHeaderNav();
   if (!prefersReducedMotion) {
     measureParallax();
     updateParallax();
   }
 });
 
-updateHeaderNav();
 updateBackToTop();
 
 if (!prefersReducedMotion) {
@@ -812,7 +634,6 @@ if (flow) {
   }
 }
 
-document.getElementById("year").textContent = new Date().getFullYear();
 applyLanguage(currentLang);
 renderSocials();
 renderSocialOrbit();

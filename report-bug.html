@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Report a bug — Pigiazza</title>
+<meta name="description" content="Found something broken? Here's where bug reports for Pigiazza's mods actually go." />
+<link rel="icon" href="assets/profile icon.png" type="image/png" />
+<link rel="apple-touch-icon" href="assets/profile icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=9" />
+<style>
+  .page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: clamp(150px, 22vw, 190px) clamp(20px, 4vw, 56px) clamp(80px, 10vw, 120px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(36px, 5vw, 52px);
+  }
+
+  .page-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+  }
+
+  .page-icon {
+    width: 84px;
+    height: 84px;
+  }
+
+  .page-icon svg { width: 38px; height: 38px; }
+
+  .page h1 {
+    font-size: var(--fs-2xl);
+    max-width: 18ch;
+  }
+
+  .page-lead {
+    color: var(--ink-soft);
+    font-size: var(--fs-lg);
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+
+  .page-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .page-card {
+    width: 100%;
+    padding: clamp(28px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .page-card h2 { font-size: var(--fs-xl); }
+
+  .page-checklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .page-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .page-checklist svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: var(--accent);
+  }
+
+  .page-note {
+    color: var(--ink-mute);
+    font-size: 0.9rem;
+  }
+</style>
+</head>
+<body data-palette="sakura">
+
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true">
+  <span class="glow glow-1"></span>
+  <span class="glow glow-2"></span>
+</div>
+
+<header class="site-header" id="site-header">
+  <div class="header-bar" aria-hidden="true"></div>
+
+  <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+  </button>
+
+  <a class="site-wordmark" href="index.html" aria-label="Pigiazza — home">
+    <img src="assets/pigiazza.png" alt="Pigiazza" />
+  </a>
+
+  <div class="header-controls">
+    <div class="lang-dropdown" id="lang-dropdown">
+      <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-current-code" id="lang-current-code">EN</span>
+        <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <ul class="lang-menu" id="lang-menu" hidden></ul>
+    </div>
+  </div>
+</header>
+
+<nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
+  <ul class="menu-links">
+    <li style="--i:0"><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li style="--i:1"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
+    <li style="--i:2"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
+  </ul>
+</nav>
+
+<main class="page">
+  <div class="page-hero">
+    <span class="flow-icon page-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M8 6a4 4 0 0 1 8 0" />
+        <rect x="6" y="9" width="12" height="10" rx="5" />
+        <path d="M6 12H3M18 12h3M7 17l-3 3M17 17l3 3M12 9v10" />
+      </svg>
+    </span>
+    <h1 id="pg-heading">Found a bug?</h1>
+    <p class="page-lead" id="pg-lead">Bugs are tracked project by project, right where the code lives. Find the one you&rsquo;re using on GitHub or Modrinth and open an issue there, not here &mdash; I read every single one.</p>
+  </div>
+
+  <div class="page-actions">
+    <a class="btn btn-primary" href="https://github.com/Pigiazza" target="_blank" rel="noopener noreferrer" id="pg-cta-github">
+      <span id="pg-cta-github-label">Browse projects on GitHub</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+    </a>
+    <a class="btn btn-ghost" href="https://modrinth.com/user/Pigiazza" target="_blank" rel="noopener noreferrer" id="pg-cta-modrinth">
+      <span id="pg-cta-modrinth-label">Browse projects on Modrinth</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+    </a>
+  </div>
+
+  <div class="glass-panel page-card">
+    <h2 id="pg-checklist-title">What to include</h2>
+    <ul class="page-checklist" id="pg-checklist">
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        <span>Which Minecraft version you&rsquo;re on</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        <span>Which loader (Fabric, Forge, NeoForge, or Quilt) and its version</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        <span>Steps to reproduce it</span>
+      </li>
+      <li>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>
+        <span>A crash report or log, if you&rsquo;ve got one</span>
+      </li>
+    </ul>
+    <p class="page-note" id="pg-note">The more of this you include, the faster I can actually fix it.</p>
+  </div>
+</main>
+
+<button type="button" class="back-to-top" id="back-to-top" data-i18n-aria="backToTop.aria" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
+</button>
+
+<footer class="site-footer">
+  <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
+</footer>
+
+<script>
+  window.PIGIAZZA_STRINGS = { en: {}, it: {} };
+  Object.assign(window.PIGIAZZA_STRINGS.en, {
+    "pg.title": "Report a bug — Pigiazza",
+    "pg.heading": "Found a bug?",
+    "pg.lead": "Bugs are tracked project by project, right where the code lives. Find the one you’re using on GitHub or Modrinth and open an issue there, not here — I read every single one.",
+    "pg.ctaGithub": "Browse projects on GitHub",
+    "pg.ctaModrinth": "Browse projects on Modrinth",
+    "pg.checklistTitle": "What to include",
+    "pg.check1": "Which Minecraft version you’re on",
+    "pg.check2": "Which loader (Fabric, Forge, NeoForge, or Quilt) and its version",
+    "pg.check3": "Steps to reproduce it",
+    "pg.check4": "A crash report or log, if you’ve got one",
+    "pg.note": "The more of this you include, the faster I can actually fix it.",
+  });
+  Object.assign(window.PIGIAZZA_STRINGS.it, {
+    "pg.title": "Segnala un bug — Pigiazza",
+    "pg.heading": "Hai trovato un bug?",
+    "pg.lead": "I bug si tracciano progetto per progetto, dove vive davvero il codice. Trova quello che stai usando su GitHub o Modrinth e apri una issue lì, non qui — le leggo tutte.",
+    "pg.ctaGithub": "Guarda i progetti su GitHub",
+    "pg.ctaModrinth": "Guarda i progetti su Modrinth",
+    "pg.checklistTitle": "Cosa includere",
+    "pg.check1": "Che versione di Minecraft stai usando",
+    "pg.check2": "Quale loader (Fabric, Forge, NeoForge o Quilt) e la sua versione",
+    "pg.check3": "Come riprodurlo, passo per passo",
+    "pg.check4": "Un crash report o un log, se ce l’hai",
+    "pg.note": "Più dettagli metti, più veloce riesco davvero a sistemarlo.",
+  });
+
+  window.onLangChange = function () {
+    document.title = t("pg.title");
+    document.getElementById("pg-heading").textContent = t("pg.heading");
+    document.getElementById("pg-lead").textContent = t("pg.lead");
+    document.getElementById("pg-cta-github-label").textContent = t("pg.ctaGithub");
+    document.getElementById("pg-cta-modrinth-label").textContent = t("pg.ctaModrinth");
+    document.getElementById("pg-checklist-title").textContent = t("pg.checklistTitle");
+    document.getElementById("pg-note").textContent = t("pg.note");
+    const items = document.querySelectorAll("#pg-checklist span");
+    items[0].textContent = t("pg.check1");
+    items[1].textContent = t("pg.check2");
+    items[2].textContent = t("pg.check3");
+    items[3].textContent = t("pg.check4");
+  };
+</script>
+<script src="nav.js?v=1"></script>
+<script>applyLanguage(currentLang);</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wiki — Pigiazza</title>
+<meta name="description" content="Loader compatibility, install basics, and where project guides will live once something ships." />
+<link rel="icon" href="assets/profile icon.png" type="image/png" />
+<link rel="apple-touch-icon" href="assets/profile icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css?v=9" />
+<style>
+  .page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: clamp(150px, 22vw, 190px) clamp(20px, 4vw, 56px) clamp(80px, 10vw, 120px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(36px, 5vw, 52px);
+  }
+
+  .page-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+  }
+
+  .page-icon {
+    width: 84px;
+    height: 84px;
+  }
+
+  .page-icon svg { width: 36px; height: 36px; }
+
+  .page h1 {
+    font-size: var(--fs-2xl);
+    max-width: 18ch;
+  }
+
+  .page-lead {
+    color: var(--ink-soft);
+    font-size: var(--fs-lg);
+    line-height: 1.6;
+    max-width: 56ch;
+  }
+
+  .page-section {
+    width: 100%;
+    padding: clamp(28px, 4vw, 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .page-section h2 { font-size: var(--fs-xl); }
+  .page-section p { color: var(--ink-soft); line-height: 1.65; max-width: none; }
+
+  .page-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .page-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .process-num {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Fredoka", sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--accent-ink);
+    background: var(--accent);
+    box-shadow: 0 8px 20px -10px var(--glow-a);
+    margin-top: 2px;
+  }
+
+  .page-steps p { margin: 0; padding-top: 6px; color: var(--ink-soft); line-height: 1.6; }
+
+  .page-section .btn { align-self: flex-start; }
+</style>
+</head>
+<body data-palette="sakura">
+
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true">
+  <span class="glow glow-1"></span>
+  <span class="glow glow-2"></span>
+</div>
+
+<header class="site-header" id="site-header">
+  <div class="header-bar" aria-hidden="true"></div>
+
+  <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="site-menu" aria-label="Open menu">
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+    <span class="menu-bar"></span>
+  </button>
+
+  <a class="site-wordmark" href="index.html" aria-label="Pigiazza — home">
+    <img src="assets/pigiazza.png" alt="Pigiazza" />
+  </a>
+
+  <div class="header-controls">
+    <div class="lang-dropdown" id="lang-dropdown">
+      <button type="button" class="lang-current" id="lang-toggle" aria-haspopup="true" aria-expanded="false">
+        <span class="lang-current-code" id="lang-current-code">EN</span>
+        <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
+      </button>
+      <ul class="lang-menu" id="lang-menu" hidden></ul>
+    </div>
+  </div>
+</header>
+
+<nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
+  <ul class="menu-links">
+    <li style="--i:0"><a href="index.html#projects" data-i18n="nav.projects">Projects</a></li>
+    <li style="--i:1"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
+    <li style="--i:2"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
+  </ul>
+</nav>
+
+<main class="page">
+  <div class="page-hero">
+    <span class="flow-icon page-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z" />
+      </svg>
+    </span>
+    <h1 id="pg-heading">Wiki</h1>
+    <p class="page-lead" id="pg-lead">General reference for now. Nothing has its own page yet since nothing&rsquo;s published, but the basics below apply to everything I build.</p>
+  </div>
+
+  <div class="glass-panel page-section">
+    <h2 id="pg-loader-title">Which loader do I need?</h2>
+    <p id="pg-loader-body">Every mod ships for Fabric, Forge, NeoForge, and Quilt, across every Minecraft version that supports it. Fabric is home base, so a new build usually lands there first, but the other three are never an afterthought. Use whichever loader you already run &mdash; you shouldn&rsquo;t have to switch for one mod.</p>
+  </div>
+
+  <div class="glass-panel page-section">
+    <h2 id="pg-install-title">Installing a mod</h2>
+    <ol class="page-steps">
+      <li>
+        <span class="process-num">1</span>
+        <p id="pg-step1">Download the file that matches your Minecraft version and loader from Modrinth.</p>
+      </li>
+      <li>
+        <span class="process-num">2</span>
+        <p id="pg-step2">Drop it into your mods folder.</p>
+      </li>
+      <li>
+        <span class="process-num">3</span>
+        <p id="pg-step3">Launch with that loader&rsquo;s profile. That&rsquo;s it.</p>
+      </li>
+    </ol>
+  </div>
+
+  <div class="glass-panel page-section">
+    <h2 id="pg-docs-title">Project docs</h2>
+    <p id="pg-docs-body">Nothing&rsquo;s published yet, so there&rsquo;s nothing project-specific to write up here. Once the first mod ships, its guide moves in.</p>
+    <a class="btn btn-primary" href="index.html#projects">
+      <span id="pg-docs-cta">See what&rsquo;s live</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+    </a>
+  </div>
+</main>
+
+<button type="button" class="back-to-top" id="back-to-top" data-i18n-aria="backToTop.aria" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
+</button>
+
+<footer class="site-footer">
+  <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
+</footer>
+
+<script>
+  window.PIGIAZZA_STRINGS = { en: {}, it: {} };
+  Object.assign(window.PIGIAZZA_STRINGS.en, {
+    "pg.title": "Wiki — Pigiazza",
+    "pg.heading": "Wiki",
+    "pg.lead": "General reference for now. Nothing has its own page yet since nothing’s published, but the basics below apply to everything I build.",
+    "pg.loaderTitle": "Which loader do I need?",
+    "pg.loaderBody": "Every mod ships for Fabric, Forge, NeoForge, and Quilt, across every Minecraft version that supports it. Fabric is home base, so a new build usually lands there first, but the other three are never an afterthought. Use whichever loader you already run — you shouldn’t have to switch for one mod.",
+    "pg.installTitle": "Installing a mod",
+    "pg.step1": "Download the file that matches your Minecraft version and loader from Modrinth.",
+    "pg.step2": "Drop it into your mods folder.",
+    "pg.step3": "Launch with that loader’s profile. That’s it.",
+    "pg.docsTitle": "Project docs",
+    "pg.docsBody": "Nothing’s published yet, so there’s nothing project-specific to write up here. Once the first mod ships, its guide moves in.",
+    "pg.docsCta": "See what’s live",
+  });
+  Object.assign(window.PIGIAZZA_STRINGS.it, {
+    "pg.title": "Wiki — Pigiazza",
+    "pg.heading": "Wiki",
+    "pg.lead": "Per ora solo riferimenti generali. Niente ha ancora una pagina tutta sua perché non ho pubblicato nulla, ma quello che c'è sotto vale per tutto quello che costruisco.",
+    "pg.loaderTitle": "Che loader mi serve?",
+    "pg.loaderBody": "Ogni mod esce per Fabric, Forge, NeoForge e Quilt, in ogni versione di Minecraft che quel tipo di progetto supporta. Fabric è la base di partenza, quindi di solito una build nuova arriva prima lì, ma gli altri tre non sono mai un ripiego. Usa il loader che hai già — non dovresti cambiarlo per una mod sola.",
+    "pg.installTitle": "Installare una mod",
+    "pg.step1": "Scarica da Modrinth il file che corrisponde alla tua versione di Minecraft e al tuo loader.",
+    "pg.step2": "Mettilo nella cartella mods.",
+    "pg.step3": "Avvia con il profilo di quel loader. Tutto qui.",
+    "pg.docsTitle": "Documentazione dei progetti",
+    "pg.docsBody": "Non ho ancora pubblicato nulla, quindi non c'è niente di specifico da scrivere qui. Quando esce la prima mod, la sua guida arriva qui.",
+    "pg.docsCta": "Guarda cosa c'è già",
+  });
+
+  window.onLangChange = function () {
+    document.title = t("pg.title");
+    document.getElementById("pg-heading").textContent = t("pg.heading");
+    document.getElementById("pg-lead").textContent = t("pg.lead");
+    document.getElementById("pg-loader-title").textContent = t("pg.loaderTitle");
+    document.getElementById("pg-loader-body").textContent = t("pg.loaderBody");
+    document.getElementById("pg-install-title").textContent = t("pg.installTitle");
+    document.getElementById("pg-step1").textContent = t("pg.step1");
+    document.getElementById("pg-step2").textContent = t("pg.step2");
+    document.getElementById("pg-step3").textContent = t("pg.step3");
+    document.getElementById("pg-docs-title").textContent = t("pg.docsTitle");
+    document.getElementById("pg-docs-body").textContent = t("pg.docsBody");
+    document.getElementById("pg-docs-cta").textContent = t("pg.docsCta");
+  };
+</script>
+<script src="nav.js?v=1"></script>
+<script>applyLanguage(currentLang);</script>
+</body>
+</html>
