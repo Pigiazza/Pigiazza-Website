@@ -61,7 +61,7 @@ const DEFAULT_FOLDER_ICON = "folder";
 const DEFAULT_REPO_ICON = "code";
 
 const COLORS = [
-  { id: "grigio", hue: 280, chroma: 0.01 },
+  { id: "predefinito", isAccent: true },
   { id: "rosa", hue: 350, chroma: 0.16 },
   { id: "corallo", hue: 25, chroma: 0.17 },
   { id: "ambra", hue: 65, chroma: 0.15 },
@@ -73,15 +73,18 @@ const COLORS = [
   { id: "viola", hue: 300, chroma: 0.16 },
   { id: "magenta", hue: 330, chroma: 0.17 },
 ];
-const DEFAULT_COLOR = "grigio";
+const DEFAULT_COLOR = "predefinito";
 
+// "predefinito" segue l'accento vivo del sito (rosa sakura oggi) invece di
+// un grigio piatto: le cartelle/i repo non ancora personalizzati restano
+// comunque colorati e coerenti con il resto del sito.
 function colorBg(colorId) {
   const c = COLORS.find((c) => c.id === colorId) || COLORS[0];
-  return `oklch(80% ${c.chroma} ${c.hue})`;
+  return c.isAccent ? "var(--accent)" : `oklch(80% ${c.chroma} ${c.hue})`;
 }
 function colorInk(colorId) {
   const c = COLORS.find((c) => c.id === colorId) || COLORS[0];
-  return `oklch(20% ${Math.min(c.chroma, 0.04)} ${c.hue})`;
+  return c.isAccent ? "var(--accent-ink)" : `oklch(20% ${Math.min(c.chroma, 0.04)} ${c.hue})`;
 }
 
 function svgIcon(iconId, extraClass) {
@@ -476,7 +479,7 @@ function attachRowHandlers() {
       }
       if (action === "open-repo") {
         const repo = repoById.get(actionEl.dataset.repoId);
-        if (repo) openRepoModal(repo);
+        if (repo) openRepoView(repo);
         return;
       }
       if (action === "github") {
@@ -678,33 +681,60 @@ document.addEventListener("keydown", (e) => {
 });
 
 // ---------------------------------------------------------------------------
-// Widget di dettaglio repo
+// Vista repo a schermo intero: header + tab (Panoramica / File / Issue / ...)
 // ---------------------------------------------------------------------------
 
-const repoModal = document.getElementById("repo-modal");
-setupModalDismiss(repoModal);
+const organizerMainEl = document.getElementById("organizer-main");
+const repoViewEl = document.getElementById("repo-view");
+const browseBodyEl = document.getElementById("browse-body");
+const browseBreadcrumbEl = document.getElementById("browse-breadcrumb");
 
-let currentModalRepo = null;
+let currentRepo = null;
+let activeRepoTab = "overview";
 
-function openRepoModal(repo) {
-  currentModalRepo = repo;
-  document.getElementById("repo-modal-icon-wrap").innerHTML = svgIcon(
-    (tree.repoMeta[repo.id]?.icon) || DEFAULT_REPO_ICON
-  );
-  document.getElementById("repo-modal-icon-wrap").style.setProperty("--badge-bg", colorBg(tree.repoMeta[repo.id]?.color || DEFAULT_COLOR));
-  document.getElementById("repo-modal-icon-wrap").style.setProperty("--badge-ink", colorInk(tree.repoMeta[repo.id]?.color || DEFAULT_COLOR));
-  document.getElementById("repo-modal-title").textContent = repo.name;
-  document.getElementById("repo-modal-owner").textContent = repo.owner;
-  document.getElementById("repo-modal-visibility").textContent = repo.private ? "Privato" : "Pubblico";
-  document.getElementById("repo-modal-visibility").className = `row-badge${repo.private ? " row-badge--private" : ""}`;
-  document.getElementById("repo-modal-desc").textContent = repo.description || "Nessuna descrizione.";
+const COMING_SOON_COPY = {
+  issues: { icon: "bug", title: "Le issue arrivano presto", text: "Questa sezione mostrera' le issue del repository direttamente da qui." },
+  wiki: { icon: "book-open", title: "La wiki arriva presto", text: "Questa sezione mostrera' (e in futuro permettera' di modificare) le pagine wiki del repository." },
+  settings: { icon: "settings", title: "Le impostazioni arrivano presto", text: "Qui potrai gestire alcune impostazioni del repository, da definire insieme." },
+};
 
-  document.getElementById("repo-modal-stats").innerHTML = `
+function renderComingSoon(tab) {
+  const copy = COMING_SOON_COPY[tab];
+  const panel = document.getElementById(`repo-tab-${tab}`);
+  if (!copy || panel.dataset.rendered) return;
+  panel.dataset.rendered = "1";
+  panel.innerHTML = `
+    <div class="repo-tab-panel-empty glass-panel">
+      <span class="flow-icon">${svgIcon(copy.icon)}</span>
+      <h3>${escapeHtml(copy.title)}</h3>
+      <p class="muted">${escapeHtml(copy.text)}</p>
+    </div>`;
+}
+
+function openRepoView(repo) {
+  currentRepo = repo;
+  organizerMainEl.hidden = true;
+  repoViewEl.hidden = false;
+
+  const icon = tree.repoMeta[repo.id]?.icon || DEFAULT_REPO_ICON;
+  const color = tree.repoMeta[repo.id]?.color || DEFAULT_COLOR;
+  const iconWrap = document.getElementById("repo-view-icon-wrap");
+  iconWrap.innerHTML = svgIcon(icon);
+  iconWrap.style.setProperty("--badge-bg", colorBg(color));
+  iconWrap.style.setProperty("--badge-ink", colorInk(color));
+
+  document.getElementById("repo-view-title").textContent = repo.name;
+  document.getElementById("repo-view-owner").textContent = repo.owner;
+  document.getElementById("repo-view-visibility").textContent = repo.private ? "Privato" : "Pubblico";
+  document.getElementById("repo-view-visibility").className = `row-badge${repo.private ? " row-badge--private" : ""}`;
+  document.getElementById("repo-view-github").href = repo.htmlUrl;
+
+  document.getElementById("repo-view-desc").textContent = repo.description || "Nessuna descrizione.";
+  document.getElementById("repo-view-stats").innerHTML = `
     <span class="stat">${svgIcon("star")} ${formatCount(repo.stars)}</span>
     <span class="stat">${svgIcon("git-branch")} ${formatCount(repo.forks)}</span>
     <span class="stat">${svgIcon("bug")} ${formatCount(repo.openIssues)}</span>
   `;
-
   const facts = [
     ["Linguaggio", repo.language || "—"],
     ["Ultimo aggiornamento", formatDate(repo.updatedAt)],
@@ -712,48 +742,55 @@ function openRepoModal(repo) {
     ["Licenza", repo.license || "Nessuna"],
     ["Branch predefinito", repo.defaultBranch || "—"],
   ];
-  document.getElementById("repo-modal-facts").innerHTML = facts
+  document.getElementById("repo-view-facts").innerHTML = facts
     .map(([k, v]) => `<div class="fact-row"><span class="fact-key">${escapeHtml(k)}</span><span class="fact-value">${escapeHtml(v)}</span></div>`)
     .join("");
-
-  document.getElementById("repo-modal-topics").innerHTML = repo.topics.length
+  document.getElementById("repo-view-topics").innerHTML = repo.topics.length
     ? repo.topics.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")
     : "";
 
-  document.getElementById("repo-modal-github").href = repo.htmlUrl;
-
-  openModal(repoModal);
+  // Ogni tab tranne Panoramica riparte da zero quando si apre un repo diverso.
+  document.querySelectorAll(".repo-tab-panel[data-rendered]").forEach((p) => delete p.dataset.rendered);
+  browseState = null;
+  switchRepoTab("overview");
 }
 
-document.getElementById("repo-modal-browse").addEventListener("click", () => {
-  if (!currentModalRepo) return;
-  closeModal(repoModal);
-  openBrowse(currentModalRepo);
+function closeRepoView() {
+  repoViewEl.hidden = true;
+  organizerMainEl.hidden = false;
+  currentRepo = null;
+}
+
+function switchRepoTab(tab) {
+  activeRepoTab = tab;
+  document.querySelectorAll(".repo-tab").forEach((btn) => {
+    const isActive = btn.dataset.repoTab === tab;
+    btn.classList.toggle("is-active", isActive);
+    btn.setAttribute("aria-selected", String(isActive));
+  });
+  document.querySelectorAll(".repo-tab-panel").forEach((panel) => {
+    panel.hidden = panel.id !== `repo-tab-${tab}`;
+  });
+
+  if (tab === "files" && !browseState) {
+    browseState = { repo: currentRepo.id, ref: currentRepo.defaultBranch || "", path: "" };
+    loadBrowsePath("");
+  } else if (["issues", "wiki", "settings"].includes(tab)) {
+    renderComingSoon(tab);
+  }
+}
+
+document.getElementById("repo-view-back").addEventListener("click", closeRepoView);
+
+document.querySelectorAll(".repo-tab").forEach((btn) => {
+  btn.addEventListener("click", () => switchRepoTab(btn.dataset.repoTab));
 });
 
 // ---------------------------------------------------------------------------
-// Sfoglia i file del repo
+// Sfoglia i file del repo (tab "File" della vista repo)
 // ---------------------------------------------------------------------------
 
-const organizerMainEl = document.getElementById("organizer-main");
-const browseViewEl = document.getElementById("browse-view");
-const browseBodyEl = document.getElementById("browse-body");
-const browseBreadcrumbEl = document.getElementById("browse-breadcrumb");
-
 let browseState = null; // { repo, ref, path }
-
-function openBrowse(repo) {
-  browseState = { repo: repo.id, ref: repo.defaultBranch || "", path: "" };
-  organizerMainEl.hidden = true;
-  browseViewEl.hidden = false;
-  loadBrowsePath("");
-}
-
-function closeBrowse() {
-  browseViewEl.hidden = true;
-  organizerMainEl.hidden = false;
-  browseState = null;
-}
 
 function renderBreadcrumb() {
   const repoName = browseState.repo.split("/")[1];
@@ -845,8 +882,6 @@ browseBreadcrumbEl.addEventListener("click", (e) => {
   if (!btn) return;
   loadBrowsePath(btn.dataset.crumbPath);
 });
-
-document.getElementById("browse-back").addEventListener("click", closeBrowse);
 
 // ---------------------------------------------------------------------------
 // Modal: nuova cartella / rinomina / icona e colore / sposta

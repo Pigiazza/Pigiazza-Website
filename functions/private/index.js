@@ -171,6 +171,8 @@ function renderPrivatePage(email) {
     align-items: center;
     justify-content: center;
     color: var(--ink-mute);
+    background: none;
+    border: none;
     cursor: grab;
     border-radius: 6px;
   }
@@ -186,6 +188,9 @@ function renderPrivatePage(email) {
     align-items: center;
     justify-content: center;
     color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
     transition: transform 0.3s var(--ease-out-quart);
   }
   .row-disclosure svg { width: 14px; height: 14px; }
@@ -193,16 +198,19 @@ function renderPrivatePage(email) {
   .row-disclosure--spacer { visibility: hidden; }
 
   .node-icon {
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     flex-shrink: 0;
-    border-radius: 9px;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--badge-bg);
     color: var(--badge-ink);
+    box-shadow: 0 6px 16px -8px var(--glow-a);
+    transition: transform 0.35s var(--ease-bounce);
   }
+  .tree-row:hover .node-icon { transform: scale(1.08); }
   .node-icon svg { width: 16px; height: 16px; }
 
   .row-main {
@@ -214,6 +222,9 @@ function renderPrivatePage(email) {
     text-align: left;
     font: inherit;
     color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 
   .row-name {
@@ -269,6 +280,9 @@ function renderPrivatePage(email) {
     align-items: center;
     justify-content: center;
     color: var(--ink-mute);
+    background: none;
+    border: none;
+    cursor: pointer;
     border-radius: 6px;
   }
   .row-menu-toggle:hover { color: var(--ink); background: var(--glass-tint-strong); }
@@ -350,6 +364,7 @@ function renderPrivatePage(email) {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     transition: transform 0.25s var(--ease-bounce), border-color 0.2s ease, color 0.2s ease;
   }
   .icon-pick svg { width: 18px; height: 18px; }
@@ -368,6 +383,7 @@ function renderPrivatePage(email) {
     border-radius: 50%;
     background: var(--swatch);
     border: 2px solid transparent;
+    cursor: pointer;
     transition: transform 0.25s var(--ease-bounce);
   }
   .color-pick:hover { transform: scale(1.12); }
@@ -389,6 +405,10 @@ function renderPrivatePage(email) {
     border-radius: var(--radius-sm);
     color: var(--ink);
     font-size: 0.9rem;
+    font-family: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
     text-align: left;
   }
   .move-option:hover { background: var(--glass-tint); }
@@ -402,48 +422,99 @@ function renderPrivatePage(email) {
     overflow-y: auto;
   }
 
-  /* --- Widget di dettaglio repo --- */
+  /* --- Vista repo a schermo intero: header, tab, pannelli --- */
 
-  .repo-modal-head {
+  .repo-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 4px;
+    margin-bottom: 20px;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+  }
+  .repo-back-link:hover { color: var(--ink); }
+  .repo-back-link svg { width: 16px; height: 16px; }
+
+  .repo-view-head {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin-bottom: 4px;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
   }
-  #repo-modal-icon-wrap {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+
+  .node-icon--lg {
+    width: 52px;
+    height: 52px;
+  }
+  .node-icon--lg svg { width: 26px; height: 26px; }
+
+  .repo-view-heading { min-width: 0; }
+  .repo-view-heading h1 {
+    font-size: var(--fs-xl);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .repo-view-owner { font-size: 0.85rem; color: var(--ink-mute); }
+
+  #repo-view-github { margin-left: auto; }
+
+  .repo-tabs {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--badge-bg, var(--glass-tint-strong));
-    color: var(--badge-ink, var(--ink));
-    flex-shrink: 0;
+    gap: 4px;
+    border-bottom: 1px solid var(--glass-edge-dim);
+    margin-bottom: 28px;
+    overflow-x: auto;
   }
-  #repo-modal-icon-wrap svg { width: 24px; height: 24px; }
-  #repo-modal-owner { font-size: 0.8rem; color: var(--ink-mute); }
-  #repo-modal-desc { color: var(--ink-soft); line-height: 1.6; margin: 14px 0 18px; }
+
+  .repo-tab {
+    padding: 10px 16px;
+    font-family: "Fredoka", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ink-mute);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .repo-tab:hover { color: var(--ink-soft); }
+  .repo-tab.is-active { color: var(--ink); border-bottom-color: var(--accent); }
+
+  #repo-view-desc { color: var(--ink-soft); line-height: 1.6; margin-bottom: 18px; }
 
   .fact-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
   .fact-row { display: flex; justify-content: space-between; gap: 12px; font-size: 0.86rem; }
   .fact-key { color: var(--ink-mute); }
   .fact-value { color: var(--ink); font-weight: 600; text-align: right; }
 
-  #repo-modal-topics {
+  #repo-view-topics {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 20px;
   }
-  #repo-modal-topics:empty { display: none; }
+  #repo-view-topics:empty { display: none; }
 
-  .repo-modal-actions {
+  .repo-tab-panel-empty {
+    padding: 56px 24px;
+    text-align: center;
+    border-radius: var(--radius-md);
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
   }
-
   /* --- Sfoglia i file --- */
 
   .browse-toolbar {
@@ -467,6 +538,10 @@ function renderPrivatePage(email) {
     border-radius: 6px;
     color: var(--ink-soft);
     font-weight: 600;
+    font-family: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
     white-space: nowrap;
   }
   .crumb:hover { background: var(--glass-tint-strong); color: var(--ink); }
@@ -508,7 +583,7 @@ function renderPrivatePage(email) {
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .icon-btn, .icon-pick, .color-pick, .row-disclosure, .tree-row, .btn {
+    .icon-btn, .icon-pick, .color-pick, .row-disclosure, .tree-row, .node-icon, .btn, .repo-tab {
       transition: none !important;
     }
   }
@@ -550,45 +625,50 @@ function renderPrivatePage(email) {
     <div id="organizer-tree"></div>
   </div>
 
-  <div id="browse-view" hidden>
-    <div class="browse-toolbar">
-      <button type="button" class="icon-btn" id="browse-back" aria-label="Torna all'organizer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
-      </button>
-      <nav class="breadcrumb" id="browse-breadcrumb" aria-label="Percorso nel repository"></nav>
-    </div>
-    <div id="browse-body"></div>
-  </div>
-</div>
-
-<!-- Widget di dettaglio repo -->
-<div class="modal-overlay" id="repo-modal" hidden>
-  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="repo-modal-title">
-    <button class="modal-close" data-close-modal aria-label="Chiudi">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+  <div id="repo-view" hidden>
+    <button type="button" class="repo-back-link" id="repo-view-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
+      <span>Torna ai repo</span>
     </button>
-    <div class="repo-modal-head">
-      <span id="repo-modal-icon-wrap"></span>
-      <div>
-        <h2 id="repo-modal-title"></h2>
-        <span id="repo-modal-owner"></span>
+
+    <div class="repo-view-head">
+      <span class="node-icon node-icon--lg" id="repo-view-icon-wrap"></span>
+      <div class="repo-view-heading">
+        <h1 id="repo-view-title"></h1>
+        <span class="repo-view-owner" id="repo-view-owner"></span>
       </div>
-      <span class="row-badge" id="repo-modal-visibility" style="margin-left:auto"></span>
-    </div>
-    <p id="repo-modal-desc"></p>
-    <div class="project-stats" id="repo-modal-stats"></div>
-    <div class="fact-list" id="repo-modal-facts"></div>
-    <div id="repo-modal-topics"></div>
-    <div class="repo-modal-actions">
-      <a class="btn btn-primary" id="repo-modal-github" href="#" target="_blank" rel="noopener noreferrer">
+      <span class="row-badge" id="repo-view-visibility"></span>
+      <a class="btn btn-primary" id="repo-view-github" href="#" target="_blank" rel="noopener noreferrer">
         <span>Vai al repository</span>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
       </a>
-      <button type="button" class="btn btn-ghost" id="repo-modal-browse">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" /></svg>
-        <span>Sfoglia i file</span>
-      </button>
     </div>
+
+    <nav class="repo-tabs" role="tablist" aria-label="Sezioni del repository">
+      <button type="button" class="repo-tab is-active" data-repo-tab="overview" role="tab" aria-selected="true">Panoramica</button>
+      <button type="button" class="repo-tab" data-repo-tab="files" role="tab" aria-selected="false">File</button>
+      <button type="button" class="repo-tab" data-repo-tab="issues" role="tab" aria-selected="false">Issue</button>
+      <button type="button" class="repo-tab" data-repo-tab="wiki" role="tab" aria-selected="false">Wiki</button>
+      <button type="button" class="repo-tab" data-repo-tab="settings" role="tab" aria-selected="false">Impostazioni</button>
+    </nav>
+
+    <div class="repo-tab-panel" id="repo-tab-overview" role="tabpanel">
+      <p id="repo-view-desc"></p>
+      <div class="project-stats" id="repo-view-stats"></div>
+      <div class="fact-list" id="repo-view-facts"></div>
+      <div id="repo-view-topics"></div>
+    </div>
+
+    <div class="repo-tab-panel" id="repo-tab-files" role="tabpanel" hidden>
+      <div class="browse-toolbar">
+        <nav class="breadcrumb" id="browse-breadcrumb" aria-label="Percorso nel repository"></nav>
+      </div>
+      <div id="browse-body"></div>
+    </div>
+
+    <div class="repo-tab-panel" id="repo-tab-issues" role="tabpanel" hidden></div>
+    <div class="repo-tab-panel" id="repo-tab-wiki" role="tabpanel" hidden></div>
+    <div class="repo-tab-panel" id="repo-tab-settings" role="tabpanel" hidden></div>
   </div>
 </div>
 
