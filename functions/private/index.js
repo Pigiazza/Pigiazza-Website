@@ -13,6 +13,9 @@ function escapeHtml(str) {
 
 // L'HTML vive qui dentro, non come file statico: cosi' il contenuto non
 // lascia mai il server finche' il controllo di sessione qui sotto non passa.
+// Il markup e' solo il guscio dell'app (toolbar, contenitore albero, modali):
+// i dati veri (repo GitHub, struttura cartelle) arrivano via fetch dal
+// browser, gia' autenticato dallo stesso cookie di sessione.
 function renderPrivatePage(email) {
   return `<!DOCTYPE html>
 <html lang="it">
@@ -27,23 +30,419 @@ function renderPrivatePage(email) {
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/style.css?v=10" />
 <style>
-  .private-page {
-    min-height: 100dvh;
+  .organizer-app {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(120px, 16vw, 150px) clamp(16px, 4vw, 32px) 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .organizer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .organizer-top-identity {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .organizer-top-identity img { height: 28px; }
+  .organizer-top-email { color: var(--ink-mute); font-size: 0.82rem; }
+
+  .organizer-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .organizer-search {
+    flex: 1;
+    min-width: 180px;
+    position: relative;
+  }
+
+  .organizer-search svg {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--ink-mute);
+    pointer-events: none;
+  }
+
+  .field-input {
+    width: 100%;
+    font: inherit;
+    font-size: 0.92rem;
+    color: var(--ink);
+    background: var(--glass-tint-strong);
+    border: 1px solid var(--glass-edge-dim);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px 10px 38px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .field-input::placeholder { color: var(--ink-mute); }
+  .field-input:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--glow-a);
+  }
+
+  .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--glass-edge-dim);
+    background: var(--glass-tint-strong);
+    color: var(--ink);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.3s var(--ease-bounce), background 0.2s ease;
   }
-  .private-card {
-    max-width: 460px;
-    padding: clamp(36px, 6vw, 56px);
+  .icon-btn:hover { background: var(--glass-tint); transform: translateY(-1px); }
+  .icon-btn:active { transform: scale(0.92); transition-duration: 0.15s; }
+  .icon-btn svg { width: 17px; height: 17px; }
+
+  .organizer-status {
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    min-height: 1.2em;
+  }
+  .organizer-status.is-error { color: oklch(55% 0.18 25); }
+
+  /* --- Albero --- */
+
+  .tree-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .tree-section-label {
+    margin: 10px 0 2px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ink-mute);
+  }
+
+  .tree-item { position: relative; }
+  .tree-item.is-dragging-source { opacity: 0.35; }
+
+  .tree-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px 8px calc(10px + var(--depth, 0) * 26px);
+    border-radius: var(--radius-sm);
+    transition: background 0.15s ease;
+  }
+  .tree-row:hover { background: var(--glass-tint); }
+
+  .tree-row.is-drop-into { background: var(--glow-a); outline: 2px dashed var(--accent); outline-offset: -2px; }
+  .tree-row.is-drop-before { box-shadow: inset 0 2px 0 0 var(--accent); }
+  .tree-row.is-drop-after { box-shadow: inset 0 -2px 0 0 var(--accent); }
+
+  .tree-row--skeleton { height: 44px; margin-bottom: 6px; border-radius: var(--radius-sm); }
+
+  .row-handle {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-mute);
+    cursor: grab;
+    border-radius: 6px;
+  }
+  .row-handle:hover { color: var(--ink-soft); background: var(--glass-tint-strong); }
+  .row-handle:active { cursor: grabbing; }
+  .row-handle svg { width: 15px; height: 15px; }
+
+  .row-disclosure {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    transition: transform 0.3s var(--ease-out-quart);
+  }
+  .row-disclosure svg { width: 14px; height: 14px; }
+  .row-disclosure.is-open { transform: rotate(90deg); }
+  .row-disclosure--spacer { visibility: hidden; }
+
+  .node-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--badge-bg);
+    color: var(--badge-ink);
+  }
+  .node-icon svg { width: 16px; height: 16px; }
+
+  .row-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+  }
+
+  .row-name {
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-meta {
+    font-size: 0.78rem;
+    color: var(--ink-mute);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .row-badge {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--glass-tint-strong);
+    color: var(--ink-soft);
+  }
+  .row-badge--private { color: oklch(55% 0.15 60); background: oklch(90% 0.06 60); }
+
+  .row-stats {
+    flex-shrink: 0;
+    display: flex;
+    gap: 10px;
+  }
+  .row-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .row-stat-icon { width: 13px; height: 13px; }
+
+  .row-menu { position: relative; flex-shrink: 0; }
+  .row-menu-toggle {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-mute);
+    border-radius: 6px;
+  }
+  .row-menu-toggle:hover { color: var(--ink); background: var(--glass-tint-strong); }
+  .row-menu-toggle svg { width: 15px; height: 15px; }
+
+  .row-menu-list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 4px);
+    z-index: var(--z-dropdown);
+    min-width: 190px;
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    background: var(--glass-tint-strong);
+    border: 1px solid var(--glass-edge-dim);
+    box-shadow: 0 16px 36px -12px var(--shadow-color);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  .row-menu-list[hidden] { display: none; }
+  .row-menu-list li { list-style: none; }
+  .row-menu-list button {
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: var(--ink);
+  }
+  .row-menu-list button:hover { background: var(--glass-tint); }
+  .row-menu-list button.is-danger { color: oklch(55% 0.18 25); }
+
+  .tree-empty {
+    padding: 40px 24px;
+    text-align: center;
+    border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    gap: 16px;
+    gap: 14px;
   }
-  .private-email { color: var(--ink-mute); font-size: 0.85rem; }
+
+  .drag-ghost {
+    position: fixed;
+    z-index: 200;
+    pointer-events: none;
+    opacity: 0.92;
+    box-shadow: 0 20px 40px -12px var(--shadow-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg);
+  }
+
+  /* --- Modali: icona/colore, rinomina, nuova cartella, sposta --- */
+
+  .field-label {
+    display: block;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-bottom: 8px;
+  }
+
+  .icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .icon-pick {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-edge-dim);
+    background: var(--glass-tint-strong);
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s var(--ease-bounce), border-color 0.2s ease, color 0.2s ease;
+  }
+  .icon-pick svg { width: 18px; height: 18px; }
+  .icon-pick:hover { transform: translateY(-2px); color: var(--ink); }
+  .icon-pick.is-selected { border-color: var(--accent); color: var(--accent-text); background: var(--glow-a); }
+
+  .color-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .color-pick {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--swatch);
+    border: 2px solid transparent;
+    transition: transform 0.25s var(--ease-bounce);
+  }
+  .color-pick:hover { transform: scale(1.12); }
+  .color-pick.is-selected { border-color: var(--ink); transform: scale(1.15); }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+
+  .move-option {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    padding-left: calc(12px + var(--depth, 0) * 20px);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    font-size: 0.9rem;
+    text-align: left;
+  }
+  .move-option:hover { background: var(--glass-tint); }
+  .move-option svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--ink-soft); }
+
+  #move-modal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 320px;
+    overflow-y: auto;
+  }
+
+  /* --- Widget di dettaglio repo --- */
+
+  .repo-modal-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 4px;
+  }
+  #repo-modal-icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--badge-bg, var(--glass-tint-strong));
+    color: var(--badge-ink, var(--ink));
+    flex-shrink: 0;
+  }
+  #repo-modal-icon-wrap svg { width: 24px; height: 24px; }
+  #repo-modal-owner { font-size: 0.8rem; color: var(--ink-mute); }
+  #repo-modal-desc { color: var(--ink-soft); line-height: 1.6; margin: 14px 0 18px; }
+
+  .fact-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+  .fact-row { display: flex; justify-content: space-between; gap: 12px; font-size: 0.86rem; }
+  .fact-key { color: var(--ink-mute); }
+  .fact-value { color: var(--ink); font-weight: 600; text-align: right; }
+
+  #repo-modal-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  #repo-modal-topics:empty { display: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-btn, .icon-pick, .color-pick, .row-disclosure, .tree-row, .btn {
+      transition: none !important;
+    }
+  }
 </style>
 </head>
 <body data-palette="sakura">
@@ -52,14 +451,130 @@ function renderPrivatePage(email) {
   <span class="glow glow-1"></span>
   <span class="glow glow-2"></span>
 </div>
-<main class="private-page">
-  <div class="glass-panel private-card">
-    <h1>Area privata</h1>
-    <p class="muted">Sei dentro. Questa pagina la vede solo chi ha accesso.</p>
-    <p class="private-email">Connesso come ${escapeHtml(email)}</p>
+
+<div class="organizer-app">
+  <div class="organizer-top">
+    <div class="organizer-top-identity">
+      <img src="/assets/pigiazza.png" alt="Pigiazza" />
+      <span class="organizer-top-email">${escapeHtml(email)}</span>
+    </div>
     <a class="btn btn-ghost" href="/api/logout">Esci</a>
   </div>
-</main>
+
+  <div class="organizer-toolbar">
+    <label class="organizer-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+      <input type="search" class="field-input" id="organizer-search" placeholder="Cerca un repo…" aria-label="Cerca un repo" />
+    </label>
+    <button type="button" class="icon-btn" id="organizer-refresh" aria-label="Aggiorna">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36" /><path d="M21 3v6h-6" /></svg>
+    </button>
+    <button type="button" class="btn btn-primary" id="organizer-new-folder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14" /></svg>
+      <span>Nuova cartella</span>
+    </button>
+  </div>
+
+  <p class="organizer-status" id="organizer-status" role="status" aria-live="polite"></p>
+
+  <div id="organizer-tree"></div>
+</div>
+
+<!-- Widget di dettaglio repo -->
+<div class="modal-overlay" id="repo-modal" hidden>
+  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="repo-modal-title">
+    <button class="modal-close" data-close-modal aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <div class="repo-modal-head">
+      <span id="repo-modal-icon-wrap"></span>
+      <div>
+        <h2 id="repo-modal-title"></h2>
+        <span id="repo-modal-owner"></span>
+      </div>
+      <span class="row-badge" id="repo-modal-visibility" style="margin-left:auto"></span>
+    </div>
+    <p id="repo-modal-desc"></p>
+    <div class="project-stats" id="repo-modal-stats"></div>
+    <div class="fact-list" id="repo-modal-facts"></div>
+    <div id="repo-modal-topics"></div>
+    <a class="btn btn-primary" id="repo-modal-github" href="#" target="_blank" rel="noopener noreferrer">
+      <span>Vai al repository</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
+    </a>
+  </div>
+</div>
+
+<!-- Icona e colore (cartella o repo) -->
+<div class="modal-overlay" id="style-modal" hidden>
+  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="style-modal-title">
+    <button class="modal-close" data-close-modal aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <h2 id="style-modal-title">Icona e colore</h2>
+    <span class="field-label" style="margin-top:20px">Icona</span>
+    <div class="icon-grid" id="style-modal-icons"></div>
+    <span class="field-label">Colore</span>
+    <div class="color-row" id="style-modal-colors"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close-modal>Annulla</button>
+      <button type="button" class="btn btn-primary" id="style-modal-save">Salva</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rinomina cartella -->
+<div class="modal-overlay" id="rename-modal" hidden>
+  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="rename-modal-title">
+    <button class="modal-close" data-close-modal aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <h2 id="rename-modal-title">Rinomina cartella</h2>
+    <form id="rename-modal-form" style="margin-top:20px">
+      <label class="field-label" for="rename-modal-input">Nome</label>
+      <input type="text" class="field-input" id="rename-modal-input" autofocus required style="margin-bottom:22px" />
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal>Annulla</button>
+        <button type="submit" class="btn btn-primary">Salva</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Nuova cartella -->
+<div class="modal-overlay" id="new-folder-modal" hidden>
+  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="new-folder-modal-title">
+    <button class="modal-close" data-close-modal aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <h2 id="new-folder-modal-title">Nuova cartella</h2>
+    <form id="new-folder-modal-form" style="margin-top:20px">
+      <label class="field-label" for="new-folder-modal-input">Nome</label>
+      <input type="text" class="field-input" id="new-folder-modal-input" autofocus required style="margin-bottom:20px" />
+      <span class="field-label">Icona</span>
+      <div class="icon-grid" id="new-folder-modal-icons"></div>
+      <span class="field-label">Colore</span>
+      <div class="color-row" id="new-folder-modal-colors"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal>Annulla</button>
+        <button type="submit" class="btn btn-primary">Crea</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Sposta in cartella -->
+<div class="modal-overlay" id="move-modal" hidden>
+  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="move-modal-title">
+    <button class="modal-close" data-close-modal aria-label="Chiudi">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+    </button>
+    <h2 id="move-modal-title">Sposta in cartella</h2>
+    <div id="move-modal-list" style="margin-top:20px"></div>
+  </div>
+</div>
+
+<script src="/private-app.js"></script>
 </body>
 </html>`;
 }

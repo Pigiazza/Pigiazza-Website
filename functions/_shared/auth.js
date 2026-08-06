@@ -130,3 +130,15 @@ export function getCookie(request, name) {
   const match = header.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
   return match ? decodeURIComponent(match[1]) : null;
 }
+
+// Helper condiviso da ogni endpoint API privato: ritorna l'email autorizzata
+// o null. Ricontrolla l'allowlist qui (non solo alla creazione del cookie)
+// cosi' togliere un'email dalla lista revoca l'accesso da subito.
+export async function requireSession(request, env, allowedEmails) {
+  if (!env.SESSION_SECRET) return null;
+  const token = getCookie(request, SESSION_COOKIE_NAME);
+  const email = await verifySessionToken(token, env.SESSION_SECRET);
+  if (!email) return null;
+  const allowed = allowedEmails.map((e) => e.toLowerCase()).includes(email.toLowerCase());
+  return allowed ? email : null;
+}
