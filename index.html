@@ -83,7 +83,7 @@
 
 <nav class="site-menu glass-panel" id="site-menu" aria-hidden="true" inert>
   <ul class="menu-links">
-    <li style="--i:0"><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+    <li style="--i:0"><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
     <li style="--i:1"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
     <li style="--i:2"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
   </ul>
@@ -105,7 +105,7 @@
       </h1>
       <p class="hero-sub" data-i18n="hero.sub">New to modding. I build things I actually want to use, test them properly, then publish them.</p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary" data-i18n="hero.ctaProjects">See what I&rsquo;ve built</a>
+        <a href="projects.html" class="btn btn-primary" data-i18n="hero.ctaProjects">See what I&rsquo;ve built</a>
         <a href="#contact" class="btn btn-ghost" data-i18n="hero.ctaContact">Say hello</a>
       </div>
     </div>
@@ -176,40 +176,6 @@
     </div>
   </section>
 
-  <section id="projects" class="projects">
-    <div class="projects-head reveal">
-      <div class="projects-head-text">
-        <h2 data-i18n="projects.heading">Everything I&rsquo;ve shipped</h2>
-        <p class="section-sub muted" data-i18n="projects.subtext">New releases show up here the moment I publish them on Modrinth, no need to refresh or check back.</p>
-      </div>
-      <div class="stats-row" id="stats-row" hidden>
-        <div class="stat-chip">
-          <span class="stat-chip-icon"></span>
-          <span class="stat-chip-value" id="stat-downloads">0</span>
-          <span class="stat-chip-label" data-i18n="stats.downloads">downloads</span>
-        </div>
-        <div class="stat-chip">
-          <span class="stat-chip-icon"></span>
-          <span class="stat-chip-value" id="stat-projects">0</span>
-          <span class="stat-chip-label" data-i18n="stats.projects">projects</span>
-        </div>
-        <div class="stat-chip">
-          <span class="stat-chip-icon"></span>
-          <span class="stat-chip-value" id="stat-followers">0</span>
-          <span class="stat-chip-label" data-i18n="stats.followers">followers</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="filter-tabs" id="filter-tabs" hidden></div>
-
-    <div id="projects-grid" class="projects-grid">
-      <div class="project-card glass-panel skeleton"></div>
-      <div class="project-card glass-panel skeleton"></div>
-      <div class="project-card glass-panel skeleton"></div>
-    </div>
-  </section>
-
   <section id="faq" class="faq">
     <h2 data-i18n="faq.heading">Questions people actually ask</h2>
     <div class="faq-list">
@@ -246,7 +212,7 @@
           <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
         </button>
         <div class="faq-answer-wrap" id="faq-answer-4">
-          <div class="faq-answer-inner"><p data-i18n="faq.a4">Open an issue on the project’s GitHub repo. I read every one.</p></div>
+          <div class="faq-answer-inner"><p><span data-i18n="faq.a4pre">Use the</span> <a href="report-bug.html" data-i18n="faq.a4link">report a bug</a> <span data-i18n="faq.a4post">page — pick the project and it opens a ready-made GitHub issue for you. I read every one.</span></p></div>
         </div>
       </div>
       <div class="faq-item glass-panel">
@@ -264,7 +230,7 @@
           <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
         </button>
         <div class="faq-answer-wrap" id="faq-answer-6">
-          <div class="faq-answer-inner"><p data-i18n="faq.a6">Yes. Every project card links straight to its GitHub repo, issues and pull requests included.</p></div>
+          <div class="faq-answer-inner"><p><span data-i18n="faq.a6pre">Yes. Check the</span> <a href="projects.html" data-i18n="faq.a6link">projects page</a> <span data-i18n="faq.a6post">— every one links to Modrinth, and from there straight to its GitHub repo.</span></p></div>
         </div>
       </div>
     </div>
@@ -288,37 +254,7 @@
   <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
-<div class="modal-overlay" id="project-modal" hidden>
-  <div class="modal-card glass-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <button class="modal-close" id="modal-close" data-i18n-aria="modal.close" aria-label="Close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
-    </button>
-    <div class="modal-head">
-      <img
-        class="modal-icon"
-        id="modal-icon"
-        alt=""
-        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23322d47'/%3E%3C/svg%3E"
-      />
-      <div>
-        <h2 id="modal-title"></h2>
-        <span class="project-type" id="modal-type"></span>
-      </div>
-    </div>
-    <div class="project-stats" id="modal-stats"></div>
-    <a class="btn btn-primary" id="modal-link" href="#" target="_blank" rel="noopener noreferrer">
-      <span id="modal-link-label" data-i18n="modal.openLink">Open on Modrinth</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-    </a>
-    <div class="modal-body" id="modal-body">
-      <p class="muted" data-i18n="modal.loading">Loading description…</p>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 <script src="nav.js?v=1"></script>
-<script src="script.js?v=9"></script>
+<script src="script.js?v=10"></script>
 </body>
 </html>
