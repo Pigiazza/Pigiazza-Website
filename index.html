@@ -84,7 +84,6 @@
     <li style="--i:0"><a href="#top" data-i18n="nav.home">Home</a></li>
     <li style="--i:1"><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
     <li style="--i:2"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
-    <li style="--i:3"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
   </ul>
 </nav>
 
@@ -110,18 +109,11 @@
     </div>
 
     <div class="hero-visual">
-      <div class="glass-panel float-shard float-shard--a" data-parallax="0.14" aria-hidden="true"></div>
       <div class="social-orbit" id="social-orbit" data-parallax="0.05"></div>
-      <div class="glass-panel float-shard float-shard--b" data-parallax="-0.1" aria-hidden="true"></div>
     </div>
   </section>
 
   <section id="about" class="about">
-    <div class="about-visual" aria-hidden="true">
-      <div class="glass-panel about-shard about-shard--a" data-parallax="-0.12"></div>
-      <div class="glass-panel about-shard about-shard--b" data-parallax="0.18"></div>
-    </div>
-
     <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: there&rsquo;s something Minecraft doesn&rsquo;t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.</p>
 
     <div class="about-bio reveal">
@@ -134,8 +126,8 @@
       <li class="flow-step reveal reveal-stagger" style="--i:0">
         <span class="flow-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
             <path d="M9 18h6" /><path d="M10 22h4" />
-            <path d="M15.1 14a5 5 0 1 0-6.2 0c.6.5 1.1 1.2 1.1 2h4c0-.8.5-1.5 1.1-2Z" />
           </svg>
         </span>
         <h3 data-i18n="about.step1Title">Idea</h3>
@@ -153,7 +145,10 @@
       <li class="flow-step reveal reveal-stagger" style="--i:2">
         <span class="flow-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3 4 9v12h16V9Z" /><path d="M12 3v6" /><path d="m9 12 3-3 3 3" /><path d="M12 9v8" />
+            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
+            <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
+            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
           </svg>
         </span>
         <h3 data-i18n="about.step3Title">Ship</h3>
@@ -266,5 +261,15 @@
 
 <script src="nav.js?v=2"></script>
 <script src="script.js?v=10"></script>
+
+<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+<script>
+  kofiWidgetOverlay.draw("pigiazza", {
+    type: "floating-chat",
+    "floating-chat.donateButton.text": "Support me",
+    "floating-chat.donateButton.background-color": "#00b9fe",
+    "floating-chat.donateButton.text-color": "#fff",
+  });
+</script>
 </body>
 </html>

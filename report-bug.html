@@ -190,7 +190,6 @@
     <li style="--i:0"><a href="index.html" data-i18n="nav.home">Home</a></li>
     <li style="--i:1"><a href="projects.html" data-i18n="nav.projects">Projects</a></li>
     <li style="--i:2"><a href="report-bug.html" data-i18n="nav.reportBug">Report a bug</a></li>
-    <li style="--i:3"><a href="wiki.html" data-i18n="nav.wiki">Wiki</a></li>
   </ul>
 </nav>
 
@@ -413,6 +412,16 @@
   });
 
   loadBugProjects();
+</script>
+
+<script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
+<script>
+  kofiWidgetOverlay.draw("pigiazza", {
+    type: "floating-chat",
+    "floating-chat.donateButton.text": "Support me",
+    "floating-chat.donateButton.background-color": "#00b9fe",
+    "floating-chat.donateButton.text-color": "#fff",
+  });
 </script>
 </body>
 </html>

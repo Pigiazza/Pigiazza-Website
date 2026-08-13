@@ -1,5 +1,5 @@
 // Header, menu a comparsa, dropdown lingua e back-to-top: l'unica roba
-// identica su tutte le pagine del sito (index, report-bug, wiki). Ogni
+// identica su tutte le pagine del sito (index, projects, report-bug). Ogni
 // pagina estende window.PIGIAZZA_STRINGS con le proprie chiavi PRIMA che
 // questo file giri, poi chiama applyLanguage(currentLang) alla fine del
 // proprio script — nav.js non lo fa da solo, altrimenti renderizzerebbe la
@@ -15,7 +15,6 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
   "nav.home": "Home",
   "nav.projects": "Projects",
   "nav.reportBug": "Report a bug",
-  "nav.wiki": "Wiki",
   "nav.langLabel": "Language",
   "backToTop.aria": "Back to top",
   "footer.tagline": "Made solo, mostly at night.",
@@ -24,7 +23,6 @@ Object.assign(window.PIGIAZZA_STRINGS.it, {
   "nav.home": "Home",
   "nav.projects": "Progetti",
   "nav.reportBug": "Segnala un bug",
-  "nav.wiki": "Wiki",
   "nav.langLabel": "Lingua",
   "backToTop.aria": "Torna in cima",
   "footer.tagline": "Fatto da solo, soprattutto di notte.",
