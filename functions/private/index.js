@@ -589,7 +589,7 @@ function renderPrivatePage(email) {
   }
 </style>
 </head>
-<body data-palette="sakura">
+<body data-palette="amber">
 <div class="noise-overlay" aria-hidden="true"></div>
 <div class="bg-glow" aria-hidden="true">
   <span class="glow glow-1"></span>
