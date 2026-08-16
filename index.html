@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Pigiazza — Minecraft Developer</title>
-<meta name="description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+<meta name="description" content="Pigiazza — solo developer, mostly Minecraft. Mods, plugins, datapacks, and the occasional other project, built with care and shipped online." />
 <link rel="canonical" href="https://pigiazza.com/" />
 
 <link rel="icon" href="assets/profile icon.png" type="image/png" />
@@ -13,11 +13,11 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://pigiazza.com/" />
 <meta property="og:title" content="Pigiazza — Minecraft Developer" />
-<meta property="og:description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+<meta property="og:description" content="Pigiazza — solo developer, mostly Minecraft. Mods, plugins, datapacks, and the occasional other project, built with care and shipped online." />
 <meta property="og:image" content="https://pigiazza.com/assets/profile%20icon.png" />
 <meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="Pigiazza — Minecraft Developer" />
-<meta name="twitter:description" content="Pigiazza — solo Minecraft developer. Mods, plugins, and datapacks, built with care and shipped on Modrinth." />
+<meta name="twitter:description" content="Pigiazza — solo developer, mostly Minecraft. Mods, plugins, datapacks, and the occasional other project, built with care and shipped online." />
 <meta name="twitter:image" content="https://pigiazza.com/assets/profile%20icon.png" />
 
 <script type="application/ld+json">
@@ -27,7 +27,7 @@
   "name": "Tommaso",
   "alternateName": "Pigiazza",
   "url": "https://pigiazza.com/",
-  "description": "Solo Minecraft developer building mods, plugins, and datapacks for Fabric, Forge, NeoForge, and Quilt.",
+  "description": "Solo developer, mostly Minecraft — mods, plugins, and datapacks for Fabric, Forge, NeoForge, and Quilt, plus the occasional other project.",
   "sameAs": [
     "https://github.com/Pigiazza",
     "https://modrinth.com/user/Pigiazza",
@@ -99,9 +99,9 @@
       <h1>
         <span data-i18n="hero.headingPre">The place to find</span>
         <span class="rotating-word-wrap"><span class="rotating-word" id="rotating-word">Mods</span></span>
-        <span data-i18n="hero.headingPost">made by someone who lives and breathes Minecraft.</span>
+        <span data-i18n="hero.headingPost">made by someone who lives and breathes Minecraft — with the occasional detour.</span>
       </h1>
-      <p class="hero-sub" data-i18n="hero.sub">New to modding. I build things I actually want to use, test them properly, then publish them.</p>
+      <p class="hero-sub" data-i18n="hero.sub">New to modding, mostly Minecraft — but not only. I build things I actually want to use, test them properly, then publish them.</p>
       <div class="hero-actions">
         <a href="projects.html" class="btn btn-primary" data-i18n="hero.ctaProjects">See what I&rsquo;ve built</a>
         <a href="#contact" class="btn btn-ghost" data-i18n="hero.ctaContact">Say hello</a>
@@ -114,11 +114,11 @@
   </section>
 
   <section id="about" class="about">
-    <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: there&rsquo;s something Minecraft doesn&rsquo;t have yet, so I build it. Then I make sure it actually holds up before anyone else sees it.</p>
+    <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: something&rsquo;s missing, so I build it &mdash; usually for Minecraft, sometimes not. Then I make sure it actually holds up before anyone else sees it.</p>
 
     <div class="about-bio reveal">
       <p data-i18n="about.bio1">I&rsquo;m Tommaso, known online as Pigiazza, one person and one editor, no team. I picked up Java to fix something that annoyed me on my own server, and never really stopped.</p>
-      <p data-i18n="about.bio2">No roadmap, no backers, no deadlines but my own. Just whatever Minecraft is missing this week, built until it&rsquo;s solid enough to hand to strangers on the internet.</p>
+      <p data-i18n="about.bio2">No roadmap, no backers, no deadlines but my own. Just whatever&rsquo;s missing this week &mdash; mostly in Minecraft &mdash; built until it&rsquo;s solid enough to hand to strangers on the internet.</p>
       <p data-i18n="about.bio3">Fabric is home base, but every mod ships for Forge, NeoForge and Quilt too, across every Minecraft version that supports it, so nobody&rsquo;s left out over a loader choice.</p>
     </div>
 
@@ -270,6 +270,41 @@
     "floating-chat.donateButton.background-color": "#ffa06a",
     "floating-chat.donateButton.text-color": "#1d0902",
   });
+</script>
+<script>
+  (function () {
+    var DISMISS_KEY = "pigiazza-kofi-dismissed";
+
+    function attachDismiss() {
+      var wraps = document.querySelectorAll(".floatingchat-container-wrap, .floatingchat-container-wrap-mobi");
+      if (!wraps.length) {
+        setTimeout(attachDismiss, 200);
+        return;
+      }
+      var dismissedBefore = localStorage.getItem(DISMISS_KEY) === "1";
+      wraps.forEach(function (wrap) {
+        if (wrap.dataset.dismissReady) return;
+        wrap.dataset.dismissReady = "1";
+        wrap.classList.add("kofi-dismiss-host");
+        if (dismissedBefore) wrap.classList.add("is-dismissed");
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "kofi-dismiss-btn";
+        btn.setAttribute("aria-label", "Nascondi il pulsante di supporto");
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>';
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          document.querySelectorAll(".kofi-dismiss-host").forEach(function (el) {
+            el.classList.add("is-dismissed");
+          });
+          localStorage.setItem(DISMISS_KEY, "1");
+        });
+        wrap.appendChild(btn);
+      });
+    }
+    attachDismiss();
+  })();
 </script>
 </body>
 </html>

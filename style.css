@@ -1772,4 +1772,50 @@ a { color: inherit; text-decoration: none; }
     opacity: 1 !important;
     transform: none !important;
   }
+
+  .kofi-dismiss-host, .kofi-dismiss-btn { transition: none !important; }
+}
+
+/* ==========================================================================
+   Ko-fi dismiss — una X compare in hover sul widget fluttuante e, se
+   cliccata, il widget scivola via a sinistra ed esce. Resta nascosto
+   (localStorage) anche dopo un refresh o cambio pagina.
+   ========================================================================== */
+
+.kofi-dismiss-host {
+  transition: transform 0.5s var(--ease-out-quart), opacity 0.4s ease;
+}
+
+.kofi-dismiss-host.is-dismissed {
+  transform: translateX(-140%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.kofi-dismiss-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: var(--ink);
+  color: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: opacity 0.2s ease, transform 0.2s var(--ease-bounce);
+  z-index: 2;
+}
+
+.kofi-dismiss-btn svg { width: 13px; height: 13px; }
+
+.kofi-dismiss-host:hover .kofi-dismiss-btn,
+.kofi-dismiss-btn:focus-visible {
+  opacity: 1;
+  transform: scale(1);
 }

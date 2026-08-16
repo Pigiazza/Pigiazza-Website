@@ -172,5 +172,40 @@
     "floating-chat.donateButton.text-color": "#1d0902",
   });
 </script>
+<script>
+  (function () {
+    var DISMISS_KEY = "pigiazza-kofi-dismissed";
+
+    function attachDismiss() {
+      var wraps = document.querySelectorAll(".floatingchat-container-wrap, .floatingchat-container-wrap-mobi");
+      if (!wraps.length) {
+        setTimeout(attachDismiss, 200);
+        return;
+      }
+      var dismissedBefore = localStorage.getItem(DISMISS_KEY) === "1";
+      wraps.forEach(function (wrap) {
+        if (wrap.dataset.dismissReady) return;
+        wrap.dataset.dismissReady = "1";
+        wrap.classList.add("kofi-dismiss-host");
+        if (dismissedBefore) wrap.classList.add("is-dismissed");
+
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "kofi-dismiss-btn";
+        btn.setAttribute("aria-label", "Nascondi il pulsante di supporto");
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>';
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          document.querySelectorAll(".kofi-dismiss-host").forEach(function (el) {
+            el.classList.add("is-dismissed");
+          });
+          localStorage.setItem(DISMISS_KEY, "1");
+        });
+        wrap.appendChild(btn);
+      });
+    }
+    attachDismiss();
+  })();
+</script>
 </body>
 </html>
