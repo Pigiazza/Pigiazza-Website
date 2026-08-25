@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=10" />
+<link rel="stylesheet" href="style.css?v=11" />
 <style>
   main.page-projects .projects {
     padding-top: clamp(150px, 22vw, 190px);
@@ -153,6 +153,14 @@
   (function () {
     var DISMISS_KEY = "pigiazza-kofi-dismissed";
 
+    // Nascosto finche' non si scrolla un po': in cima puo' sovrapporsi ai
+    // bottoni dell'hero su viewport basse.
+    function updateKofiScrollVisibility() {
+      document.querySelectorAll(".kofi-dismiss-host").forEach(function (el) {
+        el.classList.toggle("is-hero-hidden", window.scrollY < 220);
+      });
+    }
+
     function attachDismiss() {
       var wraps = document.querySelectorAll(".floatingchat-container-wrap, .floatingchat-container-wrap-mobi");
       if (!wraps.length) {
@@ -180,8 +188,11 @@
         });
         wrap.appendChild(btn);
       });
+      updateKofiScrollVisibility();
     }
     attachDismiss();
+
+    window.addEventListener("scroll", updateKofiScrollVisibility, { passive: true });
   })();
 </script>
 </body>
