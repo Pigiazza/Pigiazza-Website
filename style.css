@@ -902,11 +902,10 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   flex-direction: column;
   gap: clamp(28px, 4vw, 40px);
-  /* --accent-text e' tarato scuro/saturo per restare leggibile come testo
-     piccolo, ma con hue 48 legge come rosso-bruno piu' che arancione. Stessa
-     hue di --accent ma spostata verso il giallo e con meno croma: resta
-     arancione riconoscibile, non rosso, senza perdere contrasto. */
-  --chi-sono-label: oklch(48% 0.15 58);
+  /* Stesso arancione della parola che ruota nell'hero (.rotating-word usa
+     --accent), non la variante scura --accent-text pensata per il testo:
+     quella con questa hue/luminosita' legge come rosso-bruno. */
+  --chi-sono-label: var(--accent);
 }
 
 .chi-sono-plate {
