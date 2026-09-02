@@ -20,8 +20,8 @@ const ICON_HEART =
 // PRIMA che applyLanguage() venga chiamato in fondo a questo file. ---
 
 const ROTATING_WORDS = {
-  en: ["Mods", "Plugins", "Datapacks", "Servers"],
-  it: ["Mod", "Plugin", "Datapack", "Server"],
+  en: ["Mods", "Plugins", "Websites"],
+  it: ["Mod", "Plugin", "Siti"],
 };
 
 Object.assign(window.PIGIAZZA_STRINGS.en, {
@@ -29,7 +29,7 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
     "nav.about": "About",
     "nav.contact": "Contact",
     "hero.headingPre": "The place to find",
-    "hero.headingPost": "made by someone who lives and breathes Minecraft, for fun or for hire.",
+    "hero.headingPost": "built for fun, or for hire.",
     "hero.sub": "Personal projects ship free on Modrinth. Need something custom — a mod, a plugin, even a modern Next.js website — I take that on as paid work too.",
     "hero.ctaHire": "Hire me on Fiverr",
     "hero.ctaProjects": "See what I’ve built",
@@ -80,7 +80,7 @@ Object.assign(window.PIGIAZZA_STRINGS.it, {
     "nav.about": "Chi sono",
     "nav.contact": "Contatti",
     "hero.headingPre": "Il posto dove trovare",
-    "hero.headingPost": "creati da chi vive Minecraft in prima persona, per passione o su commissione.",
+    "hero.headingPost": "creati per passione, o su commissione.",
     "hero.sub": "I progetti personali escono gratis su Modrinth. Ti serve qualcosa su misura — una mod, un plugin, anche un sito Next.js moderno — lo prendo anche come lavoro a pagamento.",
     "hero.ctaHire": "Assumimi su Fiverr",
     "hero.ctaProjects": "Guarda cosa ho creato",
