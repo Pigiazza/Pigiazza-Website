@@ -693,16 +693,17 @@ a { color: inherit; text-decoration: none; }
   max-width: 20ch;
 }
 
-/* Block, non inline-block: cosi' la parola occupa sempre una riga tutta sua
-   e il testo dopo (headingPost) parte sempre da una riga nuova sotto,
-   qualunque sia la lunghezza della parola. Con inline-block la larghezza
-   minima calcolata in JS evitava il "salto" del titolo ma lasciava un vuoto
-   a meta' frase dopo le parole corte ("Siti" seguita da "creati..." con un
-   buco in mezzo) — questo lo evita alla radice, senza nemmeno bisogno di
-   misurare nulla. */
+/* Inline, non block: la parola sta sulla stessa riga del resto del titolo
+   invece di finire isolata su una riga tutta sua. La larghezza minima
+   (misurata in JS sulla parola piu' lunga) evita che il titolo si
+   riformatti quando la parola cambia, e il testo centrato dentro quello
+   spazio fisso distribuisce il vuoto delle parole corte ai due lati
+   invece di ammassarlo tutto dopo, dove stonava di piu'. */
 .rotating-word-wrap {
-  display: block;
+  display: inline-block;
   overflow: visible;
+  vertical-align: bottom;
+  text-align: center;
 }
 
 /* Colore pieno (no gradient-clip sul testo): la morbidezza "sfumata" viene

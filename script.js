@@ -132,6 +132,7 @@ Object.assign(window.PIGIAZZA_STRINGS.it, {
 window.onLangChange = function () {
   if (typeof showRotatingWord === "function") {
     rotatingWordIndex = 0;
+    sizeRotatingWordWrap();
     showRotatingWord();
   }
   renderLatestProject();
@@ -338,8 +339,25 @@ document.querySelectorAll(".faq-summary").forEach((btn) => {
 // sono in nav.js, condiviso da tutte le pagine.
 
 const rotatingWordEl = document.getElementById("rotating-word");
+const rotatingWordWrapEl = document.querySelector(".rotating-word-wrap");
 let rotatingWordIndex = 0;
 let rotatingWordTimer = null;
+
+// Le parole non sono tutte lunghe uguali ("Siti" vs "Plugin"): senza una
+// larghezza minima il titolo si riformatta ogni volta che la parola cambia.
+// Misurata con canvas sul font gia' applicato, non a tentoni con "ch".
+let rotatingWordMeasureCtx = null;
+function sizeRotatingWordWrap() {
+  if (!rotatingWordWrapEl || !rotatingWordEl) return;
+  const words = ROTATING_WORDS[currentLang] || ROTATING_WORDS.en;
+  const cs = getComputedStyle(rotatingWordEl);
+  if (!rotatingWordMeasureCtx) {
+    rotatingWordMeasureCtx = document.createElement("canvas").getContext("2d");
+  }
+  rotatingWordMeasureCtx.font = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+  const widest = words.reduce((max, w) => Math.max(max, rotatingWordMeasureCtx.measureText(w).width), 0);
+  rotatingWordWrapEl.style.minWidth = Math.ceil(widest) + "px";
+}
 
 function showRotatingWord() {
   const words = ROTATING_WORDS[currentLang] || ROTATING_WORDS.en;
@@ -418,6 +436,9 @@ function onScroll() {
 
 window.addEventListener("scroll", onScroll, { passive: true });
 window.addEventListener("resize", () => {
+  // Il font-size e' in clamp() legato al viewport, quindi anche la
+  // larghezza minima misurata va ricalcolata quando cambia.
+  sizeRotatingWordWrap();
   if (!prefersReducedMotion) {
     measureParallax();
     updateParallax();
@@ -463,4 +484,12 @@ applyLanguage(currentLang);
 renderSocials();
 renderSocialOrbit();
 loadLatestProject();
+sizeRotatingWordWrap();
 startRotatingWord();
+
+// Il primo giro di misure puo' capitare mentre il browser usa ancora il
+// font di fallback: quando Fredoka e' pronto per davvero si rimisura,
+// altrimenti la larghezza minima resta tarata sul font sbagliato.
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(sizeRotatingWordWrap);
+}
