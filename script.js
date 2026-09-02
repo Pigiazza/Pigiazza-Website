@@ -30,7 +30,7 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
     "nav.contact": "Contact",
     "hero.headingPre": "The place to find",
     "hero.headingPost": "built for fun, or for hire.",
-    "hero.sub": "Personal projects ship free on Modrinth. Need something custom — a mod, a plugin, even a modern Next.js website — I take that on as paid work too.",
+    "hero.sub": "Personal mods and plugins, free on Modrinth. Custom work, Minecraft or web, through Fiverr.",
     "hero.ctaHire": "Hire me on Fiverr",
     "hero.ctaProjects": "See what I’ve built",
     "about.alias": "aka Pigiazza",
@@ -81,7 +81,7 @@ Object.assign(window.PIGIAZZA_STRINGS.it, {
     "nav.contact": "Contatti",
     "hero.headingPre": "Il posto dove trovare",
     "hero.headingPost": "creati per passione, o su commissione.",
-    "hero.sub": "I progetti personali escono gratis su Modrinth. Ti serve qualcosa su misura — una mod, un plugin, anche un sito Next.js moderno — lo prendo anche come lavoro a pagamento.",
+    "hero.sub": "Mod e plugin personali, gratis su Modrinth. Lavori su misura, Minecraft o web, tramite Fiverr.",
     "hero.ctaHire": "Assumimi su Fiverr",
     "hero.ctaProjects": "Guarda cosa ho creato",
     "about.alias": "in arte Pigiazza",
@@ -333,7 +333,7 @@ document.querySelectorAll(".faq-summary").forEach((btn) => {
   });
 });
 
-// --- Parola rotante nell'hero (Mods / Plugins / Datapacks / Servers) ---
+// --- Parola rotante nell'hero (Mods / Plugins / Websites) ---
 // prefersReducedMotion, menuToggle/siteMenu/siteHeader e il menu a comparsa
 // sono in nav.js, condiviso da tutte le pagine.
 
