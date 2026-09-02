@@ -33,19 +33,18 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
     "hero.sub": "Personal projects ship free on Modrinth. Need something custom — a mod, a plugin, even a modern Next.js website — I take that on as paid work too.",
     "hero.ctaHire": "Hire me on Fiverr",
     "hero.ctaProjects": "See what I’ve built",
-    "construction.heading": "Site under construction",
-    "about.statement": "Every project starts the same way: something’s missing, so I build it — usually for Minecraft, sometimes not. Then I make sure it actually holds up before anyone else sees it.",
-    "about.bio1": "I’m Tommaso, known online as Pigiazza, one person and one editor, no team. I picked up Java to fix something that annoyed me on my own server, and never really stopped.",
-    "about.bio2": "No roadmap, no backers, no deadlines but my own — that’s how personal projects work here. Just whatever’s missing this week, mostly in Minecraft, built until it’s solid enough to hand to strangers on the internet.",
-    "about.bio3": "Fabric is home base, but every mod ships for Forge, NeoForge and Quilt too, across every Minecraft version that supports it, so nobody’s left out over a loader choice.",
-    "about.bio4": "Need something specific instead? I also take on commissioned work through Fiverr — custom mods and plugins, or a modern website built in Next.js.",
-    "about.step1Title": "Idea",
-    "about.step1Text": "Something’s missing or annoying in my own world. That’s the whole brief.",
-    "about.step2Title": "Build",
-    "about.step2Text": "Heads-down in the code, running it on my own server the whole time.",
-    "about.step3Title": "Ship",
-    "about.step3Text": "Once it survives real play without breaking, it goes up on Modrinth.",
-    "about.stackTitle": "What I build with",
+    "about.alias": "aka Pigiazza",
+    "about.badge": "Solo dev",
+    "about.tagline": "Picked up Java to fix something on my own server, and never really stopped.",
+    "about.spec1Label": "Base",
+    "about.spec1Value": "Fabric first, then ported to Forge, NeoForge and Quilt.",
+    "about.spec2Label": "Focus",
+    "about.spec2Value": "Minecraft mods and plugins, tested on my own server before anyone else sees them.",
+    "about.spec3Label": "Also",
+    "about.spec3Value": "Custom mods, plugins and Next.js sites, taken on through Fiverr.",
+    "about.spec4Label": "Solo",
+    "about.spec4Value": "No team, no roadmap, no deadlines but my own.",
+    "about.loadoutLabel": "Tools I build with",
     "latest.heading": "Latest release",
     "latest.subtext": "The newest thing I’ve shipped, straight from Modrinth.",
     "latest.viewAll": "See all projects",
@@ -85,19 +84,18 @@ Object.assign(window.PIGIAZZA_STRINGS.it, {
     "hero.sub": "I progetti personali escono gratis su Modrinth. Ti serve qualcosa su misura — una mod, un plugin, anche un sito Next.js moderno — lo prendo anche come lavoro a pagamento.",
     "hero.ctaHire": "Assumimi su Fiverr",
     "hero.ctaProjects": "Guarda cosa ho creato",
-    "construction.heading": "Sito in costruzione",
-    "about.statement": "Ogni progetto nasce allo stesso modo: manca qualcosa, quindi lo creo — di solito per Minecraft, ogni tanto no. Poi mi assicuro che regga davvero prima di farlo vedere a chiunque altro.",
-    "about.bio1": "Sono Tommaso, conosciuto online come Pigiazza, una persona sola con un editor, nessun team. Ho imparato Java per sistemare una cosa che mi dava fastidio sul mio server, e non ho più smesso.",
-    "about.bio2": "Nessuna roadmap, nessun finanziatore, nessuna scadenza se non le mie — così funzionano i progetti personali qui. Solo quello che manca questa settimana, di solito in Minecraft, costruito finché non regge abbastanza da darlo in mano a sconosciuti su internet.",
-    "about.bio3": "Fabric è la base di partenza, ma ogni mod esce anche per Forge, NeoForge e Quilt, in ogni versione di Minecraft che quel tipo di progetto supporta, così nessuno resta escluso per una scelta di loader.",
-    "about.bio4": "Ti serve qualcosa di specifico? Prendo anche lavori su commissione tramite Fiverr — mod e plugin su misura, oppure un sito moderno costruito in Next.js.",
-    "about.step1Title": "Idea",
-    "about.step1Text": "Manca qualcosa, o qualcosa dà fastidio nel mio mondo. Ecco tutto il brief.",
-    "about.step2Title": "Costruzione",
-    "about.step2Text": "Testa bassa sul codice, provandolo sul mio server per tutto il tempo.",
-    "about.step3Title": "Pubblicazione",
-    "about.step3Text": "Quando regge al gioco vero senza rompersi, va su Modrinth.",
-    "about.stackTitle": "Con cosa costruisco",
+    "about.alias": "in arte Pigiazza",
+    "about.badge": "Sviluppatore solo",
+    "about.tagline": "Ho imparato Java per sistemare una cosa sul mio server, e non ho più smesso.",
+    "about.spec1Label": "Base",
+    "about.spec1Value": "Prima Fabric, poi portato su Forge, NeoForge e Quilt.",
+    "about.spec2Label": "Focus",
+    "about.spec2Value": "Mod e plugin per Minecraft, testati sul mio server prima che li veda chiunque altro.",
+    "about.spec3Label": "Anche",
+    "about.spec3Value": "Mod, plugin e siti Next.js su misura, presi in carico tramite Fiverr.",
+    "about.spec4Label": "Solo",
+    "about.spec4Value": "Nessun team, nessuna roadmap, nessuna scadenza se non le mie.",
+    "about.loadoutLabel": "Gli strumenti che uso",
     "latest.heading": "Ultima uscita",
     "latest.subtext": "L'ultima cosa che ho pubblicato, presa direttamente da Modrinth.",
     "latest.viewAll": "Vedi tutti i progetti",
@@ -426,7 +424,7 @@ window.addEventListener("resize", () => {
   }
 });
 
-updateBackToTop();
+if (typeof updateBackToTop === "function") updateBackToTop();
 
 if (!prefersReducedMotion) {
   measureParallax();
@@ -459,30 +457,6 @@ if (!prefersReducedMotion && "IntersectionObserver" in window) {
   );
 
   revealEls.forEach((el) => revealObserver.observe(el));
-}
-
-// --- Schema Idea → Build → Ship: il filo si disegna quando entra in vista.
-// Come per .reveal, lo stato di partenza è "disegnato" nel CSS e la classe
-// viene tolta solo se possiamo garantire che l'observer la rimetta. ---
-
-const flow = document.getElementById("flow");
-
-if (flow) {
-  if (prefersReducedMotion || !("IntersectionObserver" in window)) {
-    flow.classList.add("is-drawn");
-  } else {
-    const flowObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-drawn");
-          flowObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.35 }
-    );
-    flowObserver.observe(flow);
-  }
 }
 
 applyLanguage(currentLang);

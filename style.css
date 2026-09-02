@@ -886,93 +886,228 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ==========================================================================
-   About — a single big statement
+   Chi sono — un "player card": ritratto in cornice a mirino + specifiche in
+   stile scheda personaggio, non piu' una citazione centrata con elenco
+   numerato sotto. .flow-icon resta altrove (report-bug.html): qui non si
+   tocca, si costruisce solo il nuovo componente.
    ========================================================================== */
 
-.about {
+.chi-sono {
   position: relative;
-  max-width: 900px;
+  max-width: 1040px;
   margin: clamp(40px, 8vw, 90px) auto;
-  padding: clamp(90px, 14vw, 160px) clamp(24px, 6vw, 56px) clamp(70px, 10vw, 110px);
+  padding: clamp(90px, 14vw, 160px) clamp(20px, 5vw, 56px) clamp(60px, 9vw, 100px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 40px);
+}
+
+.chi-sono-plate {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) 1fr;
+  gap: clamp(28px, 5vw, 56px);
+  align-items: center;
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.chi-sono-portrait {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(56px, 8vw, 88px);
-  overflow: clip;
+  gap: 16px;
 }
 
-.about-statement {
+.chi-sono-frame {
   position: relative;
-  z-index: 1;
+  width: 100%;
+  max-width: 220px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 20px 44px -20px var(--shadow-color);
+  /* Il transform del tilt in hover usa la transition di .reveal (che questo
+     elemento porta sempre insieme): stessa firma "bouncy" del sito, niente
+     da dichiarare qui o le due regole si scavalcherebbero. */
+}
+
+.chi-sono-frame:hover,
+.chi-sono-frame:focus-within {
+  transform: perspective(600px) rotateX(4deg) rotateY(-6deg) scale(1.03);
+}
+
+.chi-sono-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Angoli "a mirino", presi in prestito dal frame di selezione di un
+   inventario: e' l'elemento che rende questa cornice diversa da un
+   semplice avatar tondo. */
+.chi-sono-frame-corner {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border: 3px solid var(--accent);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.chi-sono-frame-corner--tl { top: 8px; left: 8px; border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+.chi-sono-frame-corner--tr { top: 8px; right: 8px; border-width: 3px 3px 0 0; border-radius: 0 6px 0 0; }
+.chi-sono-frame-corner--bl { bottom: 8px; left: 8px; border-width: 0 0 3px 3px; border-radius: 0 0 0 6px; }
+.chi-sono-frame-corner--br { bottom: 8px; right: 8px; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; }
+
+.chi-sono-badge {
   font-family: "Fredoka", sans-serif;
   font-weight: 600;
-  font-size: var(--fs-2xl);
-  line-height: 1.35;
-  letter-spacing: -0.01em;
-  text-align: center;
-  text-wrap: balance;
-  max-width: 18ch;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: var(--accent-text);
+  background: var(--glass-tint-strong);
+  border: 1px solid var(--glass-edge-dim);
+  padding: 6px 16px;
+  border-radius: 999px;
 }
 
-.about-bio {
-  position: relative;
-  z-index: 1;
+.chi-sono-info {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  max-width: 60ch;
+  gap: 10px;
 }
 
-.about-bio p {
-  font-size: var(--fs-lg);
+.chi-sono-name {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: var(--fs-2xl);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.chi-sono-alias {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.chi-sono-tagline {
   color: var(--ink-soft);
-  line-height: 1.6;
-  text-align: center;
-  max-width: none;
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+  max-width: 46ch;
+  margin: 0 0 8px;
 }
 
-/* ==========================================================================
-   Flow — Idea → Build → Ship come schema collegato invece che elenco numerato
-   ========================================================================== */
+.chi-sono-specs {
+  display: grid;
+  gap: clamp(14px, 2vw, 20px);
+  margin: 0;
+}
 
-.flow {
-  position: relative;
-  z-index: 1;
+.chi-sono-spec {
+  display: grid;
+  grid-template-columns: 84px 1fr;
+  gap: 4px 18px;
+  align-items: baseline;
+}
+
+.chi-sono-spec dt {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+
+.chi-sono-spec dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: var(--fs-base);
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .chi-sono-plate {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .chi-sono-info { align-items: center; }
+
+  .chi-sono-spec {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 2px;
+  }
+}
+
+/* Loadout — gli strumenti veri, come loghi in slot di vetro, non come
+   pillole di solo testo. */
+.loadout {
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(16px, 3vw, 32px);
-}
-
-/* Il filo che unisce i tre nodi: parte dal centro della prima icona e arriva
-   a quello dell'ultima, e si "disegna" quando la sezione entra in vista. */
-.flow::before {
-  content: "";
-  position: absolute;
-  top: 34px;
-  left: calc(16.666% + 34px);
-  right: calc(16.666% + 34px);
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  opacity: 0.55;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 1.1s var(--ease-out-expo) 0.15s;
-}
-
-.flow.is-drawn::before { transform: scaleX(1); }
-
-.flow-step {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(10px, 1.6vw, 16px);
 }
 
+.loadout-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  padding: 0 clamp(14px, 2vw, 22px);
+  border-radius: var(--radius-sm);
+  background: var(--glass-tint);
+  border: 1px solid var(--glass-edge-dim);
+}
+
+/* "transition" e' una shorthand: la regola .reveal (che questo elemento
+   porta sempre insieme) non si fonderebbe con una qui, la rimpiazzerebbe
+   del tutto. Selettore composto = specificita' piu' alta, tutte e tre le
+   proprieta' dichiarate insieme in un punto solo. La shorthand azzera
+   anche transition-delay, quindi va ridichiarato qui o lo scaglionamento
+   di .reveal-stagger (specificita' piu' bassa) sparirebbe. */
+.loadout-item.reveal {
+  transition: opacity 0.7s var(--ease-out-quart), transform 0.8s var(--ease-bounce), background 0.25s ease;
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.loadout-item:hover,
+.loadout-item:focus-within {
+  transform: translateY(-3px);
+  background: var(--glass-tint-strong);
+}
+
+.loadout-item img {
+  height: 26px;
+  width: auto;
+  max-width: 110px;
+  object-fit: contain;
+  filter: grayscale(1) opacity(0.65);
+  transition: filter 0.3s ease;
+}
+
+.loadout-item:hover img,
+.loadout-item:focus-within img {
+  filter: grayscale(0) opacity(1);
+}
+
+/* java.png e' un lockup verticale (tazza sopra, scritta "Java" sotto): alla
+   stessa altezza degli altri loghi diventerebbe un filo illeggibile, quindi
+   qui si ritaglia solo l'icona con object-fit invece di scalare tutto. */
+.loadout-item--java img {
+  width: 32px;
+  height: 38px;
+  object-fit: cover;
+  object-position: 50% 0%;
+}
+
+/* Badge tondo colorato per un'icona: non e' piu' usato dal vecchio schema
+   Idea/Build/Ship, ma resta condiviso con .page-icon su report-bug.html. */
 .flow-icon {
   position: relative;
   width: 68px;
@@ -985,112 +1120,9 @@ a { color: inherit; text-decoration: none; }
   color: var(--accent-ink);
   background: var(--accent);
   box-shadow: 0 10px 28px -10px var(--glow-a);
-  transition: transform 0.45s var(--ease-bounce);
 }
 
 .flow-icon svg { width: 30px; height: 30px; }
-
-.flow-step:hover .flow-icon { transform: translateY(-4px) scale(1.06); }
-
-/* Anello che pulsa una volta quando lo schema si disegna. */
-.flow-icon::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  opacity: 0;
-}
-
-.flow.is-drawn .flow-icon::after {
-  animation: flow-ping 1.4s var(--ease-out-quart) forwards;
-  animation-delay: calc(0.25s + var(--i, 0) * 0.28s);
-}
-
-@keyframes flow-ping {
-  0% { opacity: 0.7; transform: scale(0.85); }
-  70% { opacity: 0; transform: scale(1.25); }
-  100% { opacity: 0; transform: scale(1.25); }
-}
-
-.flow-step h3 {
-  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.35rem);
-}
-
-.flow-step p {
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-  line-height: 1.55;
-  max-width: 28ch;
-}
-
-@media (max-width: 720px) {
-  .flow {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-
-  /* In colonna il filo diventa verticale, lungo l'asse delle icone. */
-  .flow::before {
-    top: 34px;
-    bottom: 34px;
-    left: 50%;
-    right: auto;
-    width: 2px;
-    height: auto;
-    transform: translateX(-50%) scaleY(0);
-    transform-origin: center top;
-    background: linear-gradient(180deg, var(--accent), var(--accent-2));
-  }
-
-  .flow.is-drawn::before { transform: translateX(-50%) scaleY(1); }
-}
-
-/* ==========================================================================
-   Stack
-   ========================================================================== */
-
-.stack-block {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(20px, 3vw, 30px);
-}
-
-.stack-block h3 {
-  font-family: "Fredoka", sans-serif;
-  font-weight: 600;
-  font-size: var(--fs-2xl);
-  color: var(--ink);
-  text-align: center;
-  max-width: 16ch;
-}
-
-.stack-tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(10px, 1.4vw, 16px);
-}
-
-/* I tag dello stack sono un'informazione principale della sezione, non
-   un'etichetta di servizio: scala e peso propri, non quelli di .tag. */
-.stack-tags .tag {
-  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.35rem);
-  font-family: "Fredoka", sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  padding: clamp(10px, 1.2vw, 15px) clamp(20px, 2.4vw, 30px);
-  color: var(--ink);
-  transition: transform 0.4s var(--ease-bounce), background 0.25s ease;
-}
-
-.stack-tags .tag:hover {
-  transform: translateY(-3px) scale(1.04);
-  background: var(--glass-tint);
-}
 
 /* ==========================================================================
    Projects
@@ -1798,15 +1830,13 @@ a { color: inherit; text-decoration: none; }
     transition: none !important;
   }
 
-  /* Solo la transizione: lo stato "disegnato" (che su mobile include il
-     translateX di centratura) lo applica comunque .is-drawn. */
-  .flow::before { transition: none !important; }
-
-  .flow .flow-icon::after { animation: none !important; }
-
-  .flow-icon, .site-wordmark, .stack-tags .tag,
-  .social-slide, .social-slide img, .social-dot {
+  .site-wordmark, .social-slide, .social-slide img, .social-dot,
+  .chi-sono-frame, .loadout-item {
     transition-duration: 0.01ms !important;
+  }
+
+  .chi-sono-frame:hover, .chi-sono-frame:focus-within {
+    transform: none !important;
   }
 
   .stagger-in {

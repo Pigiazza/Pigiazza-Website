@@ -40,7 +40,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=12" />
+<link rel="stylesheet" href="style.css?v=16" />
 
 <!-- Analytics: richiede un account Plausible (plausible.io) con questo dominio
      aggiunto nel pannello, altrimenti lo script carica ma non traccia nulla. -->
@@ -113,69 +113,53 @@
     </div>
   </section>
 
-  <section class="construction">
-    <div class="construction-card reveal">
-      <span class="construction-icon" aria-hidden="true">⛏️</span>
-      <p class="construction-text" data-i18n="construction.heading">Site under construction</p>
-    </div>
-  </section>
+  <section id="about" class="chi-sono">
+    <div class="chi-sono-plate glass-panel">
+      <div class="chi-sono-portrait">
+        <div class="chi-sono-frame reveal" tabindex="0">
+          <img src="assets/profile icon.png" alt="Pigiazza&rsquo;s dog, the closest thing this site has to a team photo" width="400" height="400" loading="lazy" />
+          <span class="chi-sono-frame-corner chi-sono-frame-corner--tl" aria-hidden="true"></span>
+          <span class="chi-sono-frame-corner chi-sono-frame-corner--tr" aria-hidden="true"></span>
+          <span class="chi-sono-frame-corner chi-sono-frame-corner--bl" aria-hidden="true"></span>
+          <span class="chi-sono-frame-corner chi-sono-frame-corner--br" aria-hidden="true"></span>
+        </div>
+        <span class="chi-sono-badge reveal" data-i18n="about.badge">Solo dev</span>
+      </div>
 
-  <section id="about" class="about construction-hidden">
-    <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: something&rsquo;s missing, so I build it &mdash; usually for Minecraft, sometimes not. Then I make sure it actually holds up before anyone else sees it.</p>
+      <div class="chi-sono-info">
+        <h2 class="chi-sono-name reveal">Tommaso <span class="chi-sono-alias" data-i18n="about.alias">aka Pigiazza</span></h2>
+        <p class="chi-sono-tagline reveal" data-i18n="about.tagline">Picked up Java to fix something on my own server, and never really stopped.</p>
 
-    <div class="about-bio reveal">
-      <p data-i18n="about.bio1">I&rsquo;m Tommaso, known online as Pigiazza, one person and one editor, no team. I picked up Java to fix something that annoyed me on my own server, and never really stopped.</p>
-      <p data-i18n="about.bio2">No roadmap, no backers, no deadlines but my own &mdash; that&rsquo;s how personal projects work here. Just whatever&rsquo;s missing this week, mostly in Minecraft, built until it&rsquo;s solid enough to hand to strangers on the internet.</p>
-      <p data-i18n="about.bio3">Fabric is home base, but every mod ships for Forge, NeoForge and Quilt too, across every Minecraft version that supports it, so nobody&rsquo;s left out over a loader choice.</p>
-      <p data-i18n="about.bio4">Need something specific instead? I also take on commissioned work through Fiverr &mdash; custom mods and plugins, or a modern website built in Next.js.</p>
-    </div>
-
-    <ol class="flow" id="flow">
-      <li class="flow-step reveal reveal-stagger" style="--i:0">
-        <span class="flow-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5" />
-            <path d="M9 18h6" /><path d="M10 22h4" />
-          </svg>
-        </span>
-        <h3 data-i18n="about.step1Title">Idea</h3>
-        <p data-i18n="about.step1Text">Something&rsquo;s missing or annoying in my own world. That&rsquo;s the whole brief.</p>
-      </li>
-      <li class="flow-step reveal reveal-stagger" style="--i:1">
-        <span class="flow-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m8 8-5 4 5 4" /><path d="m16 8 5 4-5 4" /><path d="m13.5 5-3 14" />
-          </svg>
-        </span>
-        <h3 data-i18n="about.step2Title">Build</h3>
-        <p data-i18n="about.step2Text">Heads-down in the code, running it on my own server the whole time.</p>
-      </li>
-      <li class="flow-step reveal reveal-stagger" style="--i:2">
-        <span class="flow-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-            <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09" />
-            <path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z" />
-            <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05" />
-          </svg>
-        </span>
-        <h3 data-i18n="about.step3Title">Ship</h3>
-        <p data-i18n="about.step3Text">Once it survives real play without breaking, it goes up on Modrinth.</p>
-      </li>
-    </ol>
-
-    <div class="stack-block">
-      <h3 class="reveal" data-i18n="about.stackTitle">What I build with</h3>
-      <div class="stack-tags">
-        <span class="tag reveal reveal-stagger" style="--i:0">Java</span>
-        <span class="tag reveal reveal-stagger" style="--i:1">Fabric</span>
-        <span class="tag reveal reveal-stagger" style="--i:2">Forge</span>
-        <span class="tag reveal reveal-stagger" style="--i:3">NeoForge</span>
-        <span class="tag reveal reveal-stagger" style="--i:4">Quilt</span>
-        <span class="tag reveal reveal-stagger" style="--i:5">Gradle</span>
-        <span class="tag reveal reveal-stagger" style="--i:6">Git</span>
+        <dl class="chi-sono-specs">
+          <div class="chi-sono-spec reveal reveal-stagger" style="--i:0">
+            <dt data-i18n="about.spec1Label">Base</dt>
+            <dd data-i18n="about.spec1Value">Fabric first, then ported to Forge, NeoForge and Quilt.</dd>
+          </div>
+          <div class="chi-sono-spec reveal reveal-stagger" style="--i:1">
+            <dt data-i18n="about.spec2Label">Focus</dt>
+            <dd data-i18n="about.spec2Value">Minecraft mods and plugins, tested on my own server before anyone else sees them.</dd>
+          </div>
+          <div class="chi-sono-spec reveal reveal-stagger" style="--i:2">
+            <dt data-i18n="about.spec3Label">Also</dt>
+            <dd data-i18n="about.spec3Value">Custom mods, plugins and Next.js sites, taken on through Fiverr.</dd>
+          </div>
+          <div class="chi-sono-spec reveal reveal-stagger" style="--i:3">
+            <dt data-i18n="about.spec4Label">Solo</dt>
+            <dd data-i18n="about.spec4Value">No team, no roadmap, no deadlines but my own.</dd>
+          </div>
+        </dl>
       </div>
     </div>
+
+    <ul class="loadout" aria-label="Tools I build with">
+      <li class="loadout-item loadout-item--java reveal reveal-stagger" style="--i:0"><img src="assets/java.png" alt="Java" loading="lazy" /></li>
+      <li class="loadout-item reveal reveal-stagger" style="--i:1"><img src="assets/fabric.png" alt="Fabric" loading="lazy" /></li>
+      <li class="loadout-item reveal reveal-stagger" style="--i:2"><img src="assets/neoforge.png" alt="NeoForge" loading="lazy" /></li>
+      <li class="loadout-item reveal reveal-stagger" style="--i:3"><img src="assets/quilt.png" alt="Quilt" loading="lazy" /></li>
+      <li class="loadout-item reveal reveal-stagger" style="--i:4"><img src="assets/gradle.png" alt="Gradle" loading="lazy" /></li>
+      <li class="loadout-item reveal reveal-stagger" style="--i:5"><img src="assets/git.png" alt="Git" loading="lazy" /></li>
+      <li class="loadout-item reveal reveal-stagger" style="--i:6"><img src="assets/kotlin.png" alt="Kotlin" loading="lazy" /></li>
+    </ul>
   </section>
 
   <section id="latest" class="latest-project construction-hidden">
@@ -259,16 +243,12 @@
 
 </main>
 
-<button type="button" class="back-to-top" id="back-to-top" data-i18n-aria="backToTop.aria" aria-label="Back to top" hidden>
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
-</button>
-
 <footer class="site-footer construction-hidden">
   <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
 <script src="nav.js?v=2"></script>
-<script src="script.js?v=12"></script>
+<script src="script.js?v=13"></script>
 
 <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
 <script>
