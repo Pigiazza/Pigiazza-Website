@@ -895,11 +895,18 @@ a { color: inherit; text-decoration: none; }
 .chi-sono {
   position: relative;
   max-width: 1040px;
-  margin: clamp(40px, 8vw, 90px) auto;
-  padding: clamp(90px, 14vw, 160px) clamp(20px, 5vw, 56px) clamp(60px, 9vw, 100px);
+  /* L'hero sopra ha gia' un grande padding-bottom suo: qui basta poco,
+     altrimenti la card finisce troppo in basso nella pagina. */
+  margin: 0 auto clamp(40px, 8vw, 90px);
+  padding: 0 clamp(20px, 5vw, 56px) clamp(60px, 9vw, 100px);
   display: flex;
   flex-direction: column;
   gap: clamp(28px, 4vw, 40px);
+  /* --accent-text e' tarato scuro/saturo per restare leggibile come testo
+     piccolo, ma con hue 48 legge come rosso-bruno piu' che arancione. Stessa
+     hue di --accent ma spostata verso il giallo e con meno croma: resta
+     arancione riconoscibile, non rosso, senza perdere contrasto. */
+  --chi-sono-label: oklch(48% 0.15 58);
 }
 
 .chi-sono-plate {
@@ -964,7 +971,7 @@ a { color: inherit; text-decoration: none; }
   font-weight: 600;
   font-size: 0.85rem;
   letter-spacing: 0.02em;
-  color: var(--accent-text);
+  color: var(--chi-sono-label);
   background: var(--glass-tint-strong);
   border: 1px solid var(--glass-edge-dim);
   padding: 6px 16px;
@@ -986,7 +993,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .chi-sono-alias {
-  color: var(--accent-text);
+  color: var(--chi-sono-label);
   font-weight: 600;
 }
 
@@ -1017,7 +1024,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.78rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--accent-text);
+  color: var(--chi-sono-label);
 }
 
 .chi-sono-spec dd {
@@ -1040,70 +1047,6 @@ a { color: inherit; text-decoration: none; }
     justify-items: center;
     gap: 2px;
   }
-}
-
-/* Loadout — gli strumenti veri, come loghi in slot di vetro, non come
-   pillole di solo testo. */
-.loadout {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: clamp(10px, 1.6vw, 16px);
-}
-
-.loadout-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 56px;
-  padding: 0 clamp(14px, 2vw, 22px);
-  border-radius: var(--radius-sm);
-  background: var(--glass-tint);
-  border: 1px solid var(--glass-edge-dim);
-}
-
-/* "transition" e' una shorthand: la regola .reveal (che questo elemento
-   porta sempre insieme) non si fonderebbe con una qui, la rimpiazzerebbe
-   del tutto. Selettore composto = specificita' piu' alta, tutte e tre le
-   proprieta' dichiarate insieme in un punto solo. La shorthand azzera
-   anche transition-delay, quindi va ridichiarato qui o lo scaglionamento
-   di .reveal-stagger (specificita' piu' bassa) sparirebbe. */
-.loadout-item.reveal {
-  transition: opacity 0.7s var(--ease-out-quart), transform 0.8s var(--ease-bounce), background 0.25s ease;
-  transition-delay: calc(var(--i, 0) * 90ms);
-}
-
-.loadout-item:hover,
-.loadout-item:focus-within {
-  transform: translateY(-3px);
-  background: var(--glass-tint-strong);
-}
-
-.loadout-item img {
-  height: 26px;
-  width: auto;
-  max-width: 110px;
-  object-fit: contain;
-  filter: grayscale(1) opacity(0.65);
-  transition: filter 0.3s ease;
-}
-
-.loadout-item:hover img,
-.loadout-item:focus-within img {
-  filter: grayscale(0) opacity(1);
-}
-
-/* java.png e' un lockup verticale (tazza sopra, scritta "Java" sotto): alla
-   stessa altezza degli altri loghi diventerebbe un filo illeggibile, quindi
-   qui si ritaglia solo l'icona con object-fit invece di scalare tutto. */
-.loadout-item--java img {
-  width: 32px;
-  height: 38px;
-  object-fit: cover;
-  object-position: 50% 0%;
 }
 
 /* Badge tondo colorato per un'icona: non e' piu' usato dal vecchio schema
@@ -1831,7 +1774,7 @@ a { color: inherit; text-decoration: none; }
   }
 
   .site-wordmark, .social-slide, .social-slide img, .social-dot,
-  .chi-sono-frame, .loadout-item {
+  .chi-sono-frame {
     transition-duration: 0.01ms !important;
   }
 
