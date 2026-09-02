@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=11" />
+<link rel="stylesheet" href="style.css?v=12" />
 <style>
   .page {
     max-width: 640px;
@@ -21,6 +21,11 @@
     flex-direction: column;
     align-items: center;
     gap: clamp(32px, 5vw, 48px);
+  }
+
+  .page .construction {
+    padding: 0;
+    min-height: auto;
   }
 
   .page-hero {
@@ -194,7 +199,14 @@
 </nav>
 
 <main class="page">
-  <div class="page-hero">
+  <section class="construction">
+    <div class="construction-card reveal">
+      <span class="construction-icon" aria-hidden="true">⛏️</span>
+      <p class="construction-text" data-i18n="construction.heading">Site under construction</p>
+    </div>
+  </section>
+
+  <div class="page-hero construction-hidden">
     <span class="flow-icon page-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
         <path d="M8 6a4 4 0 0 1 8 0" />
@@ -206,7 +218,7 @@
     <p class="page-lead" id="pg-lead">Pick the project below, describe what happened, and this opens a ready-made GitHub issue for you to send — I read every one.</p>
   </div>
 
-  <form class="glass-panel page-card" id="bug-form" novalidate>
+  <form class="glass-panel page-card construction-hidden" id="bug-form" novalidate>
     <div class="bug-field">
       <label for="bug-project" id="pg-label-project">Project</label>
       <select id="bug-project" required disabled>
@@ -249,7 +261,7 @@
     <p class="bug-note" id="pg-note">This opens GitHub with everything filled in — you still need to hit submit there.</p>
   </form>
 
-  <div class="glass-panel page-card" id="bug-empty" hidden>
+  <div class="glass-panel page-card construction-hidden" id="bug-empty" hidden>
     <h2 id="pg-empty-title">Nothing published yet</h2>
     <p class="muted" id="pg-empty-text">There&rsquo;s nothing to report a bug against just yet. Check back once something ships, or follow along on Modrinth.</p>
     <a class="btn btn-primary" href="https://modrinth.com/user/Pigiazza" target="_blank" rel="noopener noreferrer" id="pg-empty-link">Visit my Modrinth profile</a>
@@ -260,7 +272,7 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
 </button>
 
-<footer class="site-footer">
+<footer class="site-footer construction-hidden">
   <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
@@ -268,6 +280,7 @@
   window.PIGIAZZA_STRINGS = { en: {}, it: {} };
   Object.assign(window.PIGIAZZA_STRINGS.en, {
     "pg.title": "Report a bug — Pigiazza",
+    "construction.heading": "Site under construction",
     "pg.heading": "Found a bug?",
     "pg.lead": "Pick the project below, describe what happened, and this opens a ready-made GitHub issue for you to send — I read every one.",
     "pg.labelProject": "Project",
@@ -288,6 +301,7 @@
   });
   Object.assign(window.PIGIAZZA_STRINGS.it, {
     "pg.title": "Segnala un bug — Pigiazza",
+    "construction.heading": "Sito in costruzione",
     "pg.heading": "Hai trovato un bug?",
     "pg.lead": "Scegli il progetto qui sotto, descrivi cos’è successo, e questo apre una issue GitHub già pronta da inviare — le leggo tutte.",
     "pg.labelProject": "Progetto",

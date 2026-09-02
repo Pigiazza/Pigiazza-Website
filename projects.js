@@ -14,6 +14,7 @@ const ICON_BOX =
 
 Object.assign(window.PIGIAZZA_STRINGS.en, {
   "pg.title": "Projects — Pigiazza",
+  "construction.heading": "Site under construction",
   "projects.heading": "Everything I’ve shipped",
   "projects.subtext": "New releases show up here the moment I publish them on Modrinth, no need to refresh or check back.",
   "projects.emptyTitle": "Nothing published yet",
@@ -33,6 +34,7 @@ Object.assign(window.PIGIAZZA_STRINGS.en, {
 
 Object.assign(window.PIGIAZZA_STRINGS.it, {
   "pg.title": "Progetti — Pigiazza",
+  "construction.heading": "Sito in costruzione",
   "projects.heading": "Tutto quello che ho pubblicato",
   "projects.subtext": "Ogni nuovo progetto compare qui non appena lo pubblico su Modrinth, non serve aggiornare la pagina.",
   "projects.emptyTitle": "Ancora nulla di pubblicato",

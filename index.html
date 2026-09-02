@@ -40,7 +40,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=11" />
+<link rel="stylesheet" href="style.css?v=12" />
 
 <!-- Analytics: richiede un account Plausible (plausible.io) con questo dominio
      aggiunto nel pannello, altrimenti lo script carica ma non traccia nulla. -->
@@ -113,7 +113,14 @@
     </div>
   </section>
 
-  <section id="about" class="about">
+  <section class="construction">
+    <div class="construction-card reveal">
+      <span class="construction-icon" aria-hidden="true">⛏️</span>
+      <p class="construction-text" data-i18n="construction.heading">Site under construction</p>
+    </div>
+  </section>
+
+  <section id="about" class="about construction-hidden">
     <p class="about-statement reveal" data-i18n="about.statement">Every project starts the same way: something&rsquo;s missing, so I build it &mdash; usually for Minecraft, sometimes not. Then I make sure it actually holds up before anyone else sees it.</p>
 
     <div class="about-bio reveal">
@@ -171,7 +178,7 @@
     </div>
   </section>
 
-  <section id="latest" class="latest-project">
+  <section id="latest" class="latest-project construction-hidden">
     <div class="reveal">
       <h2 data-i18n="latest.heading">Latest release</h2>
       <p class="section-sub muted" data-i18n="latest.subtext">The newest thing I&rsquo;ve shipped, straight from Modrinth.</p>
@@ -182,7 +189,7 @@
     <a href="projects.html" class="btn btn-ghost" data-i18n="latest.viewAll">See all projects</a>
   </section>
 
-  <section id="faq" class="faq">
+  <section id="faq" class="faq construction-hidden">
     <h2 data-i18n="faq.heading">Questions people actually ask</h2>
     <div class="faq-list">
       <div class="faq-item glass-panel">
@@ -242,7 +249,7 @@
     </div>
   </section>
 
-  <section id="contact" class="contact">
+  <section id="contact" class="contact construction-hidden">
     <div class="glass-panel contact-panel">
       <h2 data-i18n="contact.heading">Find me elsewhere</h2>
       <p class="muted" data-i18n="contact.subtext">You&rsquo;ll find the code on GitHub, downloads on Modrinth, and a coffee jar on Ko-fi if you&rsquo;re feeling generous.</p>
@@ -256,12 +263,12 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5" /><path d="m5 12 7-7 7 7" /></svg>
 </button>
 
-<footer class="site-footer">
+<footer class="site-footer construction-hidden">
   <p><span data-i18n="footer.tagline">Made solo, mostly at night.</span> © <span id="year"></span> Pigiazza</p>
 </footer>
 
 <script src="nav.js?v=2"></script>
-<script src="script.js?v=11"></script>
+<script src="script.js?v=12"></script>
 
 <script src="https://storage.ko-fi.com/cdn/scripts/overlay-widget.js"></script>
 <script>
