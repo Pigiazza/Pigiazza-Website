@@ -95,7 +95,7 @@ Ogni sezione è un componente isolato che riceve solo i testi dal dizionario.
 ## SEO e accessibilità
 
 - Metadata, Open Graph, JSON-LD (Person + VideoGame segnaposto), sitemap e robots statici.
-- Analytics Plausible mantenuto come nel vecchio sito, se vuoi tenerlo (da confermare).
+- Analytics Plausible mantenuto come nel vecchio sito (`data-domain="pigiazza.com"`, script `defer`).
 - HTML semantico, un solo `h1`, navigazione da tastiera, focus visibile, contrasto AA in entrambi i temi.
 - Immagini con `alt`; segnaposto con `alt` descrittivo.
 
