@@ -1,0 +1,47 @@
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.blob {
+  position: absolute;
+  width: 55vmax;
+  height: 55vmax;
+  border-radius: var(--r-pill);
+  filter: blur(80px);
+  opacity: 0.85;
+  animation: drift 28s ease-in-out infinite alternate;
+}
+
+.b1 {
+  background: var(--blob-1);
+  top: -15vmax;
+  left: -10vmax;
+}
+.b2 {
+  background: var(--blob-2);
+  right: -15vmax;
+  top: 10vmax;
+  animation-delay: -9s;
+}
+.b3 {
+  background: var(--blob-3);
+  bottom: -20vmax;
+  left: 20vmax;
+  animation-delay: -18s;
+}
+
+@keyframes drift {
+  to {
+    transform: translate3d(6vmax, 4vmax, 0) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob {
+    animation: none;
+  }
+}
