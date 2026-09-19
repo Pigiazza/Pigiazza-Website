@@ -25,6 +25,7 @@
   --accent: #ff8a3d;
   --accent-ink: #1b0e00;
   --accent-text: #a63f00;
+  --focus: var(--accent-text);
   --page-max: 1120px;
 
   /* light (default) */
@@ -45,6 +46,7 @@
 
 :root[data-theme='dark'] {
   --accent-text: #ff8a3d;
+  --focus: var(--accent);
   --bg: #0b0e1a;
   --text: #f2f4ff;
   --text-muted: #b1b7d4;
@@ -99,7 +101,7 @@ img {
 }
 
 :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--focus);
   outline-offset: 3px;
 }
 

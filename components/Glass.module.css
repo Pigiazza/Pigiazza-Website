@@ -1,5 +1,6 @@
 .glass {
   position: relative;
+  isolation: isolate;
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
   -webkit-backdrop-filter: blur(22px) saturate(160%);
@@ -17,6 +18,7 @@
   inset: 0;
   background: linear-gradient(135deg, var(--glass-highlight) 0%, transparent 38%);
   opacity: 0.35;
+  z-index: -1;
   pointer-events: none;
 }
 

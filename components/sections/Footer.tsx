@@ -26,7 +26,7 @@ export function Footer() {
             </li>
           ))}
         </ul>
-        <p className={styles.copy}>
+        <p className={styles.copy} suppressHydrationWarning>
           © {new Date().getFullYear()} Pigiazza. {t.footer.rights}
         </p>
       </Glass>
