@@ -1,2 +1,8 @@
+node_modules
+.next
+out
+.wrangler
 .DS_Store
-.wrangler/
+next-env.d.ts
+.superpowers
+*.tsbuildinfo
