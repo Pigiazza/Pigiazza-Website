@@ -14,6 +14,6 @@
   aspect-ratio: 16 / 10;
   border-radius: calc(var(--r-md) - var(--s-2));
   background: linear-gradient(135deg, var(--blob-3), var(--blob-2));
-  color: #fff;
+  color: var(--on-blob);
   font-weight: 800;
 }

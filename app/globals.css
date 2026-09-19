@@ -37,6 +37,8 @@
   --blob-1: #ffb27a;
   --blob-2: #8fb4ff;
   --blob-3: #c9a2ff;
+  --on-blob: var(--text);
+  --on-blob-disc: rgba(255, 255, 255, 0.55);
   color-scheme: light;
 }
 
@@ -51,6 +53,8 @@
   --blob-1: #b4531a;
   --blob-2: #2a4a9e;
   --blob-3: #6a3fb0;
+  --on-blob: #fff;
+  --on-blob-disc: rgba(255, 255, 255, 0.25);
   color-scheme: dark;
 }
 

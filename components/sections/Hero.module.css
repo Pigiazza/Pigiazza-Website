@@ -43,7 +43,7 @@
   aspect-ratio: 16 / 9;
   border-radius: calc(var(--r-lg) - var(--s-3));
   background: linear-gradient(135deg, var(--blob-1), var(--blob-2));
-  color: #fff;
+  color: var(--on-blob);
   font-weight: 800;
 }
 
@@ -53,6 +53,6 @@
   width: 72px;
   height: 72px;
   border-radius: var(--r-pill);
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--on-blob-disc);
   font-size: 1.5rem;
 }
