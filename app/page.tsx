@@ -1,3 +1,10 @@
+import { Nav } from '@/components/Nav';
+
 export default function Page() {
-  return <main>Porch Pirates</main>;
+  return (
+    <>
+      <Nav />
+      <main>Porch Pirates</main>
+    </>
+  );
 }
