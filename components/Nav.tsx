@@ -5,14 +5,13 @@ import Image from 'next/image';
 import { Glass } from './Glass';
 import { LangToggle } from './LangToggle';
 import { useI18n } from '@/lib/i18n';
+import { FIVERR_PROFILE } from '@/lib/services';
 import styles from './Nav.module.css';
 
 const links = [
-  ['game', '#game'],
-  ['screens', '#screens'],
-  ['team', '#team'],
+  ['services', '#services'],
+  ['portfolio', '#portfolio'],
   ['about', '#about'],
-  ['commissions', '#commissions'],
 ] as const;
 
 export function Nav() {
@@ -22,7 +21,7 @@ export function Nav() {
   return (
     <header className={styles.wrap}>
       <Glass as="nav" radius="pill" className={styles.bar} aria-label="Main">
-        <a href="#game" className={styles.logo} aria-label="Pigiazza">
+        <a href="#top" className={styles.logo} aria-label="Pigiazza">
           <Image src="/pigiazza.png" alt="Pigiazza" width={96} height={28} />
         </a>
         <ul className={styles.links}>
@@ -34,6 +33,9 @@ export function Nav() {
         </ul>
         <div className={styles.controls}>
           <LangToggle />
+          <a href={FIVERR_PROFILE} className={styles.cta} target="_blank" rel="noopener noreferrer">
+            {t.nav.fiverr}
+          </a>
           <button
             type="button"
             className={styles.burger}

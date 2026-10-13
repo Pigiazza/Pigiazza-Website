@@ -2,26 +2,22 @@
 
 import Image from 'next/image';
 import { Glass } from '../Glass';
+import { Wave } from '../Wave';
 import { useI18n } from '@/lib/i18n';
+import { socials } from '@/lib/socials';
 import styles from './Footer.module.css';
-
-const socials = [
-  ['GitHub', 'https://github.com/Pigiazza', '/github.png'],
-  ['Modrinth', 'https://modrinth.com/user/Pigiazza', '/modrinth.png'],
-  ['Fiverr', 'https://www.fiverr.com/sellers/pigiazza', '/fiverr.jpg'],
-  ['Ko-fi', 'https://ko-fi.com/pigiazza', '/kofi.png'],
-] as const;
 
 export function Footer() {
   const { t } = useI18n();
   return (
     <footer className={styles.footer}>
+      <Wave position="bottom" />
       <Glass radius="pill" className={styles.bar}>
         <ul className={styles.socials}>
-          {socials.map(([name, href, icon]) => (
-            <li key={name}>
-              <a href={href} target="_blank" rel="noopener noreferrer" aria-label={name} className={styles.social}>
-                <Image src={icon} alt="" width={24} height={24} />
+          {socials.map((s) => (
+            <li key={s.name}>
+              <a href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name} className={styles.social}>
+                <Image src={s.icon} alt="" width={24} height={24} />
               </a>
             </li>
           ))}

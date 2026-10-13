@@ -1,5 +1,7 @@
 .footer {
-  padding: var(--s-8) var(--s-4) var(--s-12);
+  position: relative;
+  isolation: isolate;
+  padding: var(--s-16) var(--s-4) var(--s-12);
 }
 
 .bar {
@@ -30,7 +32,7 @@
 }
 
 .social:hover {
-  background: var(--glass-bg);
+  background: var(--glass-strong);
 }
 
 .social img {

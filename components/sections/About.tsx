@@ -15,7 +15,7 @@ export function About() {
           <div className={cards.row}>
             <Image
               src="/profile-icon.png"
-              alt="Pigiazza's dog, the closest thing this site has to a team photo"
+              alt={t.about.avatarAlt}
               width={200}
               height={200}
               className={cards.portrait}

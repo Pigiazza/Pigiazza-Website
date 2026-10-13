@@ -1,40 +1,59 @@
 'use client';
 
-import { Glass } from '../Glass';
+import { Wave } from '../Wave';
 import { useI18n } from '@/lib/i18n';
+import { FIVERR_PROFILE } from '@/lib/services';
 import section from './Section.module.css';
 import styles from './Hero.module.css';
 
-// PLACEHOLDER: wishlist and discord URLs, trailer/key art.
-const WISHLIST_URL = '#';
-const DISCORD_URL = '#';
+type CubeProps = { x: number; y: number; s: number; top: string; left: string; right: string };
+
+// Isometric block, a nod to the command blocks on the gig covers.
+function Cube({ x, y, s, top, left, right }: CubeProps) {
+  const h = s / 2;
+  return (
+    <g>
+      <polygon points={`${x},${y} ${x + s},${y + h} ${x},${y + s} ${x - s},${y + h}`} fill={top} />
+      <polygon points={`${x - s},${y + h} ${x},${y + s} ${x},${y + 2 * s} ${x - s},${y + s + h}`} fill={left} />
+      <polygon points={`${x},${y + s} ${x + s},${y + h} ${x + s},${y + s + h} ${x},${y + 2 * s}`} fill={right} />
+    </g>
+  );
+}
 
 export function Hero() {
   const { t } = useI18n();
   return (
-    <section id="game" className={`${section.section} ${styles.hero}`}>
-      <div className={section.inner}>
-        <Glass radius="pill" className={styles.badge}>
-          {t.hero.badge}
-        </Glass>
-        <h1 className={styles.title}>{t.hero.title}</h1>
-        <p className={styles.pitch}>{t.hero.pitch}</p>
-        <div className={styles.actions}>
-          <a href={WISHLIST_URL} className={`${section.btn} ${section.btnPrimary}`}>
-            {t.hero.wishlist}
-          </a>
-          <a href={DISCORD_URL} className={`${section.btn} ${section.btnGhost}`}>
-            {t.hero.discord}
-          </a>
-        </div>
-        <Glass radius="lg" className={styles.trailer}>
-          <div className={styles.trailerInner} role="img" aria-label={t.hero.trailer}>
-            <span className={styles.play} aria-hidden="true">
-              ▶
-            </span>
-            <span>{t.hero.trailer}</span>
+    <section id="top" className={`${section.section} ${styles.hero}`}>
+      <Wave position="top" />
+      <div className={`${section.inner} ${styles.grid}`}>
+        <div>
+          <p className={styles.eyebrow}>{t.hero.eyebrow}</p>
+          <h1 className={styles.title}>
+            <span>{t.hero.titleTop}</span>
+            <span className={styles.accent}>{t.hero.titleAccent}</span>
+            <span>{t.hero.titleBottom}</span>
+          </h1>
+          <p className={styles.sub}>{t.hero.sub}</p>
+          <div className={styles.actions}>
+            <a
+              href={FIVERR_PROFILE}
+              className={`${section.btn} ${section.btnPrimary}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.hero.ctaPrimary}
+            </a>
+            <a href="#services" className={`${section.btn} ${section.btnGhost}`}>
+              {t.hero.ctaSecondary}
+            </a>
           </div>
-        </Glass>
+          <p className={styles.signature}>{t.hero.signature}</p>
+        </div>
+        <svg className={styles.blocks} viewBox="0 0 320 300" aria-hidden="true" focusable="false">
+          <Cube x={200} y={20} s={80} top="#9b7bff" left="#6f4fd8" right="#5236b0" />
+          <Cube x={250} y={130} s={64} top="#a8e6c8" left="#6cc49c" right="#4a9f7a" />
+          <Cube x={130} y={110} s={80} top="#ffb36b" left="#e8853a" right="#c2621f" />
+        </svg>
       </div>
     </section>
   );
