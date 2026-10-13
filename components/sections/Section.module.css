@@ -1,5 +1,8 @@
 .section {
-  padding: var(--s-16) var(--s-4);
+  position: relative;
+  padding: clamp(72px, 10vw, 128px) var(--gutter);
+  /* Entrances slide in from the sides; never let them widen the page. */
+  overflow-x: clip;
 }
 
 .inner {
@@ -7,56 +10,85 @@
   margin: 0 auto;
 }
 
+.head {
+  display: grid;
+  gap: var(--s-4);
+  margin-bottom: clamp(32px, 5vw, 56px);
+  max-width: 62ch;
+}
+
 .heading {
   font-size: var(--step-2);
-  margin-bottom: var(--s-4);
-  color: var(--text);
-  text-shadow:
-    0 2px 0 var(--accent),
-    0 4px 0 var(--ember),
-    0 10px 18px rgba(0, 0, 0, 0.35);
+  color: var(--ink);
 }
 
 .sub {
-  color: var(--text-muted);
-  max-width: 60ch;
-  margin: 0 0 var(--s-8);
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  line-height: 1.5;
 }
 
 .btn {
+  --btn-shadow: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--s-3) var(--s-6);
-  border-radius: var(--r-pill);
-  font-weight: 800;
-  text-decoration: none;
+  gap: var(--s-2);
+  min-height: 52px;
+  padding: 0 var(--s-6);
   border: 1px solid transparent;
-  transition: transform 0.15s ease;
+  border-radius: var(--r-pill);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 14px 30px -12px var(--btn-shadow);
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s var(--ease-out),
+    background-color 0.25s ease;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  transition: transform 0.35s var(--ease-out);
 }
 
 .btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+}
+
+.btn:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.btn:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 0.12s;
 }
 
 .btnPrimary {
+  --btn-shadow: var(--glow);
   background: var(--accent);
   color: var(--accent-ink);
 }
 
+.btnPrimary:hover {
+  background: oklch(80% 0.16 62);
+  box-shadow: 0 20px 40px -14px var(--glow);
+}
+
 .btnGhost {
   background: var(--glass-strong);
-  border-color: var(--glass-border);
-  color: var(--text);
+  border-color: var(--glass-edge-dim);
+  color: var(--ink);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .btn {
-    transition: none;
-  }
-  .btn:hover {
-    transform: none;
-  }
+.btnGhost:hover svg {
+  transform: translateY(3px);
 }

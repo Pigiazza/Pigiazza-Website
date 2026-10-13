@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Fredoka, Nunito } from 'next/font/google';
 import './globals.css';
 import { LangProvider } from '@/lib/i18n';
-import { GlassFilters } from '@/components/GlassFilters';
 import { Background } from '@/components/Background';
 import { buildJsonLd } from '@/lib/jsonld';
 
@@ -31,14 +30,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fredoka.variable} ${nunito.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${fredoka.variable} ${nunito.variable}`}>
       <head>
         <script defer data-domain="pigiazza.com" src="https://plausible.io/js/script.js" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }} />
       </head>
       <body>
         <LangProvider>
-          <GlassFilters />
           <Background />
           {children}
         </LangProvider>

@@ -1,5 +1,6 @@
 'use client';
 
+import { Quote, Star } from 'lucide-react';
 import type { Scores } from '@/lib/projects';
 import { useI18n } from '@/lib/i18n';
 import styles from './Portfolio.module.css';
@@ -16,24 +17,32 @@ export function ReviewBlock({ stars, scores, quote }: Props) {
 
   return (
     <figure className={styles.review}>
+      <Quote aria-hidden="true" className={styles.quoteMark} />
       <p className={styles.stars} role="img" aria-label={t.portfolio.stars}>
-        {'★'.repeat(stars)}
+        {Array.from({ length: stars }, (_, i) => (
+          <Star key={i} aria-hidden="true" style={{ '--i': i } as React.CSSProperties} />
+        ))}
       </p>
       <blockquote className={styles.quote}>
-        <p>“{quote}”</p>
+        <p>{quote}</p>
       </blockquote>
-      {t.portfolio.translatedNote && <figcaption className={styles.note}>{t.portfolio.translatedNote}</figcaption>}
       <dl className={styles.scores}>
         {rows.map(([label, value]) => (
-          <div key={label}>
+          <div key={label} className={styles.score}>
             <dt>{label}</dt>
             <dd>
-              <span aria-hidden="true">★ </span>
-              {value}
+              <span className={styles.bar} aria-hidden="true">
+                <span style={{ '--v': value / 5 } as React.CSSProperties} />
+              </span>
+              <span>
+                {value}
+                <span className="sr-only"> {t.portfolio.outOf}</span>
+              </span>
             </dd>
           </div>
         ))}
       </dl>
+      {t.portfolio.translatedNote && <figcaption className={styles.note}>{t.portfolio.translatedNote}</figcaption>}
     </figure>
   );
 }

@@ -6,39 +6,42 @@
   background: var(--bg);
 }
 
-.photo {
+.glow {
   position: absolute;
-  inset: -24px;
-  background: var(--bg) url('/bg/autumn.jpg') center / cover no-repeat;
-  background-image: image-set(url('/bg/autumn.webp') type('image/webp'), url('/bg/autumn.jpg') type('image/jpeg'));
-  filter: blur(8px) saturate(115%);
+  border-radius: var(--r-pill);
+  filter: blur(90px);
+  animation: drift 26s ease-in-out infinite alternate;
 }
 
-/* darken for text contrast, warmer at the bottom */
-.shade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(26, 15, 8, 0.45) 0%, rgba(26, 15, 8, 0.62) 60%, rgba(26, 15, 8, 0.78) 100%);
+.g1 {
+  width: 60vmax;
+  height: 60vmax;
+  top: -20vmax;
+  left: -15vmax;
+  background: radial-gradient(circle, oklch(86% 0.11 62 / 0.55), transparent 70%);
 }
 
-.square {
-  position: absolute;
-  border-radius: 0;
-  background: linear-gradient(135deg, var(--accent-2), var(--accent));
-  box-shadow: 0 6px 18px rgba(255, 138, 0, 0.35);
-  opacity: 0.85;
-  transform: rotate(12deg);
-  animation: float 9s ease-in-out infinite alternate;
+.g2 {
+  width: 52vmax;
+  height: 52vmax;
+  bottom: -18vmax;
+  right: -14vmax;
+  background: radial-gradient(circle, oklch(84% 0.1 30 / 0.4), transparent 70%);
+  animation-duration: 30s;
+  animation-direction: alternate-reverse;
 }
 
-@keyframes float {
+.g3 {
+  width: 36vmax;
+  height: 36vmax;
+  top: 40%;
+  left: 55%;
+  background: radial-gradient(circle, oklch(88% 0.09 85 / 0.45), transparent 70%);
+  animation-duration: 34s;
+}
+
+@keyframes drift {
   to {
-    transform: translate3d(0, -24px, 0) rotate(28deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .square {
-    animation: none;
+    transform: translate3d(4vmax, 3vmax, 0) scale(1.08);
   }
 }

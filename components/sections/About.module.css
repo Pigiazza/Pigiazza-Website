@@ -1,0 +1,101 @@
+.about {
+  display: grid;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+@media (min-width: 860px) {
+  .about {
+    grid-template-columns: minmax(260px, 400px) 1fr;
+  }
+}
+
+.portrait {
+  position: relative;
+  justify-self: center;
+  width: min(100%, 400px);
+}
+
+/* A warm disc offset behind the photo, like a sticker peeking out. */
+.portrait::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-lg);
+  background: var(--accent);
+  transform: rotate(6deg) translate(4%, 3%);
+  transition: transform 0.7s var(--ease-expo);
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--r-lg);
+  box-shadow: 0 30px 60px -30px var(--shadow);
+  transition: transform 0.7s var(--ease-expo);
+}
+
+.portrait:hover::before {
+  transform: rotate(10deg) translate(6%, 4%);
+}
+
+.portrait:hover .photo {
+  transform: rotate(-3deg) scale(1.02);
+}
+
+.copy {
+  display: grid;
+  gap: var(--s-5);
+}
+
+.alias {
+  color: var(--accent-text);
+}
+
+.body {
+  max-width: 58ch;
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s-3);
+  list-style: none;
+  margin: var(--s-2) 0 0;
+  padding: 0;
+}
+
+.facts li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-weight: 700;
+}
+
+.factIcon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--accent-text);
+  box-shadow: 0 0 0 1px var(--line);
+  transition: transform 0.5s var(--ease-expo);
+}
+
+.factIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.facts li:hover .factIcon {
+  transform: rotate(-10deg) scale(1.1);
+}

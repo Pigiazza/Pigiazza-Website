@@ -1,0 +1,44 @@
+.slot {
+  display: inline-grid;
+  vertical-align: bottom;
+  color: var(--accent-strong);
+}
+
+.sizer,
+.word {
+  grid-area: 1 / 1;
+  white-space: nowrap;
+}
+
+.sizer {
+  visibility: hidden;
+}
+
+.word {
+  position: relative;
+}
+
+/* Soft glow under the word, the old site's signature. */
+.word::after {
+  content: '';
+  position: absolute;
+  inset: 20% -6% 0;
+  z-index: -1;
+  border-radius: var(--r-pill);
+  background: oklch(85% 0.14 65 / 0.55);
+  filter: blur(22px);
+}
+
+.char {
+  display: inline-block;
+  animation: char-in 0.7s var(--ease-expo) both;
+  animation-delay: calc(var(--i) * 32ms);
+}
+
+@keyframes char-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(8deg);
+    filter: blur(8px);
+  }
+}

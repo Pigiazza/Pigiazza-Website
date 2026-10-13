@@ -1,18 +1,44 @@
 .footer {
   position: relative;
   isolation: isolate;
-  padding: var(--s-16) var(--s-4) var(--s-12);
+  padding: var(--s-16) var(--gutter) calc(env(safe-area-inset-bottom) + var(--s-8));
+  color: var(--accent-ink);
 }
 
-.bar {
+.inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--s-4);
+  gap: var(--s-6);
   width: min(var(--page-max), 100%);
   margin: 0 auto;
-  padding: var(--s-3) var(--s-6);
+  padding: var(--s-5) var(--s-6);
+  border-radius: var(--r-lg);
+  background: linear-gradient(155deg, var(--glass-strong), var(--glass) 65%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    0 0 0 1px var(--glass-edge-dim),
+    0 24px 50px -24px var(--shadow);
+}
+
+.brand {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.logo {
+  height: 30px;
+  width: auto;
+  image-rendering: pixelated;
+}
+
+.tagline {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 600;
 }
 
 .socials {
@@ -26,21 +52,60 @@
 .social {
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: var(--r-pill);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--line);
+  transition: transform 0.4s var(--ease-expo);
 }
 
 .social:hover {
-  background: var(--glass-strong);
+  transform: translateY(-4px) rotate(-6deg);
 }
 
 .social img {
   border-radius: var(--r-sm);
 }
 
+.top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  padding: 0 var(--s-4);
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-display);
+  font-weight: 600;
+  transition: transform 0.4s var(--ease-expo);
+}
+
+.top svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.4s var(--ease-expo);
+}
+
+.top:hover svg {
+  transform: translateY(-3px);
+}
+
 .copy {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 0.9rem;
+  margin-top: var(--s-6);
+  text-align: center;
+  color: var(--accent-ink);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+  }
+  .brand {
+    justify-items: center;
+  }
 }

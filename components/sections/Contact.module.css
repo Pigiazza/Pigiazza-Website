@@ -1,0 +1,73 @@
+.band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  justify-items: center;
+  gap: var(--s-5);
+  padding: clamp(48px, 8vw, 96px) clamp(24px, 6vw, 72px);
+  border-radius: var(--r-lg);
+  background: var(--ink);
+  color: var(--bg);
+  text-align: center;
+}
+
+/* Slow warm light drifting across the band. */
+.band::before {
+  content: '';
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 30% 30%, oklch(72% 0.17 55 / 0.55), transparent 40%),
+    radial-gradient(circle at 75% 70%, oklch(65% 0.16 30 / 0.4), transparent 45%);
+  animation: band-glow 14s ease-in-out infinite alternate;
+}
+
+@keyframes band-glow {
+  to {
+    transform: translate(8%, -6%) rotate(12deg);
+  }
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  background: var(--accent);
+  color: var(--accent-ink);
+  animation: nudge 3.2s var(--ease-in-out) infinite;
+}
+
+.icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+@keyframes nudge {
+  0%,
+  70%,
+  100% {
+    transform: none;
+  }
+  78% {
+    transform: rotate(-10deg) scale(1.06);
+  }
+  86% {
+    transform: rotate(8deg) scale(1.06);
+  }
+}
+
+.heading {
+  font-size: var(--step-2);
+  max-width: 18ch;
+  color: var(--bg);
+}
+
+.sub {
+  max-width: 44ch;
+  font-size: var(--step-1);
+  color: oklch(88% 0.02 var(--hue));
+}

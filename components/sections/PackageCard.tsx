@@ -1,40 +1,49 @@
-import { Glass } from '../Glass';
-import type { Package } from '@/lib/services';
-import section from './Section.module.css';
+'use client';
+
+import { ArrowUpRight, Clock, Gem, RotateCcw, Rocket, Sparkles } from 'lucide-react';
+import { useI18n } from '@/lib/i18n';
+import type { Package, Tier } from '@/lib/services';
 import styles from './Services.module.css';
 
-type Labels = { delivery: string; days: string; revisions: string; cta: string; featured: string };
+const TIER_LABEL: Record<Tier, string> = { basic: 'Basic', standard: 'Standard', premium: 'Premium' };
+const TIER_ICON = { basic: Sparkles, standard: Rocket, premium: Gem };
 
-type Props = { pkg: Package; tierLabel: string; name: string; desc: string; gigUrl: string; featured: boolean; labels: Labels };
+type Props = { pkg: Package; order: number; name: string; desc: string; gigUrl: string; featured: boolean };
 
-export function PackageCard({ pkg, tierLabel, name, desc, gigUrl, featured, labels }: Props) {
+export function PackageCard({ pkg, order, name, desc, gigUrl, featured }: Props) {
+  const { t } = useI18n();
+  const Icon = TIER_ICON[pkg.tier];
+
   return (
-    <Glass as="article" radius="lg" className={`${styles.card} ${featured ? styles.featured : ''}`}>
-      <div className={styles.cardHead}>
-        <span className={styles.tier}>{tierLabel}</span>
-        {featured && <span className={styles.badge}>{labels.featured}</span>}
-      </div>
+    <article className={styles.card} data-featured={featured} style={{ '--i': order } as React.CSSProperties}>
+      <header className={styles.cardHead}>
+        <span className={styles.tierIcon}>
+          <Icon aria-hidden="true" />
+        </span>
+        <span className={styles.tier}>{TIER_LABEL[pkg.tier]}</span>
+      </header>
       <h3 className={styles.name}>{name}</h3>
-      <p className={styles.price}>${pkg.priceUsd}</p>
+      <p className={styles.price}>
+        <span className={styles.currency}>$</span>
+        {pkg.priceUsd}
+      </p>
       <p className={styles.desc}>{desc}</p>
-      <dl className={styles.facts}>
-        <div>
-          <dt>{labels.delivery}</dt>
-          <dd>{labels.days.replace('{n}', String(pkg.days))}</dd>
-        </div>
-        <div>
-          <dt>{labels.revisions}</dt>
-          <dd>{pkg.revisions}</dd>
-        </div>
-      </dl>
-      <a
-        href={gigUrl}
-        className={`${section.btn} ${featured ? section.btnPrimary : section.btnGhost} ${styles.cardCta}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {labels.cta}
+      <ul className={styles.facts}>
+        <li>
+          <Clock aria-hidden="true" />
+          <span>{t.services.delivery}</span>
+          <strong>{t.services.days.replace('{n}', String(pkg.days))}</strong>
+        </li>
+        <li>
+          <RotateCcw aria-hidden="true" />
+          <span>{t.services.revisions}</span>
+          <strong>{pkg.revisions}</strong>
+        </li>
+      </ul>
+      <a href={gigUrl} className={styles.cta} target="_blank" rel="noopener noreferrer">
+        {t.services.cta}
+        <ArrowUpRight aria-hidden="true" />
       </a>
-    </Glass>
+    </article>
   );
 }

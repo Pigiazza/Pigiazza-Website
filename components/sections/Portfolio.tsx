@@ -11,11 +11,13 @@ export function Portfolio() {
   return (
     <section id="portfolio" className={section.section}>
       <div className={section.inner}>
-        <h2 className={section.heading}>{t.portfolio.heading}</h2>
-        <p className={section.sub}>{t.portfolio.sub}</p>
-        <div className={styles.grid}>
-          {projects.map((p) => (
-            <ProjectCard key={p.id} project={p} />
+        <div className={section.head} data-reveal>
+          <h2 className={section.heading}>{t.portfolio.heading}</h2>
+          <p className={section.sub}>{t.portfolio.sub}</p>
+        </div>
+        <div className={styles.list}>
+          {projects.map((p, i) => (
+            <ProjectCard key={p.id} project={p} flip={i % 2 === 1} />
           ))}
         </div>
       </div>

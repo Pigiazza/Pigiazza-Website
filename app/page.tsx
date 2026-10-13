@@ -1,19 +1,27 @@
-import { Nav } from '@/components/Nav';
+import { Header } from '@/components/Header';
 import { Hero } from '@/components/sections/Hero';
+import { TechStrip } from '@/components/sections/TechStrip';
 import { Services } from '@/components/sections/Services';
+import { Process } from '@/components/sections/Process';
 import { Portfolio } from '@/components/sections/Portfolio';
 import { About } from '@/components/sections/About';
+import { Faq } from '@/components/sections/Faq';
+import { Contact } from '@/components/sections/Contact';
 import { Footer } from '@/components/sections/Footer';
 
 export default function Page() {
   return (
     <>
-      <Nav />
+      <Header />
       <main>
         <Hero />
+        <TechStrip />
         <Services />
+        <Process />
         <Portfolio />
         <About />
+        <Faq />
+        <Contact />
       </main>
       <Footer />
     </>
