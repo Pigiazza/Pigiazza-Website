@@ -22,7 +22,7 @@ Next.js App Router + TypeScript, `output: 'export'`, Cloudflare Pages, CSS Modul
 
 ## Stile visivo
 
-- **Sfondo**: `assets/landscape-day.png` (bioma autunnale Minecraft, 1920×1080) a tutta pagina, fisso, sfocato e leggermente scurito per il contrasto. Spostato in `public/` in formato ottimizzato (WebP + fallback).
+- **Sfondo**: `assets/landscape-day.png` (bioma autunnale Minecraft, 1920×1080) a tutta pagina, fisso, sfocato e leggermente scurito per il contrasto. Spostato in `public/bg/` come WebP + JPEG di fallback (`image-set`).
 - **Onde arancioni**: SVG in gradiente arancio come nelle copertine — in alto a destra nell'hero e in basso nel footer. Restano fedeli alle copertine.
 - **Quadratini arancioni** fluttuanti (pochi, lenti), solo decorativi (`aria-hidden`). Fermi con `prefers-reduced-motion`.
 - **Liquid Glass** su nav, card pacchetti, card progetti, bio: vetro caldo ambrato scuro, bordo chiaro semitrasparente, riflesso speculare in alto. Rifrazione SVG solo su Chromium come oggi.
@@ -37,7 +37,7 @@ Next.js App Router + TypeScript, `output: 'export'`, Cloudflare Pages, CSS Modul
 2. **Hero**: titolo "Mod, plugin, addon e porting Minecraft su commissione", sottotitolo di una riga, firma "by Pigiazza". CTA primaria "Ordina su Fiverr" (profilo), secondaria "Vedi i pacchetti" (`#services`). A destra gruppo di tre blocchi stilizzati in CSS/SVG (viola, arancio, verde) che richiama i command block delle copertine.
 3. **Servizi** (`#services`): selettore a pillola Mod · Plugin · Addon · Porting (tablist accessibile, frecce da tastiera). Per il servizio selezionato, 3 card Basic / Standard / Premium con nome pacchetto, descrizione, giorni di consegna, revisioni, prezzo in $, pulsante "Scegli su Fiverr". Standard evidenziata ("Più scelto"). Su mobile le card vanno in colonna.
 4. **Portfolio** (`#portfolio`): 2 card progetto. Ogni card: immagine (o segnaposto), badge tipo, titolo, versioni/target, descrizione, poi blocco recensione statico: ★★★★★, citazione del cliente, e i tre punteggi in stile Fiverr (Livello di comunicazione del venditore 5 · Qualità della consegna 5 · Valore della consegna 5).
-5. **Chi sono** (`#about`): avatar `public/pigiazza.png` + bio breve. Bio scritta come segnaposto da correggere.
+5. **Chi sono** (`#about`): avatar `public/profile-icon.png` (quello attuale) + bio breve. Bio scritta come segnaposto da correggere.
 6. **Footer**: icone/link Fiverr, GitHub, YouTube, Ko-fi; copyright "© 2026 Pigiazza".
 
 ## Contenuti
