@@ -6,42 +6,39 @@
   background: var(--bg);
 }
 
-.blob {
+.photo {
   position: absolute;
-  width: 55vmax;
-  height: 55vmax;
-  border-radius: var(--r-pill);
-  filter: blur(80px);
+  inset: -24px;
+  background: var(--bg) url('/bg/autumn.jpg') center / cover no-repeat;
+  background-image: image-set(url('/bg/autumn.webp') type('image/webp'), url('/bg/autumn.jpg') type('image/jpeg'));
+  filter: blur(8px) saturate(115%);
+}
+
+/* darken for text contrast, warmer at the bottom */
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(26, 15, 8, 0.45) 0%, rgba(26, 15, 8, 0.62) 60%, rgba(26, 15, 8, 0.78) 100%);
+}
+
+.square {
+  position: absolute;
+  border-radius: 0;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  box-shadow: 0 6px 18px rgba(255, 138, 0, 0.35);
   opacity: 0.85;
-  animation: drift 28s ease-in-out infinite alternate;
+  transform: rotate(12deg);
+  animation: float 9s ease-in-out infinite alternate;
 }
 
-.b1 {
-  background: var(--blob-1);
-  top: -15vmax;
-  left: -10vmax;
-}
-.b2 {
-  background: var(--blob-2);
-  right: -15vmax;
-  top: 10vmax;
-  animation-delay: -9s;
-}
-.b3 {
-  background: var(--blob-3);
-  bottom: -20vmax;
-  left: 20vmax;
-  animation-delay: -18s;
-}
-
-@keyframes drift {
+@keyframes float {
   to {
-    transform: translate3d(6vmax, 4vmax, 0) scale(1.08);
+    transform: translate3d(0, -24px, 0) rotate(28deg);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .blob {
+  .square {
     animation: none;
   }
 }

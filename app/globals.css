@@ -22,43 +22,23 @@
   --step-2: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
   --step-4: clamp(2.75rem, 1.9rem + 4vw, 5rem);
 
-  --accent: #ff8a3d;
-  --accent-ink: #1b0e00;
-  --accent-text: #a63f00;
-  --focus: var(--accent-text);
   --page-max: 1120px;
 
-  /* light (default) */
-  --bg: #eef1f8;
-  --text: #14182a;
-  --text-muted: #464d6b;
-  --glass-bg: rgba(255, 255, 255, 0.5);
-  --glass-border: rgba(255, 255, 255, 0.75);
-  --glass-highlight: rgba(255, 255, 255, 0.9);
-  --glass-shadow: rgba(30, 40, 90, 0.2);
-  --blob-1: #ffb27a;
-  --blob-2: #8fb4ff;
-  --blob-3: #c9a2ff;
-  --on-blob: var(--text);
-  --on-blob-disc: rgba(255, 255, 255, 0.55);
-  color-scheme: light;
-}
-
-:root[data-theme='dark'] {
-  --accent-text: #ff8a3d;
-  --focus: var(--accent);
-  --bg: #0b0e1a;
-  --text: #f2f4ff;
-  --text-muted: #b1b7d4;
-  --glass-bg: rgba(22, 27, 50, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.16);
-  --glass-highlight: rgba(255, 255, 255, 0.3);
-  --glass-shadow: rgba(0, 0, 0, 0.55);
-  --blob-1: #b4531a;
-  --blob-2: #2a4a9e;
-  --blob-3: #6a3fb0;
-  --on-blob: #fff;
-  --on-blob-disc: rgba(255, 255, 255, 0.25);
+  /* single warm theme, from the Fiverr gig covers */
+  --bg: #1a0f08;
+  --text: #fff7ea;
+  --text-muted: #f1d9bd;
+  --accent: #ff8a00;
+  --accent-2: #ffb000;
+  --accent-ink: #1b0e00;
+  --accent-text: #ffb547;
+  --ember: #8a2a0a;
+  --focus: #ffd27a;
+  --glass-bg: rgba(42, 22, 10, 0.5);
+  --glass-strong: rgba(42, 22, 10, 0.72);
+  --glass-border: rgba(255, 220, 180, 0.22);
+  --glass-highlight: rgba(255, 236, 210, 0.35);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
   color-scheme: dark;
 }
 

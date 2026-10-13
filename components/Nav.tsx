@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Glass } from './Glass';
-import { ThemeToggle } from './ThemeToggle';
 import { LangToggle } from './LangToggle';
 import { useI18n } from '@/lib/i18n';
 import styles from './Nav.module.css';
@@ -35,7 +34,6 @@ export function Nav() {
         </ul>
         <div className={styles.controls}>
           <LangToggle />
-          <ThemeToggle />
           <button
             type="button"
             className={styles.burger}
