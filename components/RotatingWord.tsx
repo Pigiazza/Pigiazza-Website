@@ -13,7 +13,9 @@ export function RotatingWord({ words }: { words: string[] }) {
   useEffect(() => {
     setIndex(0);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = window.setInterval(() => setIndex((i) => (i + 1) % words.length), INTERVAL_MS);
+    const id = window.setInterval(() => {
+      if (!document.hidden) setIndex((i) => (i + 1) % words.length);
+    }, INTERVAL_MS);
     return () => window.clearInterval(id);
   }, [words]);
 

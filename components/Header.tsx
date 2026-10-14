@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { ArrowUpRight, Blocks, CircleHelp, FolderGit2, Hammer, Send, User } from 'lucide-react';
+import { ArrowUp, ArrowUpRight, Blocks, CircleHelp, FolderGit2, Hammer, Send, User } from 'lucide-react';
 import { LangDropdown } from './LangDropdown';
+import { useActiveSection, usePastElement } from './hooks';
 import { useI18n } from '@/lib/i18n';
 import { FIVERR_PROFILE } from '@/lib/services';
 import { socials } from '@/lib/socials';
@@ -18,12 +19,37 @@ const links = [
   { key: 'contact', href: '#contact', Icon: Send },
 ] as const;
 
+const sectionIds = links.map((l) => l.href.slice(1));
+
 export function Header() {
   const { t } = useI18n();
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
   const firstLink = useRef<HTMLAnchorElement>(null);
   const wasOpen = useRef(false);
+  const active = useActiveSection(sectionIds);
+  const pastHero = usePastElement('top');
+  const [tucked, setTucked] = useState(false);
+
+  // Slide the bar away while scrolling down, bring it back on any scroll up.
+  useEffect(() => {
+    let last = window.scrollY;
+    let frame = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        if (Math.abs(y - last) < 6) return;
+        setTucked(y > last && y > 240);
+        last = y;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -42,7 +68,8 @@ export function Header() {
 
   return (
     <>
-      <header className={styles.header} data-menu-open={open}>
+      <div className={styles.progress} aria-hidden="true" />
+      <header className={styles.header} data-menu-open={open} data-tucked={tucked && !open}>
         <div className={styles.bar}>
           <a href="#top" className={styles.logo} aria-label="Pigiazza, home">
             <Image src="/pigiazza.png" alt="Pigiazza" width={160} height={46} priority />
@@ -73,7 +100,12 @@ export function Header() {
         <ul className={styles.links}>
           {links.map(({ key, href, Icon }, i) => (
             <li key={key} style={{ '--i': i } as React.CSSProperties}>
-              <a href={href} ref={i === 0 ? firstLink : undefined} onClick={() => setOpen(false)}>
+              <a
+                href={href}
+                ref={i === 0 ? firstLink : undefined}
+                aria-current={active === href.slice(1) ? 'location' : undefined}
+                onClick={() => setOpen(false)}
+              >
                 <span className={styles.linkIcon}>
                   <Icon aria-hidden="true" />
                 </span>
@@ -100,6 +132,13 @@ export function Header() {
           </a>
         </div>
       </nav>
+
+      <a href="#top" className={styles.toTop} data-show={pastHero && !open} aria-label={t.footer.top} tabIndex={pastHero ? 0 : -1}>
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="22" pathLength={1} />
+        </svg>
+        <ArrowUp aria-hidden="true" />
+      </a>
     </>
   );
 }

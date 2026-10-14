@@ -9,8 +9,9 @@
 .glow {
   position: absolute;
   border-radius: var(--r-pill);
-  filter: blur(90px);
+  /* Soft edges come from the radial gradients themselves: no blur filter. */
   animation: drift 26s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
 .g1 {

@@ -5,7 +5,17 @@
   z-index: var(--z-header);
   width: min(calc(var(--page-max) + 2 * var(--s-4)), calc(100% - 2 * var(--s-3)));
   transform: translateX(-50%);
-  animation: header-in 0.9s var(--ease-expo) 0.1s both;
+  animation: header-in 0.9s var(--ease-expo) 0.1s backwards;
+  transition: transform 0.5s var(--ease-expo);
+}
+
+.header[data-tucked='true'] {
+  transform: translate(-50%, calc(-100% - 24px));
+}
+
+/* Keep the bar reachable while someone is tabbing through it. */
+.header[data-tucked='true']:focus-within {
+  transform: translateX(-50%);
 }
 
 @keyframes header-in {
@@ -143,14 +153,13 @@
   transform: rotate(-45deg);
 }
 
-/* Dim the page behind the menu. */
+/* Dim the page behind the menu. Plain colour: a full-screen backdrop blur
+   would be re-rendered on every frame of the reveal. */
 .backdrop {
   position: fixed;
   inset: 0;
   z-index: var(--z-backdrop);
-  background: oklch(22% 0.03 var(--hue) / 0.28);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
+  background: oklch(22% 0.03 var(--hue) / 0.4);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -180,20 +189,28 @@
   width: clamp(280px, 46vw, 560px);
   padding: calc(env(safe-area-inset-top) + 112px) clamp(28px, 6vw, 72px) calc(env(safe-area-inset-bottom) + var(--s-10));
   border-radius: var(--r-lg) 0 0 var(--r-lg);
-  background: linear-gradient(200deg, var(--glass-strong), oklch(97% 0.03 60 / 0.78) 70%);
-  -webkit-backdrop-filter: blur(30px) saturate(170%);
-  backdrop-filter: blur(30px) saturate(170%);
+  background:
+    radial-gradient(circle at 100% 0%, oklch(90% 0.08 65 / 0.7), transparent 55%),
+    linear-gradient(200deg, oklch(99% 0.008 var(--hue)), oklch(96% 0.03 60) 70%);
   box-shadow:
     inset 1px 0 0 var(--glass-edge),
     -30px 0 80px -30px var(--shadow);
   overflow-y: auto;
+  overscroll-behavior: contain;
   clip-path: circle(0% at 100% 50%);
-  transition: clip-path 0.7s var(--ease-in-out);
+  visibility: hidden;
+  transition:
+    clip-path 0.6s var(--ease-in-out),
+    visibility 0s linear 0.6s;
+  will-change: clip-path;
 }
 
 .menu[data-open='true'] {
   clip-path: circle(150% at 100% 50%);
-  transition: clip-path 1s var(--ease-expo);
+  visibility: visible;
+  transition:
+    clip-path 0.9s var(--ease-expo),
+    visibility 0s;
 }
 
 .links {
@@ -207,24 +224,20 @@
 .links li,
 .menuFoot {
   opacity: 0;
-  transform: translateX(40px);
-  filter: blur(6px);
+  transform: translateX(48px);
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    filter 0.3s ease;
+    opacity 0.25s ease,
+    transform 0.3s ease;
 }
 
 .menu[data-open='true'] .links li,
 .menu[data-open='true'] .menuFoot {
   opacity: 1;
   transform: none;
-  filter: none;
   transition:
-    opacity 0.6s var(--ease-out),
-    transform 0.8s var(--ease-expo),
-    filter 0.6s var(--ease-out);
-  transition-delay: calc(var(--i) * 55ms + 180ms);
+    opacity 0.5s var(--ease-out),
+    transform 0.8s var(--ease-expo);
+  transition-delay: calc(var(--i) * 50ms + 150ms);
 }
 
 .links a {
@@ -270,10 +283,26 @@
 }
 
 .links a:hover .linkIcon,
-.links a:focus-visible .linkIcon {
+.links a:focus-visible .linkIcon,
+.links a[aria-current] .linkIcon {
   background: var(--accent);
   color: var(--accent-ink);
+}
+
+.links a:hover .linkIcon,
+.links a:focus-visible .linkIcon {
   transform: rotate(-8deg) scale(1.08);
+}
+
+/* Where you are on the page. */
+.links a[aria-current]::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-radius: var(--r-pill);
+  background: var(--accent-strong);
+  box-shadow: 0 0 0 5px oklch(78% 0.16 58 / 0.25);
 }
 
 .menuFoot {
@@ -335,5 +364,100 @@
 @media (max-width: 560px) {
   .bar {
     padding-left: var(--s-4);
+  }
+}
+
+/* Reading progress along the top edge. */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-header);
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  transform-origin: left;
+  transform: scaleX(0);
+  pointer-events: none;
+}
+
+@supports (animation-timeline: scroll()) {
+  .progress {
+    animation: progress linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Back to top: appears after the hero, its ring fills as you scroll. */
+.toTop {
+  position: fixed;
+  right: calc(env(safe-area-inset-right) + var(--s-4));
+  bottom: calc(env(safe-area-inset-bottom) + var(--s-4));
+  z-index: var(--z-header);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: 0 16px 30px -12px oklch(30% 0.06 var(--hue) / 0.5);
+  opacity: 0;
+  transform: translateY(20px) scale(0.8);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.5s var(--ease-expo);
+}
+
+.toTop[data-show='true'] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.toTop:hover > svg:last-child {
+  transform: translateY(-3px);
+}
+
+.toTop > svg:last-child {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.4s var(--ease-expo);
+}
+
+.toTop > svg:first-child {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.toTop circle {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+@supports (animation-timeline: scroll()) {
+  .toTop circle {
+    animation: ring linear both;
+    animation-timeline: scroll(root);
+  }
+}
+
+@keyframes ring {
+  to {
+    stroke-dashoffset: 0;
   }
 }

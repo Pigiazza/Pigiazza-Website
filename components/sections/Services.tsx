@@ -61,7 +61,10 @@ export function Services() {
                 onClick={() => setIndex(i)}
               >
                 <Icon aria-hidden="true" />
-                <span>{t.services.items[s.id].tab}</span>
+                <span className={styles.tabText}>
+                  <span>{t.services.items[s.id].tab}</span>
+                  <span className={styles.tabFrom}>{t.services.from.replace('{n}', String(s.packages[0].priceUsd))}</span>
+                </span>
               </button>
             );
           })}
@@ -74,10 +77,11 @@ export function Services() {
             </span>
             {copy.lead}
           </p>
-          <div key={service.id} className={styles.grid}>
+          <div className={styles.grid}>
             {service.packages.map((pkg, i) => (
               <PackageCard
                 key={pkg.tier}
+                swapKey={service.id}
                 pkg={pkg}
                 order={i}
                 name={copy.packages[pkg.tier].name}

@@ -13,7 +13,15 @@
 .portrait {
   position: relative;
   justify-self: center;
-  width: min(100%, 400px);
+  /* Leave room for the tilted card behind it so it never gets clipped. */
+  width: min(calc(100% - 28px), 400px);
+  margin-right: 14px;
+}
+
+@media (max-width: 859px) {
+  .portrait {
+    width: min(calc(100% - 28px), 300px);
+  }
 }
 
 /* A warm disc offset behind the photo, like a sticker peeking out. */
@@ -23,7 +31,7 @@
   inset: 0;
   border-radius: var(--r-lg);
   background: var(--accent);
-  transform: rotate(6deg) translate(4%, 3%);
+  transform: rotate(5deg) translate(3%, 3%);
   transition: transform 0.7s var(--ease-expo);
 }
 
@@ -39,7 +47,7 @@
 }
 
 .portrait:hover::before {
-  transform: rotate(10deg) translate(6%, 4%);
+  transform: rotate(8deg) translate(4%, 4%);
 }
 
 .portrait:hover .photo {
@@ -64,7 +72,7 @@
 
 .facts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--s-3);
   list-style: none;
   margin: var(--s-2) 0 0;

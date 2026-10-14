@@ -12,7 +12,7 @@ describe('buildJsonLd', () => {
     expect(person.sameAs).toEqual([
       'https://www.fiverr.com/sellers/pigiazza',
       'https://github.com/Pigiazza',
-      'https://www.youtube.com/channel/UCt-khCdmSNPxp9ktgGB0o-A',
+      'https://modrinth.com/user/Pigiazza',
       'https://ko-fi.com/pigiazza',
     ]);
   });
@@ -28,8 +28,8 @@ describe('buildJsonLd', () => {
     for (const o of offers) expect(o.priceCurrency).toBe('USD');
   });
 
-  it('has no Porch Pirates, Modrinth or review data', () => {
+  it('has no Porch Pirates or review data', () => {
     const json = JSON.stringify(buildJsonLd());
-    expect(json).not.toMatch(/Porch|Bramble|modrinth|Review|AggregateRating/i);
+    expect(json).not.toMatch(/Porch|Bramble|Review|AggregateRating/i);
   });
 });

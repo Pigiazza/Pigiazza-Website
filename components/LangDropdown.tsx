@@ -23,7 +23,7 @@ export function LangDropdown() {
     };
     document.addEventListener('pointerdown', onPointer);
     document.addEventListener('keydown', onKey);
-    options.current[LANGS.indexOf(lang)]?.focus();
+    options.current[LANGS.indexOf(lang)]?.focus({ preventScroll: true });
     return () => {
       document.removeEventListener('pointerdown', onPointer);
       document.removeEventListener('keydown', onKey);

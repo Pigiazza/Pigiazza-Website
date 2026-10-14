@@ -55,8 +55,8 @@ describe('projects', () => {
 });
 
 describe('socials', () => {
-  it('lists exactly Fiverr, GitHub, YouTube, Ko-fi over https', () => {
-    expect(socials.map((s) => s.name)).toEqual(['Fiverr', 'GitHub', 'YouTube', 'Ko-fi']);
+  it('lists exactly Fiverr, GitHub, Modrinth, Ko-fi over https', () => {
+    expect(socials.map((s) => s.name)).toEqual(['Fiverr', 'GitHub', 'Modrinth', 'Ko-fi']);
     for (const s of socials) expect(s.href.startsWith('https://')).toBe(true);
   });
 

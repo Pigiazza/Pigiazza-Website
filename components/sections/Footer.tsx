@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { ArrowUp } from 'lucide-react';
 import { Wave } from '../Wave';
 import { useI18n } from '@/lib/i18n';
 import { socials } from '@/lib/socials';
@@ -26,10 +25,6 @@ export function Footer() {
             </li>
           ))}
         </ul>
-        <a href="#top" className={styles.top}>
-          <ArrowUp aria-hidden="true" />
-          {t.footer.top}
-        </a>
       </div>
       <p className={styles.copy} suppressHydrationWarning>
         © {new Date().getFullYear()} Pigiazza. {t.footer.rights}

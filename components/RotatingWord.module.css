@@ -1,7 +1,19 @@
 .slot {
+  position: relative;
   display: inline-grid;
   vertical-align: bottom;
   color: var(--accent-strong);
+}
+
+/* Soft glow under the word, the old site's signature. It lives on the slot,
+   not the word, so it is rasterised once instead of on every swap. */
+.slot::after {
+  content: '';
+  position: absolute;
+  inset: 25% -4% 0;
+  z-index: -1;
+  border-radius: var(--r-pill);
+  background: radial-gradient(ellipse at center, oklch(85% 0.14 65 / 0.6), transparent 70%);
 }
 
 .sizer,
@@ -14,21 +26,6 @@
   visibility: hidden;
 }
 
-.word {
-  position: relative;
-}
-
-/* Soft glow under the word, the old site's signature. */
-.word::after {
-  content: '';
-  position: absolute;
-  inset: 20% -6% 0;
-  z-index: -1;
-  border-radius: var(--r-pill);
-  background: oklch(85% 0.14 65 / 0.55);
-  filter: blur(22px);
-}
-
 .char {
   display: inline-block;
   animation: char-in 0.7s var(--ease-expo) both;
@@ -38,7 +35,6 @@
 @keyframes char-in {
   from {
     opacity: 0;
-    transform: translateY(0.45em) rotate(8deg);
-    filter: blur(8px);
+    transform: translateY(0.55em) rotate(10deg) scale(0.8);
   }
 }

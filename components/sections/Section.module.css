@@ -1,6 +1,6 @@
 .section {
   position: relative;
-  padding: clamp(72px, 10vw, 128px) var(--gutter);
+  padding: clamp(56px, 8vw, 104px) var(--gutter);
   /* Entrances slide in from the sides; never let them widen the page. */
   overflow-x: clip;
 }
@@ -44,7 +44,9 @@
   white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 14px 30px -12px var(--btn-shadow);
+  translate: var(--mx, 0px) var(--my, 0px);
   transition:
+    translate 0.5s var(--ease-expo),
     transform 0.35s var(--ease-out),
     box-shadow 0.35s var(--ease-out),
     background-color 0.25s ease;
@@ -85,8 +87,6 @@
   background: var(--glass-strong);
   border-color: var(--glass-edge-dim);
   color: var(--ink);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
 }
 
 .btnGhost:hover svg {

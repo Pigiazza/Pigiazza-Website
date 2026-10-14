@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight, Clock, RotateCcw, Star } from 'lucide-react';
 import { Wave } from '../Wave';
 import { RotatingWord } from '../RotatingWord';
 import { SocialCarousel } from '../SocialCarousel';
+import { MagneticLink } from '../MagneticLink';
 import { useI18n } from '@/lib/i18n';
 import { FIVERR_PROFILE } from '@/lib/services';
 import section from './Section.module.css';
@@ -19,8 +20,8 @@ export function Hero() {
     <section id="top" className={styles.hero}>
       <div className={styles.scene} aria-hidden="true">
         <picture>
-          <source srcSet="/bg/autumn.webp" type="image/webp" />
-          <img className={styles.photo} src="/bg/autumn.jpg" alt="" fetchPriority="high" />
+          <source srcSet="/bg/autumn-blur.webp" type="image/webp" />
+          <img className={styles.photo} src="/bg/autumn-blur.jpg" alt="" fetchPriority="high" />
         </picture>
         <div className={styles.veil} />
       </div>
@@ -40,14 +41,19 @@ export function Hero() {
           </h1>
           <p className={styles.sub}>{t.hero.sub}</p>
           <div className={styles.actions}>
-            <a href={FIVERR_PROFILE} className={`${section.btn} ${section.btnPrimary}`} target="_blank" rel="noopener noreferrer">
+            <MagneticLink
+              href={FIVERR_PROFILE}
+              className={`${section.btn} ${section.btnPrimary}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {t.hero.ctaPrimary}
               <ArrowUpRight aria-hidden="true" />
-            </a>
-            <a href="#services" className={`${section.btn} ${section.btnGhost}`}>
+            </MagneticLink>
+            <MagneticLink href="#services" className={`${section.btn} ${section.btnGhost}`}>
               {t.hero.ctaSecondary}
               <ArrowDown aria-hidden="true" />
-            </a>
+            </MagneticLink>
           </div>
           <ul className={styles.trust}>
             {t.hero.trust.map((item, i) => {

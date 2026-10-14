@@ -1,6 +1,5 @@
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/sections/Hero';
-import { TechStrip } from '@/components/sections/TechStrip';
 import { Services } from '@/components/sections/Services';
 import { Process } from '@/components/sections/Process';
 import { Portfolio } from '@/components/sections/Portfolio';
@@ -15,7 +14,6 @@ export default function Page() {
       <Header />
       <main>
         <Hero />
-        <TechStrip />
         <Services />
         <Process />
         <Portfolio />

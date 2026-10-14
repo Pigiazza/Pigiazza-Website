@@ -30,7 +30,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--s-2);
-  min-height: 48px;
+  min-height: 56px;
   padding: 0 var(--s-3);
   border: 0;
   border-radius: var(--r-pill);
@@ -51,6 +51,19 @@
 
 .tab:hover {
   color: var(--ink);
+}
+
+.tabText {
+  display: grid;
+  line-height: 1.1;
+  text-align: left;
+}
+
+.tabFrom {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.72rem;
+  opacity: 0.75;
 }
 
 .tab:hover svg {
@@ -121,18 +134,44 @@
   box-shadow:
     0 0 0 1px var(--line),
     0 24px 50px -34px var(--shadow);
-  animation: card-in 0.75s var(--ease-expo) backwards;
-  animation-delay: calc(var(--i) * 80ms);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition:
-    transform 0.5s var(--ease-expo),
+    transform 0.6s var(--ease-expo),
     box-shadow 0.5s var(--ease-expo);
 }
 
-@keyframes card-in {
+/* Light that follows the cursor across the card. */
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), oklch(90% 0.1 65 / 0.55), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.card:hover .glare {
+  opacity: 1;
+}
+
+.card[data-featured='true'] .glare {
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 0%), oklch(78% 0.16 58 / 0.35), transparent 55%);
+}
+
+/* Replayed on every service switch (the elements are re-keyed). */
+.swap {
+  animation: swap-in 0.55s var(--ease-expo) backwards;
+  animation-delay: calc(var(--i) * 60ms);
+}
+
+@keyframes swap-in {
   from {
     opacity: 0;
-    transform: translateY(32px) scale(0.97);
-    filter: blur(8px);
+    transform: translateY(14px);
   }
 }
 
@@ -144,7 +183,7 @@
 }
 
 .card:hover {
-  transform: translateY(-6px);
+  transition-duration: 0.15s, 0.5s;
   box-shadow:
     0 0 0 1px var(--line),
     0 36px 60px -30px var(--shadow);
@@ -329,6 +368,12 @@
   .tab svg {
     width: 18px;
     height: 18px;
+  }
+  .tabText {
+    text-align: center;
+  }
+  .tabFrom {
+    display: none;
   }
   .indicator {
     border-radius: var(--r-md);

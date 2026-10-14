@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Code, Layers, MapPin, Zap } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
+import { LiveClock } from '../LiveClock';
 import section from './Section.module.css';
 import styles from './About.module.css';
 
@@ -34,6 +35,7 @@ export function About() {
               );
             })}
           </ul>
+          <LiveClock />
         </div>
       </div>
     </section>

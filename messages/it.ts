@@ -25,7 +25,6 @@ const it: typeof en = {
     carousel: 'I miei profili',
     carouselGo: 'Mostra',
   },
-  tech: { label: 'Costruito con' },
   services: {
     heading: 'Scegli cosa ti serve',
     sub: 'Quattro servizi, tre pacchetti ciascuno. Ogni ordine passa da Fiverr, quindi pagamento e consegna sono protetti.',
@@ -34,6 +33,7 @@ const it: typeof en = {
     days: '{n} giorni',
     revisions: 'Revisioni',
     cta: 'Scegli su Fiverr',
+    from: 'da ${n}',
     items: {
       mod: {
         tab: 'Mod',
@@ -154,6 +154,9 @@ const it: typeof en = {
     alias: 'aka Pigiazza',
     body: 'Sviluppatore Minecraft italiano. Ho imparato Java per sistemare una cosa sul mio server e non mi sono più fermato. Oggi creo mod, addon e plugin su commissione, da un singolo blocco personalizzato al porting di un’intera mod su un’altra versione.',
     facts: ['Dall’Italia', 'Java e Kotlin', 'Fabric, Forge, NeoForge, Quilt, Paper', 'Rispondo entro un giorno'],
+    clockLabel: 'Ora in Italia',
+    awake: 'Probabilmente sveglio, ti rispondo a breve',
+    asleep: 'Probabilmente dormo, ti rispondo domattina',
     avatarAlt: 'Il cane di Pigiazza, la cosa più vicina a una foto del team che questo sito abbia',
   },
   faq: {

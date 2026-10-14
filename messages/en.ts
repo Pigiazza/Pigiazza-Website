@@ -23,7 +23,6 @@ const en = {
     carousel: 'My profiles',
     carouselGo: 'Show',
   },
-  tech: { label: 'Built with' },
   services: {
     heading: 'Pick what you need',
     sub: 'Four services, three packages each. Every order goes through Fiverr, so payment and delivery are protected.',
@@ -32,6 +31,7 @@ const en = {
     days: '{n} days',
     revisions: 'Revisions',
     cta: 'Choose on Fiverr',
+    from: 'from ${n}',
     items: {
       mod: {
         tab: 'Mods',
@@ -146,6 +146,9 @@ const en = {
     alias: 'aka Pigiazza',
     body: 'Italian Minecraft developer. I picked up Java to fix something on my own server and never really stopped. Today I build mods, addons and server plugins on commission, from a single custom block to porting a whole mod to another version.',
     facts: ['Based in Italy', 'Java & Kotlin', 'Fabric, Forge, NeoForge, Quilt, Paper', 'Replies within a day'],
+    clockLabel: 'Time in Italy',
+    awake: 'Probably awake, expect a reply soon',
+    asleep: 'Probably asleep, I’ll reply in the morning',
     avatarAlt: "Pigiazza's dog, the closest thing this site has to a team photo",
   },
   faq: {

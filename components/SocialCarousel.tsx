@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { ArrowUpRight } from 'lucide-react';
 import { useI18n } from '@/lib/i18n';
 import { socials } from '@/lib/socials';
+import { useTilt } from './hooks';
 import styles from './SocialCarousel.module.css';
 
 const SLIDE_MS = 2800;
@@ -18,6 +19,8 @@ export function SocialCarousel() {
   const [prev, setPrev] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
   const [autoplay, setAutoplay] = useState(false);
+  const orbit = useRef<HTMLDivElement>(null);
+  useTilt(orbit, 10);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -44,7 +47,7 @@ export function SocialCarousel() {
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className={styles.orbit}>
+      <div className={styles.orbit} ref={orbit}>
         <svg className={styles.ring} viewBox="0 0 100 100" aria-hidden="true">
           <circle className={styles.track} cx="50" cy="50" r="48" />
           {autoplay && (

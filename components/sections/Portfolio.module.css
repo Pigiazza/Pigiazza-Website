@@ -1,35 +1,221 @@
 .list {
   display: grid;
-  gap: clamp(64px, 9vw, 120px);
+  gap: var(--s-4);
 }
 
 .project {
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 20px 44px -34px var(--shadow);
+  transition:
+    box-shadow 0.5s var(--ease-expo),
+    transform 0.5s var(--ease-expo);
+}
+
+.project:hover {
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 30px 60px -34px var(--shadow);
+}
+
+.project[data-open='true'] {
+  box-shadow:
+    0 0 0 2px var(--accent),
+    0 40px 80px -40px var(--shadow);
+}
+
+.summaryWrap {
+  font-size: inherit;
+  letter-spacing: normal;
+}
+
+.summary {
   display: grid;
-  gap: clamp(28px, 4vw, 64px);
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
+  gap: clamp(12px, 2.5vw, 24px);
+  width: 100%;
+  padding: clamp(14px, 2.5vw, 20px);
+  border: 0;
+  border-radius: var(--r-lg);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.summary:focus-visible {
+  outline-offset: -3px;
+}
+
+.thumb {
+  display: grid;
+  place-items: center;
+  width: clamp(64px, 10vw, 88px);
+  aspect-ratio: 1;
+  border-radius: var(--r-md);
+  background: radial-gradient(circle at 30% 25%, var(--accent-wash), var(--bg-2) 70%);
+  color: var(--accent-text);
+  overflow: hidden;
+  transition: transform 0.6s var(--ease-expo);
+}
+
+.thumb img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+}
+
+.thumb svg {
+  width: 34%;
+  height: 34%;
+}
+
+.summary:hover .thumb {
+  transform: rotate(-5deg) scale(1.06);
+}
+
+.meta {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.kind,
+.target {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--step--1);
+}
+
+.kind {
+  color: var(--accent-text);
+}
+
+.target {
+  color: var(--ink-soft);
+}
+
+.kind svg,
+.target svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--step-1);
+  line-height: 1.15;
+}
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  background: var(--bg-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.rating svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent-strong);
+  fill: var(--accent);
+}
+
+.chevron {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--bg);
+  transition:
+    transform 0.6s var(--ease-expo),
+    background-color 0.3s ease;
+}
+
+.chevron svg {
+  width: 20px;
+  height: 20px;
+}
+
+.summary:hover .chevron {
+  background: var(--accent-strong);
+}
+
+.project[data-open='true'] .chevron {
+  transform: rotate(180deg);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Opening animates the grid track, then the content slides in. */
+.panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s var(--ease-expo);
+}
+
+.project[data-open='true'] .panel {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.detail {
+  display: grid;
+  gap: clamp(20px, 3vw, 40px);
+  padding: 0 clamp(14px, 2.5vw, 20px) clamp(20px, 3vw, 32px);
+  opacity: 0;
+  transform: translateY(-16px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.4s var(--ease-expo);
+}
+
+.project[data-open='true'] .detail {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s ease 0.12s,
+    transform 0.7s var(--ease-expo) 0.08s;
 }
 
 @media (min-width: 900px) {
-  .project {
-    grid-template-columns: 1fr 1.1fr;
-  }
-  .project[data-flip='true'] .media {
-    order: 2;
+  .detail {
+    grid-template-columns: minmax(260px, 0.8fr) 1.2fr;
+    align-items: start;
   }
 }
 
 .media {
-  position: relative;
   aspect-ratio: 1;
-  max-width: 520px;
+  max-width: 440px;
   width: 100%;
   justify-self: center;
-  border-radius: var(--r-lg);
+  border-radius: var(--r-md);
   overflow: hidden;
   background: radial-gradient(circle at 30% 25%, var(--accent-wash), var(--bg-2) 70%);
-  box-shadow:
-    0 0 0 1px var(--line),
-    0 40px 80px -40px var(--shadow);
+  transform: scale(0.94) rotate(-2deg);
+  transition: transform 0.8s var(--ease-expo);
+}
+
+.project[data-open='true'] .media {
+  transform: none;
 }
 
 .image {
@@ -63,54 +249,22 @@
 .content {
   display: grid;
   gap: var(--s-4);
-  justify-items: start;
-}
-
-.kind,
-.target {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  font-weight: 700;
-}
-
-.kind {
-  color: var(--accent-text);
-}
-
-.kind svg,
-.target svg {
-  width: 18px;
-  height: 18px;
-}
-
-.target {
-  color: var(--ink-soft);
-}
-
-.target svg {
-  color: var(--ink-mute);
-}
-
-.title {
-  font-size: var(--step-2);
 }
 
 .body {
-  max-width: 56ch;
+  max-width: 58ch;
   color: var(--ink-soft);
+  font-size: var(--step-1);
+  line-height: 1.5;
 }
 
 .review {
   position: relative;
-  width: 100%;
   margin: var(--s-4) 0 0;
-  padding: clamp(24px, 3vw, 32px);
-  border-radius: var(--r-lg);
-  background: var(--surface);
-  box-shadow:
-    0 0 0 1px var(--line),
-    0 30px 60px -40px var(--shadow);
+  padding: clamp(22px, 3vw, 30px);
+  border-radius: var(--r-md);
+  background: var(--bg);
+  box-shadow: 0 0 0 1px var(--line);
 }
 
 .quoteMark {
@@ -124,6 +278,8 @@
   background: var(--ink);
   color: var(--accent);
   fill: var(--accent);
+  transform: scale(0) rotate(-40deg);
+  transition: transform 0.6s var(--ease-expo) 0.2s;
 }
 
 .stars {
@@ -136,46 +292,11 @@
   height: 20px;
   color: var(--accent-strong);
   fill: var(--accent);
-}
-
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .stars svg {
-      animation: star-pop linear both;
-      animation-timeline: view();
-      animation-range: entry 20% entry 50%;
-    }
-    .stars svg:nth-child(2) {
-      animation-range: entry 26% entry 56%;
-    }
-    .stars svg:nth-child(3) {
-      animation-range: entry 32% entry 62%;
-    }
-    .stars svg:nth-child(4) {
-      animation-range: entry 38% entry 68%;
-    }
-    .stars svg:nth-child(5) {
-      animation-range: entry 44% entry 74%;
-    }
-    .bar span {
-      animation: bar-fill linear both;
-      animation-timeline: view();
-      animation-range: entry 40% cover 40%;
-    }
-  }
-}
-
-@keyframes star-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.2) rotate(-60deg);
-  }
-}
-
-@keyframes bar-fill {
-  from {
-    transform: scaleX(0);
-  }
+  opacity: 0;
+  transform: scale(0.3) rotate(-60deg);
+  transition:
+    opacity 0.3s ease,
+    transform 0.6s var(--ease-expo);
 }
 
 .quote {
@@ -236,10 +357,59 @@
   border-radius: var(--r-pill);
   background: linear-gradient(90deg, var(--accent), var(--accent-strong));
   transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.9s var(--ease-expo);
 }
 
 .note {
   margin-top: var(--s-4);
   color: var(--ink-mute);
   font-size: var(--step--1);
+}
+
+/* Everything inside the review plays when the project opens. */
+.project[data-open='true'] .quoteMark {
+  transform: none;
+}
+
+.project[data-open='true'] .stars svg {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(0.25s + var(--i) * 70ms);
+}
+
+.project[data-open='true'] .bar span {
+  transform: none;
+}
+
+.project[data-open='true'] .score:nth-child(1) .bar span {
+  transition-delay: 0.35s;
+}
+.project[data-open='true'] .score:nth-child(2) .bar span {
+  transition-delay: 0.45s;
+}
+.project[data-open='true'] .score:nth-child(3) .bar span {
+  transition-delay: 0.55s;
+}
+
+@media (max-width: 899px) {
+  .media {
+    aspect-ratio: 16 / 10;
+    max-width: none;
+  }
+  .image {
+    padding: 4%;
+  }
+}
+
+@media (max-width: 560px) {
+  .summary {
+    grid-template-columns: auto 1fr auto;
+  }
+  .rating {
+    display: none;
+  }
+  .title {
+    font-size: 1.15rem;
+  }
 }
