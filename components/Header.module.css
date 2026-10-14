@@ -1,156 +1,163 @@
+/* Header from the original site: fixed row, hamburger left, wordmark centred
+   on the window, language right, a floating glass pill behind them. */
 .header {
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
   position: fixed;
-  top: calc(env(safe-area-inset-top) + var(--s-3));
-  left: 50%;
+  top: env(safe-area-inset-top);
+  left: 0;
+  right: 0;
   z-index: var(--z-header);
-  width: min(calc(var(--page-max) + 2 * var(--s-4)), calc(100% - 2 * var(--s-3)));
-  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px clamp(20px, 4vw, 56px);
+  pointer-events: none;
   animation: header-in 0.9s var(--ease-expo) 0.1s backwards;
-  transition: transform 0.5s var(--ease-expo);
 }
 
-.header[data-tucked='true'] {
-  transform: translate(-50%, calc(-100% - 24px));
-}
-
-/* Keep the bar reachable while someone is tabbing through it. */
-.header[data-tucked='true']:focus-within {
-  transform: translateX(-50%);
+.header > * {
+  pointer-events: auto;
 }
 
 @keyframes header-in {
   from {
     opacity: 0;
-    transform: translate(-50%, -24px);
+    transform: translateY(-24px);
   }
 }
 
+/* Always-visible pill, inset from every screen edge. */
 .bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-4);
-  padding: var(--s-2) var(--s-2) var(--s-2) var(--s-5);
-  border-radius: var(--r-pill);
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: clamp(14px, 3vw, 28px);
+  right: clamp(14px, 3vw, 28px);
+  z-index: -1;
+  border-radius: var(--r-lg);
   background: linear-gradient(155deg, oklch(99% 0.01 var(--hue) / 0.92), oklch(99% 0.01 var(--hue) / 0.8) 65%);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   backdrop-filter: blur(24px) saturate(160%);
   box-shadow:
     inset 0 1px 0 var(--glass-edge),
     0 0 0 1px var(--glass-edge-dim),
-    0 14px 34px -20px var(--shadow);
+    0 12px 30px -18px var(--shadow);
   transition:
-    background-color 0.4s ease,
-    box-shadow 0.4s ease,
-    opacity 0.35s ease;
-}
-
-/* With the menu open the panel is the glass: the pill steps back. */
-.header[data-menu-open='true'] .bar {
-  background: transparent;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
-
-.header[data-menu-open='true'] .logo {
-  opacity: 0;
+    opacity 0.35s var(--ease-out),
+    transform 0.45s var(--ease-bounce);
   pointer-events: none;
 }
 
+/* With the menu open its panel is the glass: the pill steps back. */
+.header[data-menu-open='true'] .bar {
+  opacity: 0;
+  transform: scaleY(0.6);
+}
+
+/* Wordmark centred on the window, not between the two groups. */
 .logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
   display: flex;
   border-radius: var(--r-sm);
-  transition:
-    transform 0.4s var(--ease-out),
-    opacity 0.3s ease;
+  transform: translate(-50%, -50%);
+  transition: transform 0.4s var(--ease-bounce);
 }
 
 .logo img {
-  height: clamp(30px, 4.5vw, 40px);
+  height: clamp(34px, 5vw, 52px);
   width: auto;
   image-rendering: pixelated;
 }
 
 .logo:hover {
-  transform: scale(1.05) rotate(-2deg);
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.logo:active {
+  transform: translate(-50%, -50%) scale(0.96);
+  transition-duration: 0.15s;
+}
+
+/* Below 560px there is no room between the hamburger and the controls. */
+@media (max-width: 560px) {
+  .logo {
+    display: none;
+  }
 }
 
 .controls {
   display: flex;
   align-items: center;
-  gap: var(--s-2);
+  gap: 10px;
 }
 
 .burger {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
   border: 0;
   border-radius: var(--r-pill);
-  background: var(--ink);
+  background: oklch(30% 0.02 var(--hue) / 0.09);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   cursor: pointer;
   transition:
-    transform 0.35s var(--ease-out),
-    background-color 0.3s ease;
+    background-color 0.25s ease,
+    transform 0.4s var(--ease-bounce);
 }
 
 .burger:hover {
-  transform: scale(1.06);
+  background: oklch(30% 0.02 var(--hue) / 0.05);
+  transform: scale(1.08);
 }
 
 .burger:active {
   transform: scale(0.92);
+  transition-duration: 0.15s;
 }
 
 .burger span {
   position: absolute;
-  width: 18px;
+  width: 20px;
   height: 2px;
   border-radius: var(--r-pill);
-  background: var(--bg);
+  background: var(--ink);
   transition:
-    transform 0.5s var(--ease-expo),
-    opacity 0.25s ease,
-    width 0.4s var(--ease-expo);
+    transform 0.5s var(--ease-bounce),
+    opacity 0.25s ease;
 }
 
+/* Staggered delays + the bouncy curve give the open/close its rebound. */
 .burger span:nth-child(1) {
   transform: translateY(-6px);
+  transition-delay: 0.08s;
 }
-
+.burger span:nth-child(2) {
+  transform: translateY(0);
+  transition-delay: 0.04s;
+}
 .burger span:nth-child(3) {
-  width: 12px;
-  transform: translate(3px, 6px);
-}
-
-.burger:hover span:nth-child(3) {
-  width: 18px;
-  transform: translate(0, 6px);
-}
-
-.burger[data-open='true'] {
-  background: var(--accent);
-}
-
-.burger[data-open='true'] span {
-  background: var(--accent-ink);
+  transform: translateY(6px);
+  transition-delay: 0s;
 }
 
 .burger[data-open='true'] span:nth-child(1) {
-  transform: rotate(45deg);
+  transform: translateY(0) rotate(45deg);
+  transition-delay: 0s;
 }
-
 .burger[data-open='true'] span:nth-child(2) {
   opacity: 0;
   transform: scaleX(0);
+  transition-delay: 0.04s;
 }
-
 .burger[data-open='true'] span:nth-child(3) {
-  width: 18px;
-  transform: rotate(-45deg);
+  transform: translateY(0) rotate(-45deg);
+  transition-delay: 0.08s;
 }
 
 /* Dim the page behind the menu. Plain colour: a full-screen backdrop blur
@@ -179,7 +186,7 @@
 .menu {
   position: fixed;
   top: 0;
-  right: 0;
+  left: 0;
   bottom: 0;
   z-index: var(--z-menu);
   display: flex;
@@ -187,17 +194,18 @@
   justify-content: space-between;
   gap: var(--s-8);
   width: clamp(280px, 46vw, 560px);
-  padding: calc(env(safe-area-inset-top) + 112px) clamp(28px, 6vw, 72px) calc(env(safe-area-inset-bottom) + var(--s-10));
-  border-radius: var(--r-lg) 0 0 var(--r-lg);
+  padding: calc(env(safe-area-inset-top) + 112px) clamp(28px, 6vw, 64px) calc(env(safe-area-inset-bottom) + var(--s-10));
+  padding-left: clamp(44px, 8vw, 80px);
+  border-radius: 0 var(--r-lg) var(--r-lg) 0;
   background:
-    radial-gradient(circle at 100% 0%, oklch(90% 0.08 65 / 0.7), transparent 55%),
+    radial-gradient(circle at 0% 0%, oklch(90% 0.08 65 / 0.7), transparent 55%),
     linear-gradient(200deg, oklch(99% 0.008 var(--hue)), oklch(96% 0.03 60) 70%);
   box-shadow:
-    inset 1px 0 0 var(--glass-edge),
-    -30px 0 80px -30px var(--shadow);
+    inset -1px 0 0 var(--glass-edge),
+    30px 0 80px -30px var(--shadow);
   overflow-y: auto;
   overscroll-behavior: contain;
-  clip-path: circle(0% at 100% 50%);
+  clip-path: circle(0% at 0% 50%);
   visibility: hidden;
   transition:
     clip-path 0.6s var(--ease-in-out),
@@ -206,7 +214,7 @@
 }
 
 .menu[data-open='true'] {
-  clip-path: circle(150% at 100% 50%);
+  clip-path: circle(150% at 0% 50%);
   visibility: visible;
   transition:
     clip-path 0.9s var(--ease-expo),
@@ -224,7 +232,7 @@
 .links li,
 .menuFoot {
   opacity: 0;
-  transform: translateX(48px);
+  transform: translateX(-48px);
   transition:
     opacity 0.25s ease,
     transform 0.3s ease;
@@ -278,7 +286,7 @@
 
 .links a:hover,
 .links a:focus-visible {
-  transform: translateX(-6px);
+  transform: translateX(6px);
   outline: none;
 }
 

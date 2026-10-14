@@ -29,28 +29,6 @@ export function Header() {
   const wasOpen = useRef(false);
   const active = useActiveSection(sectionIds);
   const pastHero = usePastElement('top');
-  const [tucked, setTucked] = useState(false);
-
-  // Slide the bar away while scrolling down, bring it back on any scroll up.
-  useEffect(() => {
-    let last = window.scrollY;
-    let frame = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        const y = window.scrollY;
-        if (Math.abs(y - last) < 6) return;
-        setTucked(y > last && y > 240);
-        last = y;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, []);
-
   useEffect(() => {
     if (open) {
       wasOpen.current = true;
@@ -69,28 +47,29 @@ export function Header() {
   return (
     <>
       <div className={styles.progress} aria-hidden="true" />
-      <header className={styles.header} data-menu-open={open} data-tucked={tucked && !open}>
-        <div className={styles.bar}>
-          <a href="#top" className={styles.logo} aria-label="Pigiazza, home">
-            <Image src="/pigiazza.png" alt="Pigiazza" width={160} height={46} priority />
-          </a>
-          <div className={styles.controls}>
-            <LangDropdown />
-            <button
-              ref={toggle}
-              type="button"
-              className={styles.burger}
-              data-open={open}
-              aria-expanded={open}
-              aria-controls="site-menu"
-              aria-label={open ? t.toggles.menuClose : t.toggles.menuOpen}
-              onClick={() => setOpen((v) => !v)}
-            >
-              <span />
-              <span />
-              <span />
-            </button>
-          </div>
+      {/* Same layout as the original site: hamburger left, wordmark centred,
+          language on the right, all on a floating glass pill. */}
+      <header className={styles.header} data-menu-open={open}>
+        <div className={styles.bar} aria-hidden="true" />
+        <button
+          ref={toggle}
+          type="button"
+          className={styles.burger}
+          data-open={open}
+          aria-expanded={open}
+          aria-controls="site-menu"
+          aria-label={open ? t.toggles.menuClose : t.toggles.menuOpen}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <a href="#top" className={styles.logo} aria-label="Pigiazza, home">
+          <Image src="/pigiazza.png" alt="Pigiazza" width={242} height={52} priority />
+        </a>
+        <div className={styles.controls}>
+          <LangDropdown />
         </div>
       </header>
 
