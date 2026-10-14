@@ -48,23 +48,11 @@ export function Header() {
     <>
       <div className={styles.progress} aria-hidden="true" />
       {/* Same layout as the original site: hamburger left, wordmark centred,
-          language on the right, all on a floating glass pill. */}
+          language on the right, all on a floating glass pill. With the menu open
+          the whole bar sinks behind the dimmed backdrop like the rest of the page. */}
       <header className={styles.header} data-menu-open={open}>
         <div className={styles.bar} aria-hidden="true" />
-        <button
-          ref={toggle}
-          type="button"
-          className={styles.burger}
-          data-open={open}
-          aria-expanded={open}
-          aria-controls="site-menu"
-          aria-label={open ? t.toggles.menuClose : t.toggles.menuOpen}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
+        <span className={styles.toggleSlot} aria-hidden="true" />
         <a href="#top" className={styles.logo} aria-label="Pigiazza, home">
           <Image src="/pigiazza.png" alt="Pigiazza" width={242} height={52} priority />
         </a>
@@ -72,6 +60,22 @@ export function Header() {
           <LangDropdown />
         </div>
       </header>
+
+      {/* Lives outside the header so it stays on top while the bar dims with the page. */}
+      <button
+        ref={toggle}
+        type="button"
+        className={styles.burger}
+        data-open={open}
+        aria-expanded={open}
+        aria-controls="site-menu"
+        aria-label={open ? t.toggles.menuClose : t.toggles.menuOpen}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
 
       <div className={styles.backdrop} data-open={open} onClick={() => setOpen(false)} aria-hidden="true" />
 
